@@ -1,5 +1,6 @@
 package com.mililu.moneypower;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +12,8 @@ public class Wallet extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wallet);
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
 	}
 
 	@Override
