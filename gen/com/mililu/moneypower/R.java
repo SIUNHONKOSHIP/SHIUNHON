@@ -27,14 +27,38 @@ public final class R {
         public static final int wl_submit=0x7f020002;
     }
     public static final class id {
-        public static final int LinerLayout1=0x7f080000;
-        public static final int action_settings=0x7f080004;
-        public static final int btnSubmit=0x7f080003;
-        public static final int edtWalletName=0x7f080002;
-        public static final int textView1=0x7f080001;
+        public static final int action_settings=0x7f080017;
+        public static final int btn_backtologin=0x7f080012;
+        public static final int btn_createaccount=0x7f080011;
+        public static final int btn_createwallet=0x7f080014;
+        public static final int btn_createwallettowallet=0x7f080002;
+        public static final int btn_expenditure=0x7f080006;
+        public static final int btn_income=0x7f080007;
+        public static final int btn_insertwallet=0x7f080003;
+        public static final int btn_login=0x7f08000c;
+        public static final int btn_register=0x7f08000d;
+        public static final int btn_statistic=0x7f080009;
+        public static final int btn_wallet=0x7f080008;
+        public static final int btn_wallettohome=0x7f080013;
+        public static final int gridLayout1=0x7f080005;
+        public static final int listView1=0x7f080015;
+        public static final int tv_row1=0x7f080004;
+        public static final int tv_row2=0x7f080016;
+        public static final int txt_conformpass=0x7f080010;
+        public static final int txt_moneyinwallet=0x7f080001;
+        public static final int txt_namewallet=0x7f080000;
+        public static final int txt_password=0x7f08000f;
+        public static final int txt_passwordlogin=0x7f08000b;
+        public static final int txt_username=0x7f08000e;
+        public static final int txt_usernamelogin=0x7f08000a;
     }
     public static final class layout {
-        public static final int activity_wallet=0x7f030000;
+        public static final int activity_create_wallet=0x7f030000;
+        public static final int activity_home=0x7f030001;
+        public static final int activity_login=0x7f030002;
+        public static final int activity_register=0x7f030003;
+        public static final int activity_wallet=0x7f030004;
+        public static final int layout_for_show_list=0x7f030005;
     }
     public static final class menu {
         public static final int wallet=0x7f070000;
@@ -45,9 +69,19 @@ public final class R {
  WALLET 
          */
         public static final int app_name=0x7f050000;
+        public static final int chi=0x7f05000b;
+        public static final int dangky=0x7f050006;
+        public static final int dangnhap=0x7f050005;
+        public static final int hello=0x7f05000e;
         public static final int hello_world=0x7f050001;
         public static final int lb_listwallet=0x7f050004;
         public static final int lb_wallet=0x7f050003;
+        public static final int matkhau=0x7f050008;
+        public static final int rematkhau=0x7f050009;
+        public static final int tendangnhap=0x7f050007;
+        public static final int thongke=0x7f05000d;
+        public static final int thu=0x7f05000a;
+        public static final int vi=0x7f05000c;
     }
     public static final class style {
         /** 

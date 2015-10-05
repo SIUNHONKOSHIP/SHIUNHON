@@ -1,49 +1,50 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mililu.moneypower.Wallet" >
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/LinerLayout1"
-        android:layout_width="match_parent"
- 		android:layout_height="match_parent"
- 		android:orientation="vertical" >
-
-        <TextView
-             android:id="@+id/textView1"
-			 android:layout_width="match_parent"
-			 android:layout_height="wrap_content"
-			 android:background="#33CCFF"
-			 android:gravity="center"
-			 android:text="CREATE YOUR WALLET"
-			 android:textColor="#FFFFFF"
-			 android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/edtWalletName"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:ems="10"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical|center_horizontal"
-            android:hint="Please enter the name of wallet"
-            android:inputType="text"
-            android:textSize="15sp" >
-
-            <requestFocus />
-        </EditText>
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:columnCount="3"
+        android:useDefaultMargins="true" >
 
         <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/wl_submit"
-            android:gravity="center_horizontal" />
+            android:id="@+id/btn_wallettohome"
+            android:layout_width="50dp"
+            android:layout_column="0"
+            android:layout_gravity="left|center_horizontal"
+            android:layout_row="0"
+            android:text="&lt;-" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_row1"
+            android:layout_width="194dp"
+            android:layout_column="1"
+            android:layout_gravity="fill|center_vertical"
+            android:layout_row="0"
+            android:gravity="center"
+            android:text="Tài Khoản"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btn_createwallet"
+            android:layout_width="50dp"
+            android:layout_column="2"
+            android:layout_gravity="right|center_vertical"
+            android:layout_row="0"
+            android:text="+" />
+
+    </GridLayout>
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" >
+
+    </ListView>
+
+</LinearLayout>

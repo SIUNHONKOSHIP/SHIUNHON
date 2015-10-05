@@ -1,37 +1,31 @@
 package com.mililu.moneypower;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-public class Wallet extends Activity {
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_wallet);
-		ActionBar actionBar = getActionBar();
-		actionBar.hide();
+public class Wallet {
+	private int id_wallet;
+	private String name;
+	private String money;
+	
+	public int getId_wallet() {
+		return id_wallet;
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.wallet, menu);
-		return true;
+	public void setId_wallet(int id_wallet) {
+		this.id_wallet = id_wallet;
 	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	public String getName() {
+		return name;
 	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getMoney() {
+		return money;
+	}
+	public void setMoney(String money) {
+		this.money = money;
+	}
+	@Override
+	 public String toString() {
+	 // TODO Auto-generated method stub
+	 return this.name +" - "+this.money;
+	 }
 }
