@@ -22,9 +22,10 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int submit_wallet=0x7f020001;
-        public static final int wl_submit=0x7f020002;
+        public static final int bg=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int submit_wallet=0x7f020002;
+        public static final int wl_submit=0x7f020003;
     }
     public static final class id {
         public static final int action_settings=0x7f080017;
@@ -59,6 +60,7 @@ public final class R {
         public static final int activity_register=0x7f030003;
         public static final int activity_wallet=0x7f030004;
         public static final int layout_for_show_list=0x7f030005;
+        public static final int layout_intro=0x7f030006;
     }
     public static final class menu {
         public static final int wallet=0x7f070000;

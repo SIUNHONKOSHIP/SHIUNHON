@@ -19,6 +19,9 @@ public class DataBaseAdapter {
 	static final String DATABASE_CREATE_EXP_DETAIL = "create table tbl_EXP_DETAIL (ID_EXP_DET integer primary key autoincrement, ID_EXP  integer, NAME_EXP_DET text); ";
 	static final String DATABASE_CREATE_DIARY_INC = "create table tbl_DIARY_INC (ID_DIA_INC integer primary key autoincrement, ID_INC_DET integer, ID_WALLET integer, DATE text, MONEY numeric); ";
 	static final String DATABASE_CREATE_DIARY_EXP = "create table tbl_DIARY_EXP (ID_DIA_EXP integer primary key autoincrement, ID_EXP_DET integer, ID_WALLET integer, DATE text, MONEY numeric); ";
+	static final String DATABASE_INSERT_EXPENDITURE = "insert into tbl_EXPENDITURE (ID_EXP, NAME_EXP) value (1, Ăn uống), (2, Đi lại), (3, Dịch vụ sinh hoạt), (4, Hưởng thụ); ";
+	static final String DATABASE_INSERT_EXP_DET = "insert into tbl_EXP_DETAIL (ID_EXP_DET, ID_EXP, NAME_EXP_DET) value (1, 1, Đi chợ/siêu thị), (2, 1, Cafe), (3, 1, Cơm tiệm), (4, 2, Gửi xe), (5, 2, Xăng xe), (6, 2, Rửa xe), (7, 3, Điện thoại), (8, 3, Điện), (9, 3, Nước), (10, 4, Du lịch), (11, 4, Xem phim); ";
+
 	// Variable to hold the database instance
 	public  SQLiteDatabase db;
 	// Context of the application using the database.
