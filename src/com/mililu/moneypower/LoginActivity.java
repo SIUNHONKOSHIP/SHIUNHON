@@ -1,6 +1,7 @@
 package com.mililu.moneypower;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,8 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
 		/////DeleteDB();
 		
 		// Create a instance of SQLite Database
@@ -97,10 +100,10 @@ public class LoginActivity extends Activity {
 	public void DeleteDB(){
 		String msg = "";
 		if (deleteDatabase("DARFTMONEYPOWER.db")==true){
-			msg = "xoa database thanh cong";
+			msg = "Delete database successful!";
 		}
 		else{
-			msg = "That bai cmnr";
+			msg = "Failed!";
 		}
 		Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_LONG).show();
 	}
