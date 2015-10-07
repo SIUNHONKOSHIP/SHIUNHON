@@ -14,13 +14,14 @@ public class DataBaseAdapter {
 	static final String DATABASE_CREATE_ACCOUNT = "create table tbl_ACCOUNT (ID_ACCOUNT integer primary key autoincrement, USERNAME  text,PASSWORD text); ";
 	static final String DATABASE_CREATE_WALLET = "create table tbl_WALLET (ID_WALLET integer primary key autoincrement, NAME_WALLET  text,ID_ACCOUNT integer, MONEY numeric); ";
 	static final String DATABASE_CREATE_INCOME = "create table tbl_INCOME (ID_INC integer primary key autoincrement, NAME_INCOME  text); ";
+	static final String DATABASE_CREATE_INCOME_DETAIL = "create table tbl_INC_DETAIL (ID_INC_DET integer primary key autoincrement, ID_INC integer, NAME_INC_DET text); ";
 	static final String DATABASE_CREATE_EXPENDITURE = "create table tbl_EXPENDITURE (ID_EXP integer primary key autoincrement, NAME_EXP text); ";
 	static final String DATABASE_CREATE_EXP_DETAIL = "create table tbl_EXP_DETAIL (ID_EXP_DET integer primary key autoincrement, ID_EXP  integer, NAME_EXP_DET text); ";
-	static final String DATABASE_CREATE_DIARY_INC = "create table tbl_DIARY_INC (ID_DIA_INC integer primary key autoincrement, ID_INC integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
-	static final String DATABASE_CREATE_DIARY_EXP = "create table tbl_DIARY_EXP (ID_DIA_EXP integer primary key autoincrement, ID_EXP_DET integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
-	static final String DATABASE_INSERT_EXPENDITURE = "insert into tbl_EXPENDITURE (ID_EXP, NAME_EXP) values (1, 'Ăn uống'), (2, 'Đi lại'), (3, 'Dịch vụ sinh hoạt'), (4, 'Hưởng thụ'); ";
-	static final String DATABASE_INSERT_EXP_DET = "insert into tbl_EXP_DETAIL (ID_EXP_DET, ID_EXP, NAME_EXP_DET) values (1, 1, 'Đi chợ/siêu thị'), (2, 1, 'Cafe'), (3, 1, 'Cơm tiệm'), (4, 2, 'Gửi xe'), (5, 2, 'Xăng xe'), (6, 2, 'Rửa xe'), (7, 3, 'Điện thoại'), (8, 3, 'Điện'), (9, 3, 'Nước'), (10, 4, 'Du lịch'), (11, 4, 'Xem phim'); ";
-	static final String DATABASE_INSERT_INCOME = "insert into tbl_INCOME (ID_INC, NAME_INCOME) values (1, 'Lương'), (2, 'Thưởng'), (3, 'Lãi'), (4, 'Lãi tiết kiệm'), (5, 'Được cho/tặng'), (6, 'Khác'); ";
+	static final String DATABASE_CREATE_DIARY_INC = "create table tbl_DIARY_INC (ID_DIA_INC integer primary key autoincrement, ID_INC_DET integer, ID_WALLET integer, DATE text, MONEY numeric); ";
+	static final String DATABASE_CREATE_DIARY_EXP = "create table tbl_DIARY_EXP (ID_DIA_EXP integer primary key autoincrement, ID_EXP_DET integer, ID_WALLET integer, DATE text, MONEY numeric); ";
+	static final String DATABASE_INSERT_EXPENDITURE = "insert into tbl_EXPENDITURE (ID_EXP, NAME_EXP) value (1, Ăn uống), (2, Đi lại), (3, Dịch vụ sinh hoạt), (4, Hưởng thụ); ";
+	static final String DATABASE_INSERT_EXP_DET = "insert into tbl_EXP_DETAIL (ID_EXP_DET, ID_EXP, NAME_EXP_DET) value (1, 1, Đi chợ/siêu thị), (2, 1, Cafe), (3, 1, Cơm tiệm), (4, 2, Gửi xe), (5, 2, Xăng xe), (6, 2, Rửa xe), (7, 3, Điện thoại), (8, 3, Điện), (9, 3, Nước), (10, 4, Du lịch), (11, 4, Xem phim); ";
+
 	// Variable to hold the database instance
 	public  SQLiteDatabase db;
 	// Context of the application using the database.
@@ -46,11 +47,7 @@ public class DataBaseAdapter {
 	{
 		return db;
 	}
-	/**
-	 * Insert account into database
-	 * @param username
-	 * @param password
-	 */
+
 	public void InsertAccount(String username,String password)
 	{
        ContentValues newValues = new ContentValues();
@@ -70,11 +67,7 @@ public class DataBaseAdapter {
         return numberOFEntriesDeleted;
 	}
 	
-	/**
-	 * Get password of account from database
-	 * @param username
-	 * @return
-	 */
+	
 	public String getAccountPassword(String username)
 	{
 		Cursor cursor=db.query("tbl_ACCOUNT", null, " USERNAME=?", new String[]{username}, null, null, null);
@@ -88,11 +81,7 @@ public class DataBaseAdapter {
 		cursor.close();
 		return password;				
 	}
-	/**
-	 * Get ID of account from table ACCOUNT 
-	 * @param username
-	 * @return
-	 */
+	
 	public int getAccountId(String username)
 	{
 		Cursor cursor=db.query("tbl_ACCOUNT", null, " USERNAME=?", new String[]{username}, null, null, null);
@@ -106,11 +95,7 @@ public class DataBaseAdapter {
 		cursor.close();
 		return id;				
 	}
-	/**
-	 * Check username is exit in table ACCOUNT or not 
-	 * @param username
-	 * @return
-	 */
+	
 	public boolean isAccountExit(String username){
 		Cursor cursor=db.query("tbl_ACCOUNT", null, " USERNAME=?", new String[]{username}, null, null, null);
         if(cursor.getCount()<1) // UserName Not Exist
@@ -131,12 +116,7 @@ public class DataBaseAdapter {
         String where="USERNAME = ?";
 	    db.update("LOGIN",updatedValues, where, new String[]{userName});			   
 	}	
-	/**
-	 * Insert wallet into table WALLET
-	 * @param namewallet
-	 * @param money
-	 * @param id_user
-	 */
+	
 	public void insertWallet(String namewallet, int money, int id_user){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
@@ -146,15 +126,9 @@ public class DataBaseAdapter {
 
 		// Insert the row into your table
 		db.insert("tbl_WALLET", null, newValues);
-		db.close(); // Close database
+		db.close();
 	}
 	
-	/**
-	 * Update wallet from table WALLET
-	 * @param id_wallet
-	 * @param namewallet
-	 * @param money
-	 */
 	public void updateWallet(int id_wallet, String namewallet, int money){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
@@ -164,13 +138,4 @@ public class DataBaseAdapter {
 		
 		db.update("tbl_WALLET", newValues, "ID_WALLET =? ", new String[] {String.valueOf(id_wallet)});
 	}
-	/**
-	 * Delete wallet from table WALLET
-	 * @param id_wallet
-	 */
-	public void deleteWallet(int id_wallet){
-		db.delete("tbl_WALLET", "ID_WALLET =?", new String[] {String.valueOf(id_wallet)});
-		db.close();
-	}
 }
-

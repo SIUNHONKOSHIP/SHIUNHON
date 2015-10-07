@@ -3,9 +3,6 @@ package com.mililu.moneypower;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-	// 
+	// khai bÃ³a biáº¿n
 	Button btnLogin, btnRegister;
 	EditText txtUserName, txtPassword;
 	DataBaseAdapter dbAdapter;
@@ -21,12 +18,18 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-		
+		setContentView(R.layout.layout_intro);
+		/////DeleteDB();
+		try{
+			Thread.sleep(5000);
+		}
+		catch (Exception e){
+			// TODO Auto-generated catch block
+		}
 		setContentView(R.layout.activity_login);
 		// Create a instance of SQLite Database
-
-		CreateDB();
+	    dbAdapter =new DataBaseAdapter(this);
+	    dbAdapter = dbAdapter.open();
 	    
 	    // Get The Reference Of Buttons and Edit Text
 	    txtUserName = (EditText)findViewById(R.id.txt_usernamelogin);
@@ -58,69 +61,55 @@ public class LoginActivity extends Activity {
 		}
 	}
 	
-	/**
-	 * Create Database
-	 */
-	private void CreateDB() {
-	    dbAdapter =new DataBaseAdapter(this);
-	    dbAdapter = dbAdapter.open();
-	}
-	
 	/** Ham xu ly dang nhap
 	 * 
 	 */
 	public void Login(){
-		String username = txtUserName.getText().toString(); 
-		String password = txtPassword.getText().toString(); 
+		String username = txtUserName.getText().toString(); // táº¡o biáº¿n lÆ°u thÃ´ng tin tÃªn Ä‘Äƒng nháº­p trong textbox
+		String password = txtPassword.getText().toString(); // táº¡o biáº¿n lÆ°u thÃ´ng tin máº­t kháº©u trong textbox
 		
 		// Get validation
 		if(username.equals("")||password.equals(""))
 		{
-				Toast.makeText(getApplicationContext(), "Please insert username and password", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "Vui lÃ²ng Ä‘iá»�n Ä‘áº§y Ä‘á»§ thÃ´ng tin", Toast.LENGTH_LONG).show();
 				return;
 		}
-		else{ 
-			String passindatabase = dbAdapter.getAccountPassword(username);  
+		else{ // náº¿u Ä‘Ã£ Ä‘iá»�n Ä‘á»§ thÃ´ng tin
+			String passindatabase = dbAdapter.getAccountPassword(username); // táº¡o biáº¿n lÆ°u thÃ´ng tin pass trong database 
 			if (password.equals(passindatabase)){
-				// Get ID of account
+				// Láº¥y dá»¯ liá»‡u ID cá»§a account
 				int id_account = dbAdapter.getAccountId(username);
-				//Identify Bundle
+				//Khai bÃ¡o Bundle
 				Bundle bundle=new Bundle();
-				// set data into Bundle
+				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 				bundle.putInt("ID_ACCOUNT", id_account);
-				// create Intend 
+				// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
 				Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
-				//Set bundle into intent
+				//Ä�Æ°a Bundle vÃ o Intent
 				intent.putExtra("DATA_ACCOUNT", bundle);
-				// Start Activity
+				// má»Ÿ Activity
 				startActivity(intent);
 			}
 			else{
-				Toast.makeText(LoginActivity.this, "username or password is not correct", Toast.LENGTH_LONG).show();
+				Toast.makeText(LoginActivity.this, "Sai tÃªn Ä‘Äƒng nháº­p hoáº·c máº­t kháº©u", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
 	
-	/** 
-	 * Delete database
+	/** HÃ m xÃ³a database
+	 * 
 	 */
 	public void DeleteDB(){
 		String msg = "";
 		if (deleteDatabase("DARFTMONEYPOWER.db")==true){
-			msg = "Delete database successful!";
+			msg = "xoa database thanh cong";
 		}
 		else{
-			msg = "Failed!";
+			msg = "That bai cmnr";
 		}
 		Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_LONG).show();
 	}
-	/**
-	 * Delete and create Database again
-	 */
-	public void ResetDatabase() {
-		DeleteDB();
-		CreateDB();
-	}
+	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -129,26 +118,5 @@ public class LoginActivity extends Activity {
 		dbAdapter.close();
 		txtUserName.setText("");
 		txtPassword.setText("");
-	}
-	
-	//// create menu
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.login_menu, menu);
-	    return super.onCreateOptionsMenu(menu);
-	}
-	
-	//// Set even click for Menu
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	        case R.id.reset_database:
-	            ResetDatabase();
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
 	}
 }
