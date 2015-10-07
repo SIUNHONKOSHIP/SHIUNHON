@@ -19,12 +19,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_ACCOUNT);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_WALLET);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_INCOME);
-			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_INCOME_DETAIL);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_EXPENDITURE);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_EXP_DETAIL);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_DIARY_INC);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_DIARY_EXP);
- 
+			//_db.execSQL(DataBaseAdapter.DATABASE_INSERT_INCOME);
+			_db.execSQL(DataBaseAdapter.DATABASE_INSERT_EXPENDITURE);
+			//_db.execSQL(DataBaseAdapter.DATABASE_INSERT_EXP_DET);
 	}
 	// Called when there is a database version mismatch meaning that the version
 	// of the database on disk needs to be upgraded to the current version.

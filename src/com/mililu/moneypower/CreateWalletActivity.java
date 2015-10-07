@@ -15,7 +15,6 @@ public class CreateWalletActivity extends Activity {
 	Button btnBack, btnInsertWallet;
 	EditText txtNameWallet, txtMoney;
 	int id_curent_user;
-	int action; // lÆ°u tráº¡ng thÃ¡i hÃ nh Ä‘á»™ng: 1 - insert, 2 - update
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +62,13 @@ public class CreateWalletActivity extends Activity {
 		// check if any of the fields are vaccant
 		if(namewallet.equals("")||money.isEmpty()||Integer.valueOf(money)<0)
 		{
-				Toast.makeText(this, "Vui lÃ²ng Ä‘iá»�n Ä‘áº§y Ä‘á»§ thÃ´ng tin", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Please write your wallet's name and money ☝", Toast.LENGTH_LONG).show();
 				return;
 		}
 		else{
 			// Save the Data in Database
 			dbAdapter.insertWallet(namewallet, Integer.valueOf(money), id);
-			Toast.makeText(getApplicationContext(), "VÃ­ Ä‘Ã£ Ä‘Æ°á»£c táº¡o thÃ nh cÃ´ng", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Wallet has been created 😏", Toast.LENGTH_LONG).show();
 			CreateWalletActivity.this.finish();
 		}
 	}
