@@ -9,9 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.graphics.Typeface;
 
 public class LoginActivity extends Activity {
-	// khai bÃ³a biáº¿n
+	// khai bao bien
 	Button btnLogin, btnRegister;
 	EditText txtUserName, txtPassword;
 	DataBaseAdapter dbAdapter;
@@ -28,10 +29,24 @@ public class LoginActivity extends Activity {
 	    dbAdapter = dbAdapter.open();
 	    
 	    // Get The Reference Of Buttons and Edit Text
+	    
 	    txtUserName = (EditText)findViewById(R.id.txt_usernamelogin);
+	    //Thiet lap font de su dung tu assets
+        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+        //Thiet lap font cho Username
+        txtUserName.setTypeface(font);
+        
 	    txtPassword = (EditText)findViewById(R.id.txt_passwordlogin);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    txtPassword.setTypeface(font);
+	    
 	    btnLogin=(Button)findViewById(R.id.btn_login);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
+	    btnLogin.setTypeface(font);
+	    
 	    btnRegister=(Button)findViewById(R.id.btn_register);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHTITALIC.TTF");
+	    btnRegister.setTypeface(font);
 	    
 	    // Set OnClick Listener on SignUp button 
 	    btnLogin.setOnClickListener(new MyEvent());
@@ -67,7 +82,7 @@ public class LoginActivity extends Activity {
 		// Get validation
 		if(username.equals("")||password.equals(""))
 		{
-				Toast.makeText(getApplicationContext(), "Vui lÃ²ng Ä‘iá»�n Ä‘áº§y Ä‘á»§ thÃ´ng tin", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "Please enter your information.", Toast.LENGTH_LONG).show();
 				return;
 		}
 		else{ // náº¿u Ä‘Ã£ Ä‘iá»�n Ä‘á»§ thÃ´ng tin
@@ -87,7 +102,7 @@ public class LoginActivity extends Activity {
 				startActivity(intent);
 			}
 			else{
-				Toast.makeText(LoginActivity.this, "Sai tÃªn Ä‘Äƒng nháº­p hoáº·c máº­t kháº©u", Toast.LENGTH_LONG).show();
+				Toast.makeText(LoginActivity.this, "Wrong username or password, please try again.", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
@@ -98,10 +113,10 @@ public class LoginActivity extends Activity {
 	public void DeleteDB(){
 		String msg = "";
 		if (deleteDatabase("DARFTMONEYPOWER.db")==true){
-			msg = "xoa database thanh cong";
+			msg = "Delete your database successful!";
 		}
 		else{
-			msg = "That bai cmnr";
+			msg = "Failed!";
 		}
 		Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_LONG).show();
 	}

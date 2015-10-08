@@ -22,7 +22,7 @@ public class Intro extends Activity {
 			public void run() {
 				try {
 					// Thread will sleep for 5 seconds
-					sleep(5000);
+					sleep(3000);
 	                
 					// After 5 seconds redirect to another intent
 					Intent i=new Intent(getBaseContext(),LoginActivity.class);

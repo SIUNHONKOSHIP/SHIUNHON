@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tv_row1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/dangky" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"
-        android:layout_marginTop="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical" >
 
         <EditText
@@ -29,7 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/tendangnhap" >
+            android:gravity="center_vertical|start"
+            android:hint="Please enter your Username"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#989898"
+            android:textSize="15sp" >
 
             <requestFocus />
         </EditText>
@@ -39,29 +29,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/matkhau"
-            android:inputType="textPassword" />
+            android:gravity="center_vertical|start"
+            android:hint="Please enter your Password"
+            android:inputType="textPassword"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#989898"
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/txt_conformpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/rematkhau"
-            android:inputType="textPassword" />
+            android:gravity="center_vertical|start"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#989898"
+            android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/btn_createaccount"
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dangky" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:columnCount="2"
+            android:useDefaultMargins="true" >
 
-        <Button
-            android:id="@+id/btn_backtologin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dangnhap" />
+            <Button
+                android:id="@+id/btn_backtologin"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_column="0"
+                android:layout_gravity="left|center_horizontal"
+                android:layout_row="0"
+                android:alpha=".90"
+                android:background="@drawable/btn_backlogin"
+                android:gravity="center"
+                android:text="BACK"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
+            <Button
+                android:id="@+id/btn_createaccount"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_column="1"
+                android:layout_gravity="right|center_horizontal"
+                android:layout_row="0"
+                android:background="@drawable/btn_signup"
+                android:gravity="center"
+                android:text="REGISTER"
+                android:textSize="18sp" />
+
+        </GridLayout>
+               
     </LinearLayout>
-
+    
+    
+    
 </FrameLayout>
