@@ -81,19 +81,19 @@ public class RegisterActivity extends Activity {
 		// check if any of the fields are vaccant
 		if(username.equals("")||password.equals("")||confirmpass.equals(""))
 		{
-				Toast.makeText(getApplicationContext(), "Vui lÃ²ng Ä‘iá»�n Ä‘áº§y Ä‘á»§ thÃ´ng tin", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "Please enter username and password.", Toast.LENGTH_LONG).show();
 				return;
 		}
 		// check if both password matches
 		if(!password.equals(confirmpass))
 		{
-			Toast.makeText(getApplicationContext(), "Máº­t kháº©u nháº­p láº¡i khÃ´ng trÃ¹ng khá»›p", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "The passwords are not match.", Toast.LENGTH_LONG).show();
 			return;
 		}
 		else
 		{
 			if (dbAdapter.isAccountExit(username)){
-				Toast.makeText(getApplicationContext(), "TÃ i khoáº£n Ä‘Ã£ tá»“n táº¡i !!!", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "The username is duplicate, try again.", Toast.LENGTH_LONG).show();
 			}
 			else{
 				// Save the Data in Database

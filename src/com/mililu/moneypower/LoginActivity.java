@@ -17,11 +17,8 @@ import android.widget.Toast;
 import android.graphics.Typeface;
 
 public class LoginActivity extends Activity {
-<<<<<<< HEAD
-	// 
-=======
 	// khai bao bien
->>>>>>> Dev
+	
 	Button btnLogin, btnRegister;
 	EditText txtUserName, txtPassword;
 	DataBaseAdapter dbAdapter;
@@ -29,12 +26,8 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-		
-=======
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
->>>>>>> Dev
 		setContentView(R.layout.activity_login);
 		
 		
@@ -104,11 +97,7 @@ public class LoginActivity extends Activity {
 		// Get validation
 		if(username.equals("")||password.equals(""))
 		{
-<<<<<<< HEAD
 				Toast.makeText(getApplicationContext(), "Please insert username and password", Toast.LENGTH_LONG).show();
-=======
-				Toast.makeText(getApplicationContext(), "Please enter your information.", Toast.LENGTH_LONG).show();
->>>>>>> Dev
 				return;
 		}
 		else{ 
@@ -128,11 +117,7 @@ public class LoginActivity extends Activity {
 				startActivity(intent);
 			}
 			else{
-<<<<<<< HEAD
-				Toast.makeText(LoginActivity.this, "username or password is not correct", Toast.LENGTH_LONG).show();
-=======
-				Toast.makeText(LoginActivity.this, "Wrong username or password, please try again.", Toast.LENGTH_LONG).show();
->>>>>>> Dev
+				Toast.makeText(LoginActivity.this, "Username or Password is not correct", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
@@ -143,11 +128,7 @@ public class LoginActivity extends Activity {
 	public void DeleteDB(){
 		String msg = "";
 		if (deleteDatabase("DARFTMONEYPOWER.db")==true){
-<<<<<<< HEAD
 			msg = "Delete database successful!";
-=======
-			msg = "Delete your database successful!";
->>>>>>> Dev
 		}
 		else{
 			msg = "Failed!";

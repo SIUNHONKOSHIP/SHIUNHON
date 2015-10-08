@@ -25,12 +25,7 @@
             </intent-filter>
         </activity>
         
-<<<<<<< HEAD
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".WalletActivity"></activity>
-=======
+
 <!--         <activity android:name=".Intro"></activity> -->
 		<activity 
 		    android:screenOrientation="portrait"
@@ -44,7 +39,6 @@
         <activity 
             android:screenOrientation="portrait"
             android:name=".WalletActivity"></activity>
->>>>>>> Dev
         <activity android:name=".CreateWalletActivity"></activity>
         <activity android:name=".ExpenditureActivity"></activity>
         <activity android:name=".IncomeActivity"></activity>

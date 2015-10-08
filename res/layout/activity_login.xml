@@ -28,15 +28,10 @@
             android:ems="10"
             android:gravity="center_vertical|start"
             android:hint="Username"
-<<<<<<< HEAD
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
-            android:textColorLink="#33CCFF" />
-=======
             android:textColor="#33CCFF"
             android:textColorHint="#CCFFFFFF"
             android:textColorLink="#CCFFFFFF" />
->>>>>>> Dev
+
 
         <EditText
             android:id="@+id/txt_passwordlogin"
@@ -45,17 +40,10 @@
             android:ems="10"
             android:gravity="center_vertical|start"
             android:hint="Password"
-<<<<<<< HEAD
-            android:inputType="textPassword"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
-            android:textColorLink="#33CCFF" />
-=======
             android:password="true"
             android:textColor="#33CCFF"
             android:textColorHint="#CCFFFFFF"
             android:textColorLink="#CCFFFFFF" />
->>>>>>> Dev
 
         <LinearLayout
             android:layout_width="match_parent"
