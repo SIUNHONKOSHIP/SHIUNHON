@@ -1,5 +1,6 @@
 package com.mililu.moneypower;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,15 +19,10 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_intro);
-		/////DeleteDB();
-		try{
-			Thread.sleep(5000);
-		}
-		catch (Exception e){
-			// TODO Auto-generated catch block
-		}
 		setContentView(R.layout.activity_login);
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
+		
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
