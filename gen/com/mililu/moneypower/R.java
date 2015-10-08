@@ -24,18 +24,21 @@ public final class R {
     public static final class drawable {
         public static final int bg_login=0x7f020000;
         public static final int bgintro=0x7f020001;
-        public static final int btn_login=0x7f020002;
-        public static final int btn_trans=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int logo=0x7f020005;
-        public static final int logo1=0x7f020006;
-        public static final int submit_wallet=0x7f020007;
-        public static final int wl_submit=0x7f020008;
+        public static final int btn_backlogin=0x7f020002;
+        public static final int btn_login=0x7f020003;
+        public static final int btn_rowleft=0x7f020004;
+        public static final int btn_signup=0x7f020005;
+        public static final int btn_trans=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int logo=0x7f020008;
+        public static final int logo1=0x7f020009;
+        public static final int submit_wallet=0x7f02000a;
+        public static final int wl_submit=0x7f02000b;
     }
     public static final class id {
         public static final int action_settings=0x7f080019;
-        public static final int btn_backtologin=0x7f080013;
-        public static final int btn_createaccount=0x7f080012;
+        public static final int btn_backtologin=0x7f080012;
+        public static final int btn_createaccount=0x7f080013;
         public static final int btn_createwallet=0x7f080015;
         public static final int btn_createwallettowallet=0x7f080002;
         public static final int btn_expenditure=0x7f080006;

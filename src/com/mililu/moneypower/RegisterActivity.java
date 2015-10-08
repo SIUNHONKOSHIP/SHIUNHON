@@ -1,8 +1,12 @@
 package com.mililu.moneypower;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,18 +20,39 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_register);
+//		ActionBar actionBar = getActionBar();
+//		actionBar.hide();
 		
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
 	    
 	    // Get The Reference Of Views
+	    
 	    txtUserName = (EditText)findViewById(R.id.txt_username);
+	    //Thiet lap font de su dung tu assets
+        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+        //Thiet lap font cho Username
+        txtUserName.setTypeface(font);
+        
 	    txtPassword = (EditText)findViewById(R.id.txt_password);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    txtPassword.setTypeface(font);
+	    
 	    txtConfirmPass = (EditText)findViewById(R.id.txt_conformpass);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    txtConfirmPass.setTypeface(font);
+	    
 	    btnRegister=(Button)findViewById(R.id.btn_createaccount);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
+	    btnRegister.setTypeface(font);
+	    
 	    btnBack=(Button)findViewById(R.id.btn_backtologin);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    btnBack.setTypeface(font);
 	    
 	    // Set OnClick Listener on SignUp button 
 	    btnBack.setOnClickListener(new MyEvent());

@@ -8,13 +8,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.graphics.Typeface;
 
 public class LoginActivity extends Activity {
+<<<<<<< HEAD
 	// 
+=======
+	// khai bao bien
+>>>>>>> Dev
 	Button btnLogin, btnRegister;
 	EditText txtUserName, txtPassword;
 	DataBaseAdapter dbAdapter;
@@ -22,20 +29,38 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+<<<<<<< HEAD
 		
+=======
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+>>>>>>> Dev
 		setContentView(R.layout.activity_login);
-		ActionBar actionBar = getActionBar();
-		actionBar.hide();
+		
 		
 		// Create a instance of SQLite Database
 
 		CreateDB();
 	    
 	    // Get The Reference Of Buttons and Edit Text
+	    
 	    txtUserName = (EditText)findViewById(R.id.txt_usernamelogin);
+	    //Thiet lap font de su dung tu assets
+        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+        //Thiet lap font cho Username
+        txtUserName.setTypeface(font);
+        
 	    txtPassword = (EditText)findViewById(R.id.txt_passwordlogin);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    txtPassword.setTypeface(font);
+	    
 	    btnLogin=(Button)findViewById(R.id.btn_login);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
+	    btnLogin.setTypeface(font);
+	    
 	    btnRegister=(Button)findViewById(R.id.btn_register);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHTITALIC.TTF");
+	    btnRegister.setTypeface(font);
 	    
 	    // Set OnClick Listener on SignUp button 
 	    btnLogin.setOnClickListener(new MyEvent());
@@ -79,7 +104,11 @@ public class LoginActivity extends Activity {
 		// Get validation
 		if(username.equals("")||password.equals(""))
 		{
+<<<<<<< HEAD
 				Toast.makeText(getApplicationContext(), "Please insert username and password", Toast.LENGTH_LONG).show();
+=======
+				Toast.makeText(getApplicationContext(), "Please enter your information.", Toast.LENGTH_LONG).show();
+>>>>>>> Dev
 				return;
 		}
 		else{ 
@@ -99,7 +128,11 @@ public class LoginActivity extends Activity {
 				startActivity(intent);
 			}
 			else{
+<<<<<<< HEAD
 				Toast.makeText(LoginActivity.this, "username or password is not correct", Toast.LENGTH_LONG).show();
+=======
+				Toast.makeText(LoginActivity.this, "Wrong username or password, please try again.", Toast.LENGTH_LONG).show();
+>>>>>>> Dev
 			}
 		}
 	}
@@ -110,7 +143,11 @@ public class LoginActivity extends Activity {
 	public void DeleteDB(){
 		String msg = "";
 		if (deleteDatabase("DARFTMONEYPOWER.db")==true){
+<<<<<<< HEAD
 			msg = "Delete database successful!";
+=======
+			msg = "Delete your database successful!";
+>>>>>>> Dev
 		}
 		else{
 			msg = "Failed!";
