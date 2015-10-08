@@ -22,39 +22,43 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int bg=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int intro=0x7f020002;
-        public static final int intro1=0x7f020003;
-        public static final int submit_wallet=0x7f020004;
-        public static final int wl_submit=0x7f020005;
+        public static final int bg_login=0x7f020000;
+        public static final int bgintro=0x7f020001;
+        public static final int btn_login=0x7f020002;
+        public static final int btn_trans=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int logo=0x7f020005;
+        public static final int logo1=0x7f020006;
+        public static final int submit_wallet=0x7f020007;
+        public static final int wl_submit=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f080018;
-        public static final int btn_backtologin=0x7f080012;
-        public static final int btn_createaccount=0x7f080011;
-        public static final int btn_createwallet=0x7f080014;
+        public static final int action_settings=0x7f080019;
+        public static final int btn_backtologin=0x7f080013;
+        public static final int btn_createaccount=0x7f080012;
+        public static final int btn_createwallet=0x7f080015;
         public static final int btn_createwallettowallet=0x7f080002;
         public static final int btn_expenditure=0x7f080006;
         public static final int btn_income=0x7f080007;
         public static final int btn_insertwallet=0x7f080003;
-        public static final int btn_login=0x7f08000c;
-        public static final int btn_register=0x7f08000d;
+        public static final int btn_login=0x7f08000d;
+        public static final int btn_register=0x7f08000e;
         public static final int btn_statistic=0x7f080009;
         public static final int btn_wallet=0x7f080008;
-        public static final int btn_wallettohome=0x7f080013;
+        public static final int btn_wallettohome=0x7f080014;
         public static final int gridLayout1=0x7f080005;
-        public static final int listView1=0x7f080015;
-        public static final int reset_database=0x7f080017;
+        public static final int imageView1=0x7f08000a;
+        public static final int listView1=0x7f080016;
+        public static final int reset_database=0x7f080018;
         public static final int tv_row1=0x7f080004;
-        public static final int tv_row2=0x7f080016;
-        public static final int txt_conformpass=0x7f080010;
+        public static final int tv_row2=0x7f080017;
+        public static final int txt_conformpass=0x7f080011;
         public static final int txt_moneyinwallet=0x7f080001;
         public static final int txt_namewallet=0x7f080000;
-        public static final int txt_password=0x7f08000f;
-        public static final int txt_passwordlogin=0x7f08000b;
-        public static final int txt_username=0x7f08000e;
-        public static final int txt_usernamelogin=0x7f08000a;
+        public static final int txt_password=0x7f080010;
+        public static final int txt_passwordlogin=0x7f08000c;
+        public static final int txt_username=0x7f08000f;
+        public static final int txt_usernamelogin=0x7f08000b;
     }
     public static final class layout {
         public static final int activity_create_wallet=0x7f030000;
@@ -64,7 +68,6 @@ public final class R {
         public static final int activity_register=0x7f030004;
         public static final int activity_wallet=0x7f030005;
         public static final int layout_for_show_list=0x7f030006;
-        public static final int layout_intro=0x7f030007;
     }
     public static final class menu {
         public static final int home_menu=0x7f070000;
