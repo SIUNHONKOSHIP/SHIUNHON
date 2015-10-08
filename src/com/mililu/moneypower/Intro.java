@@ -7,15 +7,20 @@ import android.os.Bundle;
 import android.app.ActionBar;
 
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class Intro extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_intro);
-		ActionBar actionBar = getActionBar();
-		actionBar.hide();
+//		ActionBar actionBar = getActionBar();
+//		actionBar.hide();
+		
 		    
 	    /****** Create Thread that will sleep for 3 seconds *************/        
 		Thread background = new Thread() {
