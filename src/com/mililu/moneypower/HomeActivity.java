@@ -2,20 +2,25 @@ package com.mililu.moneypower;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.GridView;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends Activity{
 
-	Button btnIncome, btnExpenditure, btnWallet, btnStatistic;
-	TextView txthello;
+	Button btnWallet, btnIncome, btnExpenditure, btnStatistic;
+	
 	DataBaseAdapter dbAdapter;
 	int id_curent_user;
 	@Override
@@ -30,11 +35,23 @@ public class HomeActivity extends Activity {
 	    dbAdapter = dbAdapter.open();
 	    
 	    // Get The Reference Of Buttons and Edit Text
-	    btnIncome=(Button)findViewById(R.id.btn_income);
-	    btnExpenditure=(Button)findViewById(R.id.btn_expenditure);
 	    btnWallet=(Button)findViewById(R.id.btn_wallet);
+	    Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
+	    btnWallet.setTypeface(font);
+        
+	    btnIncome=(Button)findViewById(R.id.btn_income);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    btnIncome.setTypeface(font);
+	    
+	    btnExpenditure=(Button)findViewById(R.id.btn_expenditure);	 
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    btnExpenditure.setTypeface(font);
+	    
 	    btnStatistic=(Button)findViewById(R.id.btn_statistic);
-	    txthello = (TextView)findViewById(R.id.tv_row1);
+	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLDITALIC.TTF");
+	    btnStatistic.setTypeface(font);
+	    
+//	    txthello = (TextView)findViewById(R.id.tv_row1);
 	    
 	    // Set OnClick Listener on SignUp button 
 	    btnIncome.setOnClickListener(new MyEvent());
@@ -46,23 +63,24 @@ public class HomeActivity extends Activity {
 	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
 	    
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-		txthello.setText("Hello " + id_curent_user);
+//		txthello.setText("Hello " + id_curent_user);
 	}
 
 	private class MyEvent implements OnClickListener{
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			
 			if(v.getId()==R.id.btn_income)
 			{
 				//Intent intent = new Intent (HomeActivity.this, IncomeActivity.class);
 				//startActivity(intent);
-				Toast.makeText(HomeActivity.this, "ChÆ°a cÃ³ code ðŸ˜�", Toast.LENGTH_LONG).show();
+				Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
 			}
 			else if(v.getId()==R.id.btn_expenditure) {
 				//Intent intent = new Intent (HomeActivity.this, ExpenditureActivity.class);
 				//startActivity(intent);
-				Toast.makeText(HomeActivity.this, "ChÆ°a cÃ³ code ðŸ˜†", Toast.LENGTH_LONG).show();
+				Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
 			}
 			else if(v.getId()==R.id.btn_wallet) {
 				Bundle bundle=new Bundle();
@@ -77,7 +95,7 @@ public class HomeActivity extends Activity {
 			else if(v.getId()==R.id.btn_statistic) {
 				//Intent intent = new Intent (HomeActivity.this, StatisticActivity.class);
 				//startActivity(intent);
-				Toast.makeText(HomeActivity.this, "ChÆ°a cÃ³ code ðŸ˜„", Toast.LENGTH_LONG).show();
+				Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
 			}
 		}
 	}

@@ -55,7 +55,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="30dp"
             android:columnCount="2"
-            android:useDefaultMargins="true" >
+            android:useDefaultMargins="true">
 
             <Button
                 android:id="@+id/btn_backtologin"

@@ -43,7 +43,8 @@
             android:password="true"
             android:textColor="#33CCFF"
             android:textColorHint="#CCFFFFFF"
-            android:textColorLink="#CCFFFFFF" />
+            android:textColorLink="#CCFFFFFF"
+             />
 
         <LinearLayout
             android:layout_width="match_parent"

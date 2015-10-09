@@ -26,19 +26,27 @@
         </activity>
         
 
-<!--         <activity android:name=".Intro"></activity> -->
+<!--         <activity -->
+<!--             android:screenOrientation="portrait" -->
+<!--             android:name=".Intro"></activity> -->
+        
 		<activity 
 		    android:screenOrientation="portrait"
 		    android:name=".LoginActivity"></activity>
+		
         <activity 
             android:screenOrientation="portrait"
             android:name=".RegisterActivity"></activity>
+        
         <activity 
             android:screenOrientation="portrait"
             android:name=".HomeActivity"></activity>
+
         <activity 
             android:screenOrientation="portrait"
             android:name=".WalletActivity"></activity>
+        
+        
         <activity android:name=".CreateWalletActivity"></activity>
         <activity android:name=".ExpenditureActivity"></activity>
         <activity android:name=".IncomeActivity"></activity>
