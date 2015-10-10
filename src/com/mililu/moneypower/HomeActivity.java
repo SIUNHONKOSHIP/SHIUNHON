@@ -1,9 +1,12 @@
 package com.mililu.moneypower;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -16,9 +19,18 @@ import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 public class HomeActivity extends Activity{
 
+	ListView mDrawerList;
+	RelativeLayout mDrawerPane;
+	//private ActionBarDrawerToggle mDrawerToggle;
+	private DrawerLayout mDrawerLayout;
+	 
+	ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+	
 	Button btnWallet, btnIncome, btnExpenditure, btnStatistic;
 	
 	DataBaseAdapter dbAdapter;
@@ -63,7 +75,29 @@ public class HomeActivity extends Activity{
 	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
 	    
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-//		txthello.setText("Hello " + id_curent_user);
+	    
+	    mNavItems.add(new NavItem("Wallet", "You have 0 VND", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Income", "", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Expenture", "", R.drawable.ic_launcher));
+	    mNavItems.add(new NavItem("About us", "Information about this application", R.drawable.icon_info));
+	    mNavItems.add(new NavItem("Logout", "", R.drawable.icon_info));
+	 
+	    // DrawerLayout
+	    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+	 
+	    // Populate the Navigtion Drawer with options
+	    mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
+	    mDrawerList = (ListView) findViewById(R.id.navList);
+	    DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
+	    mDrawerList.setAdapter(adapter);
+	 
+	    // Drawer Item click listeners
+	    mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	        @Override
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	            selectItemFromDrawer(position);
+	        }
+	    });
 	}
 
 	private class MyEvent implements OnClickListener{
@@ -98,6 +132,46 @@ public class HomeActivity extends Activity{
 				Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
 			}
 		}
+	}
+	
+	/*
+	* Called when a particular item from the navigation drawer
+	* is selected.
+	* */
+	private void selectItemFromDrawer(int position) {
+	    //Fragment fragment = new PreferencesFragment();
+	 
+	    //FragmentManager fragmentManager = getFragmentManager();
+	    //fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
+	 
+		if (position == 0){
+			Bundle bundle=new Bundle();
+			//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
+			bundle.putInt("ID_ACCOUNT", id_curent_user);
+			// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
+			Intent intent = new Intent (HomeActivity.this, WalletActivity.class);
+			//Ä�Æ°a Bundle vÃ o Intent
+			intent.putExtra("DATA_ACCOUNT", bundle);
+			startActivity(intent);
+		}
+		else if (position == 1){
+			Toast.makeText(HomeActivity.this, "You have just select Income", Toast.LENGTH_LONG).show();
+		}
+		else if (position == 2){
+			Toast.makeText(HomeActivity.this, "You have just select Expenture", Toast.LENGTH_LONG).show();
+		}
+		else if (position == 3){
+			Toast.makeText(HomeActivity.this, "You have just select Infor", Toast.LENGTH_LONG).show();
+		}
+		else if (position == 4){
+			HomeActivity.this.finish();
+		}
+		
+	    mDrawerList.setItemChecked(position, true);
+	    setTitle(mNavItems.get(position).mTitle);
+	 
+	    // Close the drawer
+	    mDrawerLayout.closeDrawer(mDrawerPane);
 	}
 
 	@Override

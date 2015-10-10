@@ -1,6 +1,5 @@
 package com.mililu.moneypower;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -109,6 +108,7 @@ public class LoginActivity extends Activity {
 				Bundle bundle=new Bundle();
 				// set data into Bundle
 				bundle.putInt("ID_ACCOUNT", id_account);
+				bundle.putString("USERNAME_ACCOUNT", username);
 				// create Intend 
 				Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
 				//Set bundle into intent

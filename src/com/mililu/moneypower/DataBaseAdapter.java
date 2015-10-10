@@ -106,6 +106,7 @@ public class DataBaseAdapter {
 		cursor.close();
 		return id;				
 	}
+	
 	/**
 	 * Check username is exit in table ACCOUNT or not 
 	 * @param username
@@ -129,7 +130,8 @@ public class DataBaseAdapter {
 		updatedValues.put("PASSWORD",password);
 
         String where="USERNAME = ?";
-	    db.update("LOGIN",updatedValues, where, new String[]{userName});			   
+	    db.update("LOGIN",updatedValues, where, new String[]{userName});
+	    db.close();
 	}	
 	/**
 	 * Insert wallet into table WALLET

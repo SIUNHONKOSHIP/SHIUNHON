@@ -1,6 +1,5 @@
 package com.mililu.moneypower;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -23,15 +22,12 @@ public class RegisterActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_register);
-//		ActionBar actionBar = getActionBar();
-//		actionBar.hide();
 		
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
 	    
 	    // Get The Reference Of Views
-	    
 	    txtUserName = (EditText)findViewById(R.id.txt_username);
 	    //Thiet lap font de su dung tu assets
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
@@ -108,7 +104,6 @@ public class RegisterActivity extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
- 
 		dbAdapter.close();
 	}
 
