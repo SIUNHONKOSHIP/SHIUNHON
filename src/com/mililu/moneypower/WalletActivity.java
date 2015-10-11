@@ -78,6 +78,7 @@ public class WalletActivity extends Activity{
 	protected void onStart(){
 		super.onStart();
 		ShowWallet();
+		getTotalAmount(id_curent_user);
 	}
 	
 	/** HÃ m xÃ©t sá»± kiá»‡n nháº¥n nÃºt 
@@ -106,6 +107,10 @@ public class WalletActivity extends Activity{
 				//ShowWallet();
 			}
 		}
+	}
+	private void getTotalAmount(int id_user){
+		int mBalance = dbAdapter.getTotalAmount(id_user);
+		txtAmount.setText(String.valueOf(mBalance));
 	}
 	
 	private void ShowWallet(){

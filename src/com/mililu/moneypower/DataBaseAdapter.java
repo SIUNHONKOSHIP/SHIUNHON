@@ -16,7 +16,7 @@ public class DataBaseAdapter {
 	// TODO: Create public field for each column in your table.
 	// SQL Statement to create a new database.
 	static final String DATABASE_CREATE_ACCOUNT = "create table tbl_ACCOUNT (ID_ACCOUNT integer primary key autoincrement, USERNAME  text,PASSWORD text); ";
-	static final String DATABASE_CREATE_WALLET = "create table tbl_WALLET (ID_WALLET integer primary key autoincrement, NAME_WALLET  text,ID_ACCOUNT integer, MONEY numeric); ";
+	static final String DATABASE_CREATE_WALLET = "create table tbl_WALLET (ID_WALLET integer primary key autoincrement, NAME_WALLET  text,ID_ACCOUNT integer, MONEY numeric, DESCRIPTION text); ";
 	static final String DATABASE_CREATE_INCOME = "create table tbl_INCOME (ID_INC integer primary key autoincrement, NAME_INCOME  text); ";
 	static final String DATABASE_CREATE_EXPENDITURE = "create table tbl_EXPENDITURE (ID_EXP integer primary key autoincrement, NAME_EXP text); ";
 	static final String DATABASE_CREATE_EXP_DETAIL = "create table tbl_EXP_DETAIL (ID_EXP_DET integer primary key autoincrement, ID_EXP  integer, NAME_EXP_DET text); ";
@@ -142,12 +142,13 @@ public class DataBaseAdapter {
 	 * @param money
 	 * @param id_user
 	 */
-	public void insertWallet(String namewallet, int money, int id_user){
+	public void insertWallet(String namewallet, int money, int id_user, String description){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
 		newValues.put("NAME_WALLET", namewallet);
 		newValues.put("ID_ACCOUNT",id_user);
 		newValues.put("MONEY", money);
+		newValues.put("DESCRIPTION", description);
 
 		// Insert the row into your table
 		db.insert("tbl_WALLET", null, newValues);
@@ -185,6 +186,24 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 		int amount = cursor.getInt(cursor.getColumnIndex("MONEY"));
+		cursor.close();
+		return amount;
+	}
+	
+	public int getTotalAmount(int id_user){
+		Cursor cursor=db.query("tbl_WALLET", null, " ID_ACCOUNT=?", new String[]{String.valueOf(id_user)}, null, null, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("MONEY"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
 		cursor.close();
 		return amount;
 	}

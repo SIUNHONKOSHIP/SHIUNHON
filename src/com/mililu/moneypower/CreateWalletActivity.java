@@ -17,9 +17,10 @@ import android.widget.Toast;
 public class CreateWalletActivity extends Activity {
 	DataBaseAdapter dbAdapter;
 	Button btnBack, btnInsertWallet;
-	EditText txtNameWallet, txtMoney;
+	EditText txtNameWallet, txtMoney, txtDescription;
 	int id_curent_user;
-	TextView txtTittle;
+	TextView tvTittle;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +37,17 @@ public class CreateWalletActivity extends Activity {
 	    Typeface light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    Typeface bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
 	    
-	    txtTittle = (TextView) findViewById(R.id.textView1);
-	    txtTittle.setTypeface(light);
+	    tvTittle = (TextView) findViewById(R.id.textView1);
+	    tvTittle.setTypeface(light);
 	    
 	    txtNameWallet = (EditText)findViewById(R.id.txt_namewallet);
 	    txtNameWallet.setTypeface(light);
 	    
 	    txtMoney = (EditText)findViewById(R.id.txt_moneyinwallet);
 	    txtMoney.setTypeface(light);
+	    
+	    txtDescription = (EditText)findViewById(R.id.txt_descriptionwallet);
+	    txtDescription.setTypeface(light);
 	    
 	    btnBack=(Button)findViewById(R.id.btn_createwallettowallet);
 	    
@@ -77,6 +81,7 @@ public class CreateWalletActivity extends Activity {
 		int id =  id_curent_user;
 		String namewallet = txtNameWallet.getText().toString();
 		String money = txtMoney.getText().toString();
+		String descrip = txtDescription.getText().toString();
 
 		// check if any of the fields are vaccant
 		if(namewallet.equals("")||money.isEmpty()||Integer.valueOf(money)<0)
@@ -86,7 +91,7 @@ public class CreateWalletActivity extends Activity {
 		}
 		else{
 			// Save the Data in Database
-			dbAdapter.insertWallet(namewallet, Integer.valueOf(money), id);
+			dbAdapter.insertWallet(namewallet, Integer.valueOf(money), id, descrip);
 			Toast.makeText(getApplicationContext(), "Wallet has been created 😏", Toast.LENGTH_LONG).show();
 			CreateWalletActivity.this.finish();
 		}
