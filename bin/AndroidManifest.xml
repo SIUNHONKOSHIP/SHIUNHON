@@ -44,13 +44,23 @@
 
         <activity 
             android:screenOrientation="portrait"
-            android:name=".WalletActivity"></activity>
+            android:name=".WalletActivity"></activity>        
         
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".CreateWalletActivity"></activity>
         
-        <activity android:name=".CreateWalletActivity"></activity>
-        <activity android:name=".ExpenditureActivity"></activity>
-        <activity android:name=".IncomeActivity"></activity>
-        <activity android:name=".StatisticActivity"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ExpenditureActivity"></activity>
+        
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".IncomeActivity"></activity>
+        
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".StatisticActivity"></activity>
     </application>
 
 </manifest>

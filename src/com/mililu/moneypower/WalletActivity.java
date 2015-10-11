@@ -10,18 +10,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 public class WalletActivity extends Activity{
-	// Khai bÃ¡o biáº¿n
+	
+	// Khai bao bien
 	SQLiteDatabase db = null;
 	MyWalletArrayAdapter arrayadapter = null;
 	Button btnBack, btnCreateWallet;
@@ -29,11 +34,27 @@ public class WalletActivity extends Activity{
 	Wallet wl=null;
 	List<Wallet>list_wallet=new ArrayList<Wallet>();
 	int id_curent_user;
+	TextView txtTittle, txtBalance, txtAmount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_wallet);
+		
+		// Set font
+		txtTittle=(TextView)findViewById(R.id.textView1);
+        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+        txtTittle.setTypeface(font);
+        
+        txtBalance=(TextView)findViewById(R.id.textView2);
+        font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+        txtBalance.setTypeface(font);
+        
+        txtAmount=(TextView)findViewById(R.id.textView3);
+        font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
+        txtAmount.setTypeface(font);
 		
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
@@ -92,7 +113,7 @@ public class WalletActivity extends Activity{
 		if(db!=null){
 			Cursor cursor=db.query("tbl_WALLET", null, "ID_ACCOUNT=?", new String[]{String.valueOf(id_curent_user)}, null, null, null);
 			if (cursor.getCount()<1){
-				Toast.makeText(WalletActivity.this, "You Don't have any wallet !!", Toast.LENGTH_LONG).show();
+				Toast.makeText(WalletActivity.this, "You don't have any wallet !!", Toast.LENGTH_LONG).show();
 			}
 			else{
 				list_wallet.clear();
