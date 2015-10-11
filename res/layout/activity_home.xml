@@ -11,38 +11,32 @@
         android:layout_height="match_parent" >
         
         <GridLayout
-        android:id="@+id/header_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_bg_foot"
-        android:columnCount="3"
-        android:orientation="horizontal"
-        android:useDefaultMargins="true" >
+            android:id="@+id/header_home"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#FFFFFF"
+            android:columnCount="1" >
 
-	        <Button
-	            android:id="@+id/btn_menu"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="left|center_vertical"
-	            android:layout_marginLeft="10dp"
-	            android:background="@drawable/home_foot_imgmenu"
-	            android:minHeight="0dp"
-	            android:minWidth="0dp" />
-	
-	        <Button
-	            android:id="@+id/btn_logout"
-	            android:layout_width="27dp"
-	            android:layout_height="24dp"
-	            android:layout_gravity="right|center_vertical"
-	            android:layout_marginRight="5dp"
-	            android:background="@drawable/home_foot_imglogout" />
-	
-	        <Space
-	            android:layout_column="2"
-	            android:layout_gravity="fill_vertical"
-	            android:layout_row="1" />
-	    </GridLayout>
+            <Button
+                android:id="@+id/btn_menu"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/home_icon_menu" />
 
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="M O N E Y  P O W E R"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+            
+        </GridLayout>
+
+       
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
@@ -56,7 +50,7 @@
 	            android:background="@drawable/home_bg_wallet"
 	            android:gravity="center"
 	            android:orientation="vertical" >
-	
+
 	            <Button
 	                android:id="@+id/btn_wallet"
 	                android:layout_width="wrap_content"

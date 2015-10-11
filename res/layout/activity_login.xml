@@ -30,7 +30,8 @@
             android:hint="Username"
             android:textColor="#33CCFF"
             android:textColorHint="#CCFFFFFF"
-            android:textColorLink="#CCFFFFFF" />
+            android:textColorLink="#CCFFFFFF"
+             />
 
 
         <EditText
