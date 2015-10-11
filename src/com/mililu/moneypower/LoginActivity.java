@@ -141,6 +141,7 @@ public class LoginActivity extends Activity {
 	public void ResetDatabase() {
 		DeleteDB();
 		CreateDB();
+		Toast.makeText(LoginActivity.this, "Database has been reset 😎", Toast.LENGTH_LONG).show();
 	}
 	@Override
 	protected void onDestroy() {

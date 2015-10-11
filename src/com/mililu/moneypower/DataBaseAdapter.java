@@ -1,9 +1,13 @@
 package com.mililu.moneypower;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBaseAdapter {
 	static final String DATABASE_NAME = "DARFTMONEYPOWER.db";
@@ -131,7 +135,6 @@ public class DataBaseAdapter {
 
         String where="USERNAME = ?";
 	    db.update("LOGIN",updatedValues, where, new String[]{userName});
-	    db.close();
 	}	
 	/**
 	 * Insert wallet into table WALLET
@@ -148,7 +151,6 @@ public class DataBaseAdapter {
 
 		// Insert the row into your table
 		db.insert("tbl_WALLET", null, newValues);
-		db.close(); // Close database
 	}
 	
 	/**
@@ -172,7 +174,74 @@ public class DataBaseAdapter {
 	 */
 	public void deleteWallet(int id_wallet){
 		db.delete("tbl_WALLET", "ID_WALLET =?", new String[] {String.valueOf(id_wallet)});
-		db.close();
+	}
+	
+	public int getAmountOfWallet(String id_wallet){
+		Cursor cursor=db.query("tbl_WALLET", null, " ID_WALLET=?", new String[]{id_wallet}, null, null, null);
+        if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return -1;
+        }
+	    cursor.moveToFirst();
+		int amount = cursor.getInt(cursor.getColumnIndex("MONEY"));
+		cursor.close();
+		return amount;
+	}
+	
+	/**
+     * Getting all labels
+     * returns list of labels
+     * */
+    public List<String> getAllLabels(){
+        List<String> labels = new ArrayList<String>();
+         
+        // Select All Query
+        String selectQuery = "SELECT  * FROM tbl_WALLET";
+      
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+      
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                labels.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+         
+        // closing connection
+        cursor.close();
+        db.close();
+        // returning lables
+        return labels;
+    }
+    
+    public Cursor getWalletCursor() {
+        // Select All Query
+        String selectQuery = "SELECT ID_WALLET AS _id, * FROM tbl_WALLET";
+        db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+        
+    }
+    
+    public Cursor getCategoryIncomeCursor() {
+        // Select All Query
+        String selectQuery = "SELECT ID_INC AS _id, * FROM tbl_INCOME";
+        db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+    
+	public void insertDiaryIncome(int amount, int id_wallet, int id_income, String date, String hour, String notice){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("ID_INC", id_income);
+		newValues.put("ID_WALLET",id_wallet);
+		newValues.put("MONEY", amount);
+		newValues.put("DATE", date);
+		newValues.put("HOUR", hour);
+		newValues.put("NOTICE", notice);
+		// Insert the row into your table
+		db.insert("tbl_DIARY_INC", null, newValues);
 	}
 }
 
