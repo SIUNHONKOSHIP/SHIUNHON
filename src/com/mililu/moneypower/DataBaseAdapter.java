@@ -15,7 +15,7 @@ public class DataBaseAdapter {
 	public static final int NAME_COLUMN = 1;
 	// TODO: Create public field for each column in your table.
 	// SQL Statement to create a new database.
-	static final String DATABASE_CREATE_ACCOUNT = "create table tbl_ACCOUNT (ID_ACCOUNT integer primary key autoincrement, USERNAME  text,PASSWORD text); ";
+	static final String DATABASE_CREATE_ACCOUNT = "create table tbl_ACCOUNT (ID_ACCOUNT integer primary key autoincrement, USERNAME  text,PASSWORD text, FULLNAME text); ";
 	static final String DATABASE_CREATE_WALLET = "create table tbl_WALLET (ID_WALLET integer primary key autoincrement, NAME_WALLET  text,ID_ACCOUNT integer, MONEY numeric, DESCRIPTION text); ";
 	static final String DATABASE_CREATE_INCOME = "create table tbl_INCOME (ID_INC integer primary key autoincrement, NAME_INCOME  text); ";
 	static final String DATABASE_CREATE_EXPENDITURE = "create table tbl_EXPENDITURE (ID_EXP integer primary key autoincrement, NAME_EXP text); ";
@@ -55,12 +55,13 @@ public class DataBaseAdapter {
 	 * @param username
 	 * @param password
 	 */
-	public void InsertAccount(String username,String password)
+	public void InsertAccount(String username,String password, String fullname)
 	{
        ContentValues newValues = new ContentValues();
 		// Assign values for each row.
 		newValues.put("USERNAME", username);
 		newValues.put("PASSWORD",password);
+		newValues.put("FULLNAME", fullname);
 
 		// Insert the row into your table
 		db.insert("tbl_ACCOUNT", null, newValues);
@@ -110,6 +111,16 @@ public class DataBaseAdapter {
 		cursor.close();
 		return id;				
 	}
+	
+    public Cursor getAccountInfor(String username) {
+        // Select All Query
+    	// String selectQuery = "SELECT ID_ACCOUNT AS _id, * FROM tbl_ACCOUNT WHERE USERNAME = " + username;
+    	// db = dbHelper.getReadableDatabase();
+        //return db.rawQuery(selectQuery, null);
+        
+        Cursor cursor=db.query("tbl_ACCOUNT", null, " USERNAME=?", new String[]{username}, null, null, null);
+        return cursor;
+    }
 	
 	/**
 	 * Check username is exit in table ACCOUNT or not 
@@ -207,40 +218,12 @@ public class DataBaseAdapter {
 		cursor.close();
 		return amount;
 	}
-	
-	/**
-     * Getting all labels
-     * returns list of labels
-     * */
-    public List<String> getAllLabels(){
-        List<String> labels = new ArrayList<String>();
-         
-        // Select All Query
-        String selectQuery = "SELECT  * FROM tbl_WALLET";
-      
-        db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-      
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                labels.add(cursor.getString(1));
-            } while (cursor.moveToNext());
-        }
-         
-        // closing connection
-        cursor.close();
-        db.close();
-        // returning lables
-        return labels;
-    }
-    
-    public Cursor getWalletCursor() {
-        // Select All Query
-        String selectQuery = "SELECT ID_WALLET AS _id, * FROM tbl_WALLET";
+	   
+    public Cursor getListWalletOfUser(int id_user) {
+    	// Select All Query
+        String selectQuery = "SELECT ID_WALLET AS _id, * FROM tbl_WALLET WHERE ID_ACCOUNT=" + id_user;
         db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
-        
     }
     
     public Cursor getCategoryIncomeCursor() {

@@ -1,7 +1,11 @@
 package com.mililu.moneypower;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,21 +25,16 @@ public class LoginActivity extends Activity {
 	Button btnLogin, btnRegister;
 	EditText txtUserName, txtPassword;
 	DataBaseAdapter dbAdapter;
+	Cursor mAccountCorsor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_login);
 		
-		
-		// Create a instance of SQLite Database
-
-		CreateDB();
-	    
 	    // Get The Reference Of Buttons and Edit Text
-	    
 	    txtUserName = (EditText)findViewById(R.id.txt_usernamelogin);
 	    //Thiet lap font de su dung tu assets
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
@@ -57,7 +56,7 @@ public class LoginActivity extends Activity {
 	    // Set OnClick Listener on SignUp button 
 	    btnLogin.setOnClickListener(new MyEvent());
 	    btnRegister.setOnClickListener(new MyEvent());
-	    
+	    //
 	}
 	
 	/** Ham tao su kien khi nhan button
@@ -76,6 +75,13 @@ public class LoginActivity extends Activity {
 				Login();
 			}
 		}
+	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		// Create a instance of SQLite Database
+		CreateDB();
 	}
 	
 	/**
@@ -100,25 +106,39 @@ public class LoginActivity extends Activity {
 				return;
 		}
 		else{ 
-			String passindatabase = dbAdapter.getAccountPassword(username);  
-			if (password.equals(passindatabase)){
-				// Get ID of account
-				int id_account = dbAdapter.getAccountId(username);
-				//Identify Bundle
-				Bundle bundle=new Bundle();
-				// set data into Bundle
-				bundle.putInt("ID_ACCOUNT", id_account);
-				bundle.putString("USERNAME_ACCOUNT", username);
-				// create Intend 
-				Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
-				//Set bundle into intent
-				intent.putExtra("DATA_ACCOUNT", bundle);
-				// Start Activity
-				startActivity(intent);
+			//String passindatabase = dbAdapter.getAccountPassword(username);
+			mAccountCorsor = dbAdapter.getAccountInfor(username);
+			if(mAccountCorsor.getCount()<1) // UserName Not Exist
+	        {
+	        	mAccountCorsor.close();
+	        	Toast.makeText(getApplicationContext(), "This account isn't exit", Toast.LENGTH_LONG).show();
+	        }
+			else {
+				mAccountCorsor.moveToFirst();
+				String passindatabase = mAccountCorsor.getString(mAccountCorsor.getColumnIndex("PASSWORD"));
+				if (password.equals(passindatabase)){
+					// Get information of account
+					int id_account = mAccountCorsor.getInt(mAccountCorsor.getColumnIndex("ID_ACCOUNT")); //dbAdapter.getAccountId(username);
+					String fullname = mAccountCorsor.getString(mAccountCorsor.getColumnIndex("FULLNAME"));
+					String user = mAccountCorsor.getString(mAccountCorsor.getColumnIndex("USERNAME"));
+					//Identify Bundle
+					Bundle bundle=new Bundle();
+					// set data into Bundle
+					bundle.putInt("ID_ACCOUNT", id_account);
+					bundle.putString("USERNAME_ACCOUNT", user);
+					bundle.putString("FULLNAME_ACCOUNT", fullname);
+					// create Intend 
+					Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
+					//Set bundle into intent
+					intent.putExtra("DATA_ACCOUNT", bundle);
+					// Start Activity
+					startActivity(intent);
+				}
+				else{
+					Toast.makeText(LoginActivity.this, "Password is not correct", Toast.LENGTH_LONG).show();
+				}
 			}
-			else{
-				Toast.makeText(LoginActivity.this, "Username or Password is not correct", Toast.LENGTH_LONG).show();
-			}
+			mAccountCorsor.close();
 		}
 	}
 	
@@ -139,8 +159,25 @@ public class LoginActivity extends Activity {
 	 * Delete and create Database again
 	 */
 	public void ResetDatabase() {
-		DeleteDB();
-		CreateDB();
+		AlertDialog.Builder b = new Builder(LoginActivity.this);
+		b.setTitle("Reset Database");
+		b.setMessage("Do you wanna Reset Database?");
+		b.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				DeleteDB();
+				CreateDB();
+			}
+		});
+		b.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				dialog.cancel();
+			}
+		});
+		b.show();
 		Toast.makeText(LoginActivity.this, "Database has been reset 😎", Toast.LENGTH_LONG).show();
 	}
 	@Override

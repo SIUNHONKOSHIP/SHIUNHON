@@ -11,6 +11,7 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -32,7 +33,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     DataBaseAdapter dbAdapter;
     Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
     EditText txtAmount, txtNotice, txtDate, txtTime;
-    int id_wallet, id_income;
+    int id_wallet, id_income, id_curent_user;
     String name_wallet, name_income;
     int mYear, mMonth, mDay, mHour, mMinute;
     Dialog mDialog;
@@ -40,7 +41,12 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_income);
- 
+        
+        Intent intent = getIntent();
+	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
+	    
+	    id_curent_user = bundle.getInt("ID_ACCOUNT");
+        
         // Spinner element
         spinnerWallet = (Spinner) findViewById(R.id.spinner_wallet);
         spinnerCategoryIncome = (Spinner)findViewById(R.id.spinner_danhmuc);
@@ -91,11 +97,11 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
      * Function to load the spinner data from SQLite database
      * */    
     private void loadSpinnerDataWallet() {
-
+    	//Toast.makeText(getApplicationContext(), "ID: " + id_curent_user, Toast.LENGTH_LONG).show();
     	dbAdapter = new DataBaseAdapter(getApplicationContext());
 
         // Spinner Drop down cursor
-        walletsCursor = dbAdapter.getWalletCursor();
+        walletsCursor = dbAdapter.getListWalletOfUser(id_curent_user);
         // map the cursor column names to the TextView ids in the layout
         String[] from = { "NAME_WALLET" };
         int[] to = { android.R.id.text1 };

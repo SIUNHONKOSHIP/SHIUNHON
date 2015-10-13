@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 	Button btnBack, btnRegister;
-	EditText txtUserName, txtPassword, txtConfirmPass;
+	EditText txtUserName, txtPassword, txtConfirmPass, txtFullname;
 	DataBaseAdapter dbAdapter;
 	
 	@Override
@@ -26,30 +26,23 @@ public class RegisterActivity extends Activity {
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
-	    
-	    // Get The Reference Of Views
-	    txtUserName = (EditText)findViewById(R.id.txt_username);
 	    //Thiet lap font de su dung tu assets
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-        //Thiet lap font cho Username
-        txtUserName.setTypeface(font);
-        
+	    Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    Typeface font2 = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
+	    // Get The Reference Of Views
+	    txtFullname = (EditText)findViewById(R.id.txt_fullname);
+	    txtUserName = (EditText)findViewById(R.id.txt_username);
 	    txtPassword = (EditText)findViewById(R.id.txt_password);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-	    txtPassword.setTypeface(font);
-	    
 	    txtConfirmPass = (EditText)findViewById(R.id.txt_conformpass);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-	    txtConfirmPass.setTypeface(font);
-	    
 	    btnRegister=(Button)findViewById(R.id.btn_createaccount);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
-	    btnRegister.setTypeface(font);
-	    
 	    btnBack=(Button)findViewById(R.id.btn_backtologin);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-	    btnBack.setTypeface(font);
-	    
+	    //Thiet lap font cho Username
+	    txtFullname.setTypeface(font);
+	    txtUserName.setTypeface(font);
+	    txtPassword.setTypeface(font);
+	    txtConfirmPass.setTypeface(font);
+	    btnRegister.setTypeface(font2);
+	    btnBack.setTypeface(font2);
 	    // Set OnClick Listener on SignUp button 
 	    btnBack.setOnClickListener(new MyEvent());
 	    btnRegister.setOnClickListener(new MyEvent());
@@ -73,6 +66,7 @@ public class RegisterActivity extends Activity {
 		String username=txtUserName.getText().toString();
 		String password=txtPassword.getText().toString();
 		String confirmpass=txtConfirmPass.getText().toString();
+		String fullname=txtFullname.getText().toString();
 
 		// check if any of the fields are vaccant
 		if(username.equals("")||password.equals("")||confirmpass.equals(""))
@@ -93,7 +87,7 @@ public class RegisterActivity extends Activity {
 			}
 			else{
 				// Save the Data in Database
-			    dbAdapter.InsertAccount(username, password);
+			    dbAdapter.InsertAccount(username, password, fullname);
 			    Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
 			    RegisterActivity.this.finish();
 			}

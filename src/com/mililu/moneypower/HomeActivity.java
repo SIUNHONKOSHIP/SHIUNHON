@@ -39,6 +39,8 @@ public class HomeActivity extends Activity{
 	TextView lableFullname, lableUsername;
 	DataBaseAdapter dbAdapter;
 	int id_curent_user;
+	String username_current_user, fullname_current_user;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +56,8 @@ public class HomeActivity extends Activity{
 	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
 	    
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-	    
+	    fullname_current_user = bundle.getString("FULLNAME_ACCOUNT");
+	    username_current_user = bundle.getString("USERNAME_ACCOUNT");
 	    // Get The Reference Of Buttons and Edit Text
 	    btnWallet=(Button)findViewById(R.id.btn_wallet);
 	    Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
@@ -74,9 +77,8 @@ public class HomeActivity extends Activity{
 	    
 	    lableFullname = (TextView)findViewById(R.id.lable_fullname) ;
 	    lableUsername = (TextView)findViewById(R.id.lable_username);
-	    lableFullname.setText("Unknow Name");
-	    lableUsername.setText(String.valueOf(id_curent_user));
-	    
+	    lableFullname.setText(fullname_current_user);
+	    lableUsername.setText(username_current_user);
 	    
 	    // Set OnClick Listener on SignUp button 
 	    btnIncome.setOnClickListener(new MyEvent());
@@ -84,14 +86,13 @@ public class HomeActivity extends Activity{
 	    btnWallet.setOnClickListener(new MyEvent());
 	    btnStatistic.setOnClickListener(new MyEvent());
 	    
-	    
-	    
-	    mNavItems.add(new NavItem("Wallet", "You have 0 VND", R.drawable.ic_launcher));
+	    mNavItems.add(new NavItem("Wallet", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Income", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Expenture", "", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Category", "Income/Expenditure", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Report", "", R.drawable.ic_launcher));
 	    mNavItems.add(new NavItem("About us", "Information about this app", R.drawable.icon_info));
 	    mNavItems.add(new NavItem("Logout", "", R.drawable.icon_info));
-	    mNavItems.add(new NavItem("Reset Database", "⚠ delete and create Database again 💀", R.drawable.icon_info));
 	 
 	    // DrawerLayout
 	    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -109,28 +110,6 @@ public class HomeActivity extends Activity{
 	            selectItemFromDrawer(position);
 	        }
 	    });
-	}
-	
-	/**
-	 * Delete and create Database again
-	 */
-	public void ResetDatabase() {
-		/// Delete Database
-		String msg = "";
-		if (deleteDatabase("DARFTMONEYPOWER.db")==true){
-			msg = "Delete database successful!";
-		}
-		else{
-			msg = "Failed!";
-		}
-		Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_LONG).show();
-		
-		/// Create Database
-		dbAdapter =new DataBaseAdapter(this);
-	    dbAdapter = dbAdapter.open();
-	    
-	    /// Thong bao thanh cong
-		Toast.makeText(HomeActivity.this, "Database has been reset 😎", Toast.LENGTH_LONG).show();
 	}
 	
 	private class MyEvent implements OnClickListener{
@@ -172,17 +151,13 @@ public class HomeActivity extends Activity{
 		}
 	}
 	
-	/*
+	/**
 	* Called when a particular item from the navigation drawer
 	* is selected.
-	* */
+	**/
 	private void selectItemFromDrawer(int position) {
-	    //Fragment fragment = new PreferencesFragment();
 	 
-	    //FragmentManager fragmentManager = getFragmentManager();
-	    //fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
-	 
-		if (position == 0){
+		if (position == 0){ /// selected wallet
 			Bundle bundle=new Bundle();
 			//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 			bundle.putInt("ID_ACCOUNT", id_curent_user);
@@ -192,40 +167,31 @@ public class HomeActivity extends Activity{
 			intent.putExtra("DATA_ACCOUNT", bundle);
 			startActivity(intent);
 		}
-		else if (position == 1){
-			Toast.makeText(HomeActivity.this, "You have just select Income", Toast.LENGTH_LONG).show();
+		else if (position == 1){  /// selected income
+			Bundle bundle=new Bundle();
+			//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
+			bundle.putInt("ID_ACCOUNT", id_curent_user);
+			// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
+			Intent intent = new Intent (HomeActivity.this, IncomeActivity.class);
+			//Ä�Æ°a Bundle vÃ o Intent
+			intent.putExtra("DATA_ACCOUNT", bundle);
+			startActivity(intent);
 		}
-		else if (position == 2){
+		else if (position == 2){ ///selected expenditure
 			Toast.makeText(HomeActivity.this, "You have just select Expenture", Toast.LENGTH_LONG).show();
 		}
-		else if (position == 3){
-			Toast.makeText(HomeActivity.this, "You have just select Infor", Toast.LENGTH_LONG).show();
+		else if (position == 3){ ///selected category
+			Toast.makeText(HomeActivity.this, "You have just select Category", Toast.LENGTH_LONG).show();
 		}
-		else if (position == 4){
+		else if (position == 4){ ///selected report
+			Toast.makeText(HomeActivity.this, "You have just select Report", Toast.LENGTH_LONG).show();
+		}
+		else if (position == 5){ ///selected about us
+			Toast.makeText(HomeActivity.this, "You have just select About us", Toast.LENGTH_LONG).show();
+		}
+		else if (position == 6){ ///selected logout
 			HomeActivity.this.finish();
-		}
-		else if (position == 5){
-			AlertDialog.Builder b = new Builder(HomeActivity.this);
-			b.setTitle("Remove Wallet");
-			b.setMessage("Do you wanna Reset Database?");
-			b.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					ResetDatabase();
-					HomeActivity.this.finish();
-				}
-			});
-			b.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					dialog.cancel();
-				}
-			});
-			b.show();
-		}
-		
+		}		
 	    mDrawerList.setItemChecked(position, true);
 	    setTitle(mNavItems.get(position).mTitle);
 	 
