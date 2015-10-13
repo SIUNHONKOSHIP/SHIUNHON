@@ -129,9 +129,14 @@ public class HomeActivity extends Activity{
 				startActivity(intent);
 			}
 			else if(v.getId()==R.id.btn_expenditure) {
-				//Intent intent = new Intent (HomeActivity.this, ExpenditureActivity.class);
-				//startActivity(intent);
-				Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
+				Bundle bundle=new Bundle();
+				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
+				bundle.putInt("ID_ACCOUNT", id_curent_user);
+				// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
+				Intent intent = new Intent (HomeActivity.this, ExpenditureActivity.class);
+				//Ä�Æ°a Bundle vÃ o Intent
+				intent.putExtra("DATA_ACCOUNT", bundle);
+				startActivity(intent);
 			}
 			else if(v.getId()==R.id.btn_wallet) {
 				Bundle bundle=new Bundle();

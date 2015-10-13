@@ -233,6 +233,20 @@ public class DataBaseAdapter {
         return db.rawQuery(selectQuery, null);
     }
     
+    public Cursor getCategoryExpenCursor() {
+        // Select All Query
+        String selectQuery = "SELECT ID_EXP AS _id, * FROM tbl_EXPENDITURE";
+        db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+    
+    public Cursor getCategoryExpenDetail(int id_exp) {
+        // Select All Query
+        String selectQuery = "SELECT ID_EXP_DET AS _id, * FROM tbl_EXP_DETAIL WHERE ID_EXP =" + id_exp;
+        db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+    
 	public void insertDiaryIncome(int amount, int id_wallet, int id_income, String date, String hour, String notice){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
@@ -244,6 +258,18 @@ public class DataBaseAdapter {
 		newValues.put("NOTICE", notice);
 		// Insert the row into your table
 		db.insert("tbl_DIARY_INC", null, newValues);
+	}
+	public void insertDiaryExpen(int amount, int id_wallet, int id_exp_det, String date, String hour, String notice){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("ID_EXP_DET", id_exp_det);
+		newValues.put("ID_WALLET",id_wallet);
+		newValues.put("MONEY", amount);
+		newValues.put("DATE", date);
+		newValues.put("HOUR", hour);
+		newValues.put("NOTICE", notice);
+		// Insert the row into your table
+		db.insert("tbl_DIARY_EXP", null, newValues);
 	}
 }
 

@@ -18,14 +18,14 @@
             android:text="So tien" />
 
         <Spinner
-            android:id="@+id/spinner_danhmuc"
+            android:id="@+id/spn_income_danhmuc"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:layout_row="1" />
 
         <Button
-            android:id="@+id/btn_createcategoryincome"
+            android:id="@+id/btn_income_createcategory"
             android:layout_width="wrap_content"
             android:layout_column="2"
             android:layout_gravity="right|center_vertical"
@@ -47,7 +47,7 @@
             android:text="Wallet" />
 
         <Spinner
-            android:id="@+id/spinner_wallet"
+            android:id="@+id/spn_income_wallet"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_column="1"
@@ -134,14 +134,14 @@
     </GridLayout>
 
     <Button
-        android:id="@+id/btn_submit_income"
+        android:id="@+id/btn_income_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:text="Submit" />
 
     <Button
-        android:id="@+id/btn_incomebacktohome"
+        android:id="@+id/btn_income_backtohome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"

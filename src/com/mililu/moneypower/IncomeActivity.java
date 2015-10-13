@@ -48,19 +48,19 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
         
         // Spinner element
-        spinnerWallet = (Spinner) findViewById(R.id.spinner_wallet);
-        spinnerCategoryIncome = (Spinner)findViewById(R.id.spinner_danhmuc);
+        spinnerWallet = (Spinner) findViewById(R.id.spn_income_wallet);
+        spinnerCategoryIncome = (Spinner)findViewById(R.id.spn_income_danhmuc);
         // Spinner click listener
         spinnerWallet.setOnItemSelectedListener(this);
         spinnerCategoryIncome.setOnItemSelectedListener(this);
         loadSpinnerDataWallet();
         loadSpinnerDataCategoryIncome();
         
-        btnSubmit = (Button)findViewById(R.id.btn_submit_income);
+        btnSubmit = (Button)findViewById(R.id.btn_income_submit);
         btnSubmit.setOnClickListener(new MyEvent()); 
-        btnBack = (Button)findViewById(R.id.btn_incomebacktohome);
+        btnBack = (Button)findViewById(R.id.btn_income_backtohome);
         btnBack.setOnClickListener(new MyEvent());
-        btnCreateCategory = (Button)findViewById(R.id.btn_createcategoryincome);
+        btnCreateCategory = (Button)findViewById(R.id.btn_income_createcategory);
         btnCreateCategory.setOnClickListener(new MyEvent());
         btnDate = (Button)findViewById(R.id.btn_income_date);
         btnDate.setOnClickListener(new MyEvent());
@@ -137,11 +137,11 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if(v.getId()==R.id.btn_submit_income)
+			if(v.getId()==R.id.btn_income_submit)
 			{
 				DoInsertIncome();
 			}
-			else if(v.getId() == R.id.btn_incomebacktohome){
+			else if(v.getId() == R.id.btn_income_backtohome){
 				IncomeActivity.this.finish();
 			}
 			else if(v.getId() == R.id.btn_income_date){
@@ -180,13 +180,13 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		Spinner spinner = (Spinner) parent;
-		if(spinner.getId() == R.id.spinner_wallet)
+		if(spinner.getId() == R.id.spn_income_wallet)
 		{
 			walletsCursor.moveToPosition(position);
 			id_wallet = walletsCursor.getInt(walletsCursor.getColumnIndexOrThrow("_id"));
 			name_wallet = walletsCursor.getString(walletsCursor.getColumnIndexOrThrow("NAME_WALLET"));
 		}
-		else if(spinner.getId() == R.id.spinner_danhmuc)
+		else if(spinner.getId() == R.id.spn_income_danhmuc)
 		{
 			categoryIncomeCursor.moveToPosition(position);
 			id_income = categoryIncomeCursor.getInt(categoryIncomeCursor.getColumnIndexOrThrow("_id"));
