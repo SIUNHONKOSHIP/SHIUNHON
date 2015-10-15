@@ -30,12 +30,12 @@ public class RegisterActivity extends Activity {
 	    Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    Typeface font2 = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
 	    // Get The Reference Of Views
-	    txtFullname = (EditText)findViewById(R.id.txt_fullname);
-	    txtUserName = (EditText)findViewById(R.id.txt_username);
-	    txtPassword = (EditText)findViewById(R.id.txt_password);
-	    txtConfirmPass = (EditText)findViewById(R.id.txt_conformpass);
-	    btnRegister=(Button)findViewById(R.id.btn_createaccount);
-	    btnBack=(Button)findViewById(R.id.btn_backtologin);
+	    txtFullname = (EditText)findViewById(R.id.txt_register_fullname);
+	    txtUserName = (EditText)findViewById(R.id.txt_register_username);
+	    txtPassword = (EditText)findViewById(R.id.txt_register_password);
+	    txtConfirmPass = (EditText)findViewById(R.id.txt_register_conformpass);
+	    btnRegister=(Button)findViewById(R.id.btn_register_submit);
+	    btnBack=(Button)findViewById(R.id.btn_register_back);
 	    //Thiet lap font cho Username
 	    txtFullname.setTypeface(font);
 	    txtUserName.setTypeface(font);
@@ -52,11 +52,11 @@ public class RegisterActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if(v.getId()==R.id.btn_backtologin)
+			if(v.getId()==R.id.btn_register_back)
 			{
 				RegisterActivity.this.finish();
 			}
-			else if(v.getId()==R.id.btn_createaccount) {
+			else if(v.getId()==R.id.btn_register_submit) {
 				InsertAccount();
 			}
 		}

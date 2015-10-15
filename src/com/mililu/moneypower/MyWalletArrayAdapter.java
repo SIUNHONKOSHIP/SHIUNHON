@@ -4,15 +4,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.graphics.Typeface;
 
 public class MyWalletArrayAdapter extends ArrayAdapter<Wallet>{
 	
@@ -34,24 +31,21 @@ public class MyWalletArrayAdapter extends ArrayAdapter<Wallet>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		
-		LayoutInflater flater = context.getLayoutInflater();
-		View row = flater.inflate(layout, parent,false);
-		
-		TextView txt1=(TextView) row.findViewById(R.id.tv_row1);
-		txt1.setTypeface(tf);
-		TextView txt2=(TextView) row.findViewById(R.id.tv_row2);	
-		txt2.setTypeface(tf);
-		
-		Wallet data=list.get(position);
-		txt1.setText(data.getName()==null?"":data.getName().toString());
-		txt2.setText(data.getMoney()==null?"":data.getMoney().toString());
-		
-//		if((position/2)==0){
-//			row.setBackgroundColor(Color.rgb(204, 238, 255));;
-//		}
-		
-		return row;
+		//if (convertView == null){
+			LayoutInflater flater = context.getLayoutInflater();
+			View row = flater.inflate(layout, parent,false);
+			
+			TextView walletname =(TextView) row.findViewById(R.id.tv_layoutlistwallet_name);
+			walletname.setTypeface(tf);
+			TextView amount = (TextView) row.findViewById(R.id.tv_layoutlistwallet_amount);	
+			amount.setTypeface(tf);
+			
+			Wallet data=list.get(position);
+			walletname.setText(data.getName()==null?"":data.getName().toString());
+			amount.setText(data.getMoney()==null?"":data.getMoney().toString());
+			return row;
+		//	}
+		//return convertView;
 	}
 
 	

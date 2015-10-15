@@ -61,6 +61,10 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".StatisticActivity"></activity>
+        
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".DetailWalletActivity"></activity>
     </application>
 
 </manifest>

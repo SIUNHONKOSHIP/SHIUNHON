@@ -251,43 +251,25 @@ public class DataBaseAdapter {
         db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
+	
+    public void insertDiary(Diary diary){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("ID_CATEGORY", diary.getId_category());
+		newValues.put("ID_WALLET",diary.getId_wallet());
+		newValues.put("AMOUNT", diary.getAmount());
+		newValues.put("DAY", diary.getDay());
+		newValues.put("MONTH", diary.getMonth());
+		newValues.put("YEAR", diary.getYear());
+		newValues.put("TIME", diary.getTime().toString());
+		newValues.put("TYPE", diary.getType());
+		newValues.put("NOTICE", diary.getNotice().toString());
+		// Insert the row into your table
+		db.insert("tbl_DIARY", null, newValues);
+	}
     
-	public void insertDiaryIncome(int amount, int id_wallet, int id_income, String date, String hour, String notice){
-		ContentValues newValues = new ContentValues();
-		// Assign values for each row.
-		newValues.put("ID_INC", id_income);
-		newValues.put("ID_WALLET",id_wallet);
-		newValues.put("MONEY", amount);
-		newValues.put("DATE", date);
-		newValues.put("HOUR", hour);
-		newValues.put("NOTICE", notice);
-		// Insert the row into your table
-		db.insert("tbl_DIARY_INC", null, newValues);
-	}
-	public void insertDiaryExpen(int amount, int id_wallet, int id_exp_det, String date, String hour, String notice){
-		ContentValues newValues = new ContentValues();
-		// Assign values for each row.
-		newValues.put("ID_EXP_DET", id_exp_det);
-		newValues.put("ID_WALLET",id_wallet);
-		newValues.put("MONEY", amount);
-		newValues.put("DATE", date);
-		newValues.put("HOUR", hour);
-		newValues.put("NOTICE", notice);
-		// Insert the row into your table
-		db.insert("tbl_DIARY_EXP", null, newValues);
-	}
-	public Cursor getDiaryIncome(){
-		String selectQuery = "SELECT tbl_DIARY_INC.MONEY, tbl_INCOME.NAME_INCOME, tbl_WALLET.NAME_WALLET, tbl_DIARY_INC.DATE, tbl_DIARY_INC.HOUR, tbl_DIARY_INC.NOTICE  FROM tbl_DIARY_INC, tbl_INCOME, tbl_WALLET WHERE  (tbl_WALLET.ID_WALLET = tbl_DIARY_INC.ID_WALLET AND tbl_INCOME.ID_INC = tbl_DIARY_INC.ID_INC) GROUP BY tbl_DIARY_INC.ID_DIA_INC";
-		db = dbHelper.getReadableDatabase();
-        return db.rawQuery(selectQuery, null);
-	}
-	public Cursor getDiaryExpen(){
-		String selectQuery = "SELECT tbl_DIARY_EXP.MONEY, tbl_EXP_DETAIL.NAME_EXP_DET, tbl_WALLET.NAME_WALLET, tbl_DIARY_EXP.DATE, tbl_DIARY_EXP.HOUR, tbl_DIARY_EXP.NOTICE  FROM tbl_DIARY_EXP, tbl_EXP_DETAIL, tbl_WALLET WHERE  (tbl_WALLET.ID_WALLET = tbl_DIARY_EXP.ID_WALLET AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY_EXP.ID_EXP_DET) GROUP BY tbl_DIARY_EXP.ID_DIA_EXP";
-		db = dbHelper.getReadableDatabase();
-        return db.rawQuery(selectQuery, null);
-	}
-	public Cursor getDiary(){
-		String selectQuery = "SELECT tbl_DIARY.AMOUNT, tbl_INCOME.NAME_INCOME, tbl_EXP_DETAIL.NAME_EXP_DET, tbl_WALLET.NAME_WALLET, tbl_DIARY.DATE, tbl_DIARY.TIME, tbl_DIARY.NOTICE FROM tbl_DIARY, tbl_EXP_DETAIL, tbl_INCOME, tbl_WALLET WHERE (((tbl_DIARY.TYPE = 1 AND tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC) OR (tbl_DIARY.TYPE = 2 AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY.ID_CATEGORY)) AND (tbl_DIARY.ID_WALLET = tbl_WALLET.ID_WALLET)) GROUP BY tbl_DIARY.ID_DIARY ORDER BY tbl_DIARY.DATE DESC, tbl_DIARY.TIME ";
+	public Cursor getDiaryByWallet(int id_wallet){
+		String selectQuery = "SELECT tbl_DIARY.AMOUNT, tbl_INCOME.NAME_INCOME, tbl_EXP_DETAIL.NAME_EXP_DET, tbl_DIARY.DAY, tbl_DIARY.MONTH, tbl_DIARY.YEAR, tbl_DIARY.TIME, tbl_DIARY.TYPE, tbl_DIARY.NOTICE FROM tbl_DIARY, tbl_EXP_DETAIL, tbl_INCOME WHERE (((tbl_DIARY.TYPE = 1 AND tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC) OR (tbl_DIARY.TYPE = 2 AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY.ID_CATEGORY)) AND (tbl_DIARY.ID_WALLET = " + id_wallet +")) GROUP BY tbl_DIARY.ID_DIARY ORDER BY tbl_DIARY.YEAR DESC, tbl_DIARY.MONTH DESC, tbl_DIARY.DAY DESC, tbl_DIARY.TIME;";
 		db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 	}

@@ -37,24 +37,24 @@ public class CreateWalletActivity extends Activity {
 	    Typeface light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    Typeface bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
 	    
-	    tvTittle = (TextView) findViewById(R.id.textView1);
+	    tvTittle = (TextView) findViewById(R.id.tv_createwallet_title);
 	    tvTittle.setTypeface(light);
 	    
-	    txtNameWallet = (EditText)findViewById(R.id.txt_namewallet);
+	    txtNameWallet = (EditText)findViewById(R.id.txt_createwallet_namewallet);
 	    txtNameWallet.setTypeface(light);
 	    
-	    txtMoney = (EditText)findViewById(R.id.txt_moneyinwallet);
+	    txtMoney = (EditText)findViewById(R.id.txt_createwallet_money);
 	    txtMoney.setTypeface(light);
 	    
-	    txtDescription = (EditText)findViewById(R.id.txt_descriptionwallet);
+	    txtDescription = (EditText)findViewById(R.id.txt_createwallet_description);
 	    txtDescription.setTypeface(light);
 	    
-	    btnBack=(Button)findViewById(R.id.btn_createwallettowallet);
+	    btnBack=(Button)findViewById(R.id.btn_createwallet_back);
 	    
-	    btnInsertWallet=(Button)findViewById(R.id.btn_insertwallet);
+	    btnInsertWallet=(Button)findViewById(R.id.btn_createwallet_submit);
 	    btnInsertWallet.setTypeface(bold);
 	    
-	    // Set OnClick Listener on SignUp button 
+	    // Set OnClick Listener on button 
 	    btnBack.setOnClickListener(new MyEvent());
 	    btnInsertWallet.setOnClickListener(new MyEvent());
 	    
@@ -67,11 +67,11 @@ public class CreateWalletActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if(v.getId()==R.id.btn_createwallettowallet)
+			if(v.getId()==R.id.btn_createwallet_back)
 			{
 				CreateWalletActivity.this.finish();
 			}
-			else if(v.getId()==R.id.btn_insertwallet) {
+			else if(v.getId()==R.id.btn_createwallet_submit) {
 					InsertWallet();
 			}
 		}

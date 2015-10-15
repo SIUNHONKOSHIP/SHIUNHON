@@ -35,21 +35,21 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		
 	    // Get The Reference Of Buttons and Edit Text
-	    txtUserName = (EditText)findViewById(R.id.txt_usernamelogin);
+	    txtUserName = (EditText)findViewById(R.id.txt_login_username);
 	    //Thiet lap font de su dung tu assets
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
         //Thiet lap font cho Username
         txtUserName.setTypeface(font);
         
-	    txtPassword = (EditText)findViewById(R.id.txt_passwordlogin);
+	    txtPassword = (EditText)findViewById(R.id.txt_login_password);
 	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    txtPassword.setTypeface(font);
 	    
-	    btnLogin=(Button)findViewById(R.id.btn_login);
+	    btnLogin=(Button)findViewById(R.id.btn_login_submit);
 	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
 	    btnLogin.setTypeface(font);
 	    
-	    btnRegister=(Button)findViewById(R.id.btn_register);
+	    btnRegister=(Button)findViewById(R.id.btn_login_register);
 	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHTITALIC.TTF");
 	    btnRegister.setTypeface(font);
 	    
@@ -66,12 +66,12 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if(v.getId()==R.id.btn_register)
+			if(v.getId()==R.id.btn_login_register)
 			{
 				Intent intent = new Intent (LoginActivity.this, RegisterActivity.class);
 				startActivity(intent);
 			}
-			else if(v.getId()==R.id.btn_login) {
+			else if(v.getId()==R.id.btn_login_submit) {
 				Login();
 			}
 		}

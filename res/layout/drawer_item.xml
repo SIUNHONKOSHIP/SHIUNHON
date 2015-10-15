@@ -6,7 +6,7 @@
     android:paddingBottom="10dp">
  
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/imgv_menu_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"
@@ -15,7 +15,7 @@
         android:src="@drawable/ic_launcher" />
  
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/tv_menu_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -24,14 +24,14 @@
         android:text="Line 1"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/icon"/>
+        android:layout_toRightOf="@+id/imgv_menu_icon"/>
  
-    <TextView android:id="@+id/subTitle"
+    <TextView android:id="@+id/tv_menu_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Line 2"
-        android:layout_toRightOf="@+id/icon"
-        android:layout_below="@+id/title"
+        android:layout_toRightOf="@+id/imgv_menu_icon"
+        android:layout_below="@+id/tv_menu_title"
         android:layout_alignParentRight="true"/>
  
 </RelativeLayout>

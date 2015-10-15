@@ -1,10 +1,7 @@
 package com.mililu.moneypower;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
-import android.R.integer;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -58,7 +55,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         
         btnSubmit = (Button)findViewById(R.id.btn_income_submit);
         btnSubmit.setOnClickListener(new MyEvent()); 
-        btnBack = (Button)findViewById(R.id.btn_income_backtohome);
+        btnBack = (Button)findViewById(R.id.btn_income_back);
         btnBack.setOnClickListener(new MyEvent());
         btnCreateCategory = (Button)findViewById(R.id.btn_income_createcategory);
         btnCreateCategory.setOnClickListener(new MyEvent());
@@ -70,7 +67,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         txtAmount = (EditText)findViewById(R.id.txt_income_amount);
         txtNotice = (EditText)findViewById(R.id.txt_income_notice);
         txtDate = (EditText)findViewById(R.id.txt_income_date);
-        txtTime = (EditText)findViewById(R.id.txt_income_hour);
+        txtTime = (EditText)findViewById(R.id.txt_income_time);
         setCurrentDate();
         setCurrentTime();
     }
@@ -141,7 +138,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 			{
 				DoInsertIncome();
 			}
-			else if(v.getId() == R.id.btn_income_backtohome){
+			else if(v.getId() == R.id.btn_income_back){
 				IncomeActivity.this.finish();
 			}
 			else if(v.getId() == R.id.btn_income_date){
@@ -156,18 +153,32 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     private void DoInsertIncome(){
     	String mAmount = txtAmount.getText().toString();
     	String mNotice = txtNotice.getText().toString();
-    	String mDate = txtDate.getText().toString();
+    	//String mDate = txtDate.getText().toString();
     	String mTime = txtTime.getText().toString();
-    	if(mAmount.equals("")||mDate.equals("")||mTime.equals("")){
+    	
+    	
+    	if(mAmount.equals("")||txtDate.getText().equals("")||txtTime.getText().equals("")){
     		Toast.makeText(getApplicationContext(), "Please insert amount, date and hour", Toast.LENGTH_LONG).show();
     	}
     	else {
     		int curentmoney = dbAdapter.getAmountOfWallet(String.valueOf(id_wallet));
     		int newmoney = curentmoney + Integer.valueOf(mAmount);
-    		dbAdapter.insertDiaryIncome(Integer.valueOf(mAmount), id_wallet, id_income, mDate, mTime, mNotice);
+    		
+    		Diary diary = new Diary();
+    		diary.setAmount(Integer.valueOf(mAmount));
+    		diary.setId_wallet(id_wallet);
+    		diary.setId_category(id_income);
+    		diary.setDay(mDay);
+    		diary.setMonth(mMonth);
+    		diary.setYear(mYear);
+    		diary.setTime(mTime);
+    		diary.setType(1);
+    		diary.setNotice(mNotice);
+    		
+    		dbAdapter.insertDiary(diary);
     		dbAdapter.updateWallet(id_wallet, name_wallet, newmoney);
     		dbAdapter.close();
-    		//Toast.makeText(getApplicationContext(), dbAdapter.getAmountOfWallet(String.valueOf(id_wallet)), Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(), "thanh cong", Toast.LENGTH_LONG).show();
     		ClearTextBox();
     	}
     }

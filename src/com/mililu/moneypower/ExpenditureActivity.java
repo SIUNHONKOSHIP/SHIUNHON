@@ -57,7 +57,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
         
         btnSubmit = (Button)findViewById(R.id.btn_expen_submit);
         btnSubmit.setOnClickListener(new MyEvent()); 
-        btnBack = (Button)findViewById(R.id.btn_expen_backtohome);
+        btnBack = (Button)findViewById(R.id.btn_expen_back);
         btnBack.setOnClickListener(new MyEvent());
         btnCreateCategory = (Button)findViewById(R.id.btn_expen_createcategory);
         btnCreateCategory.setOnClickListener(new MyEvent());
@@ -69,7 +69,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
         txtAmount = (EditText)findViewById(R.id.txt_expen_amount);
         txtNotice = (EditText)findViewById(R.id.txt_expen_notice);
         txtDate = (EditText)findViewById(R.id.txt_expen_date);
-        txtTime = (EditText)findViewById(R.id.txt_expen_hour);
+        txtTime = (EditText)findViewById(R.id.txt_expen_time);
         setCurrentDate();
         setCurrentTime();
     }
@@ -157,7 +157,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 			{
 				DoInsertExpen();
 			}
-			else if(v.getId() == R.id.btn_expen_backtohome){
+			else if(v.getId() == R.id.btn_expen_back){
 				ExpenditureActivity.this.finish();
 			}
 			else if(v.getId() == R.id.btn_expen_date){
@@ -180,7 +180,19 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     	else {
     		int curentmoney = dbAdapter.getAmountOfWallet(String.valueOf(id_wallet));
     		int newmoney = curentmoney - Integer.valueOf(mAmount);
-    		dbAdapter.insertDiaryExpen(Integer.valueOf(mAmount), id_wallet, id_expen_detail, mDate, mTime, mNotice);
+    		
+    		Diary diary = new Diary();
+    		diary.setAmount(Integer.valueOf(mAmount));
+    		diary.setId_wallet(id_wallet);
+    		diary.setId_category(id_expen_detail);
+    		diary.setDay(mDay);
+    		diary.setMonth(mMonth);
+    		diary.setYear(mYear);
+    		diary.setTime(mTime);
+    		diary.setType(2); // 2 = chi
+    		diary.setNotice(mNotice);
+    		
+    		dbAdapter.insertDiary(diary);
     		dbAdapter.updateWallet(id_wallet, name_wallet, newmoney);
     		dbAdapter.close();
     		//Toast.makeText(getApplicationContext(), dbAdapter.getAmountOfWallet(String.valueOf(id_wallet)), Toast.LENGTH_LONG).show();

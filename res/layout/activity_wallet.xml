@@ -11,7 +11,7 @@
         android:columnCount="1" >
 
         <Button
-            android:id="@+id/btn_wallettohome"
+            android:id="@+id/btn_wallet_back"
             android:layout_width="17dp"
             android:layout_height="25dp"
             android:layout_gravity="left|center_vertical"
@@ -19,7 +19,7 @@
             android:background="@drawable/wallet_list_back" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tv_wallet_title"
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="0"
@@ -28,7 +28,7 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/btn_createwallet"
+            android:id="@+id/btn_wallet_createwallet"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_column="0"
@@ -46,7 +46,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_wallet_totalbalance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -56,7 +56,7 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_wallet_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -66,14 +66,14 @@
             android:textSize="25sp" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imgv_wallet_line"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:src="@drawable/line" />
 
         <ListView
-            android:id="@+id/listView1"
+            android:id="@+id/lv_wallet_listwallet"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 

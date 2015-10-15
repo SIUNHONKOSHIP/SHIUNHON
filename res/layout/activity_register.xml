@@ -11,7 +11,7 @@
         android:orientation="vertical" >
 
         <EditText
-            android:id="@+id/txt_fullname"
+            android:id="@+id/txt_register_fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -28,7 +28,7 @@
         </EditText>
 
         <EditText
-            android:id="@+id/txt_username"
+            android:id="@+id/txt_register_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -43,7 +43,7 @@
         </EditText>
 
         <EditText
-            android:id="@+id/txt_password"
+            android:id="@+id/txt_register_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -57,7 +57,7 @@
         </EditText>
 
         <EditText
-            android:id="@+id/txt_conformpass"
+            android:id="@+id/txt_register_conformpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -80,7 +80,7 @@
             android:useDefaultMargins="true">
 
             <Button
-                android:id="@+id/btn_backtologin"
+                android:id="@+id/btn_register_back"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_column="0"
@@ -94,7 +94,7 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btn_createaccount"
+                android:id="@+id/btn_register_submit"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_column="1"

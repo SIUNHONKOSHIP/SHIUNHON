@@ -3,10 +3,6 @@ package com.mililu.moneypower;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Application;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,13 +12,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -59,24 +52,24 @@ public class HomeActivity extends Activity{
 	    fullname_current_user = bundle.getString("FULLNAME_ACCOUNT");
 	    username_current_user = bundle.getString("USERNAME_ACCOUNT");
 	    // Get The Reference Of Buttons and Edit Text
-	    btnWallet=(Button)findViewById(R.id.btn_wallet);
+	    btnWallet=(Button)findViewById(R.id.btn_home_wallet);
 	    Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
 	    btnWallet.setTypeface(font);
         
-	    btnIncome=(Button)findViewById(R.id.btn_income);
+	    btnIncome=(Button)findViewById(R.id.btn_home_income);
 	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    btnIncome.setTypeface(font);
 	    
-	    btnExpenditure=(Button)findViewById(R.id.btn_expenditure);	 
+	    btnExpenditure=(Button)findViewById(R.id.btn_home_expenditure);	 
 	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    btnExpenditure.setTypeface(font);
 	    
-	    btnStatistic=(Button)findViewById(R.id.btn_statistic);
+	    btnStatistic=(Button)findViewById(R.id.btn_home_statistic);
 	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLDITALIC.TTF");
 	    btnStatistic.setTypeface(font);
 	    
-	    lableFullname = (TextView)findViewById(R.id.lable_fullname) ;
-	    lableUsername = (TextView)findViewById(R.id.lable_username);
+	    lableFullname = (TextView)findViewById(R.id.tv_home_fullname) ;
+	    lableUsername = (TextView)findViewById(R.id.tv_home_username);
 	    lableFullname.setText(fullname_current_user);
 	    lableUsername.setText(username_current_user);
 	    
@@ -99,7 +92,7 @@ public class HomeActivity extends Activity{
 	 
 	    // Populate the Navigtion Drawer with options
 	    mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
-	    mDrawerList = (ListView) findViewById(R.id.navList);
+	    mDrawerList = (ListView) findViewById(R.id.lv_home_navList);
 	    DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
 	    mDrawerList.setAdapter(adapter);
 	 
@@ -117,7 +110,7 @@ public class HomeActivity extends Activity{
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			
-			if(v.getId()==R.id.btn_income)
+			if(v.getId()==R.id.btn_home_income)
 			{
 				Bundle bundle=new Bundle();
 				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
@@ -128,7 +121,7 @@ public class HomeActivity extends Activity{
 				intent.putExtra("DATA_ACCOUNT", bundle);
 				startActivity(intent);
 			}
-			else if(v.getId()==R.id.btn_expenditure) {
+			else if(v.getId()==R.id.btn_home_expenditure) {
 				Bundle bundle=new Bundle();
 				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 				bundle.putInt("ID_ACCOUNT", id_curent_user);
@@ -138,7 +131,7 @@ public class HomeActivity extends Activity{
 				intent.putExtra("DATA_ACCOUNT", bundle);
 				startActivity(intent);
 			}
-			else if(v.getId()==R.id.btn_wallet) {
+			else if(v.getId()==R.id.btn_home_wallet) {
 				Bundle bundle=new Bundle();
 				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 				bundle.putInt("ID_ACCOUNT", id_curent_user);
@@ -148,7 +141,7 @@ public class HomeActivity extends Activity{
 				intent.putExtra("DATA_ACCOUNT", bundle);
 				startActivity(intent);
 			}
-			else if(v.getId()==R.id.btn_statistic) {
+			else if(v.getId()==R.id.btn_home_statistic) {
 				//Intent intent = new Intent (HomeActivity.this, StatisticActivity.class);
 				//startActivity(intent);
 				Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();

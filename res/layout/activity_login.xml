@@ -14,14 +14,14 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imgv_login_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/logo" />
 
         <EditText
-            android:id="@+id/txt_usernamelogin"
+            android:id="@+id/txt_login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -35,7 +35,7 @@
 
 
         <EditText
-            android:id="@+id/txt_passwordlogin"
+            android:id="@+id/txt_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -54,7 +54,7 @@
             android:orientation="vertical" >
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_login_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -63,7 +63,7 @@
                 android:textColor="#FFFFFF" />
 
             <Button
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_login_register"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:background="@drawable/btn_trans"

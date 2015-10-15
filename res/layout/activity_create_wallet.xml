@@ -11,7 +11,7 @@
         android:columnCount="1" >
 
         <Button
-            android:id="@+id/btn_createwallettowallet"
+            android:id="@+id/btn_createwallet_back"
             android:layout_width="17dp"
             android:layout_height="25dp"
             android:layout_gravity="left|center_vertical"
@@ -19,7 +19,7 @@
             android:background="@drawable/wallet_list_back" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tv_createwallet_title"
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="0"
@@ -44,7 +44,7 @@
             android:orientation="vertical" >
 
             <EditText
-                android:id="@+id/txt_namewallet"
+                android:id="@+id/txt_createwallet_namewallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal|center"
@@ -61,7 +61,7 @@
             </EditText>
 
             <EditText
-                android:id="@+id/txt_moneyinwallet"
+                android:id="@+id/txt_createwallet_money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal|center"
@@ -76,7 +76,7 @@
                 android:textSize="15sp" />
             
             <EditText
-                android:id="@+id/txt_descriptionwallet"
+                android:id="@+id/txt_createwallet_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal|center"
@@ -90,7 +90,7 @@
                 android:textSize="15sp" />
 
             <Button
-                android:id="@+id/btn_insertwallet"
+                android:id="@+id/btn_createwallet_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"

@@ -9,7 +9,7 @@
         android:columnCount="5" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tv_expen_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -33,7 +33,7 @@
             android:text="Create" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_expen_category"
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
@@ -41,7 +41,7 @@
             android:text="Danh Muc" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_expen_walletname"
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
@@ -57,7 +57,7 @@
             android:layout_row="3" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_expen_notice"
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="6"
@@ -74,14 +74,14 @@
         </EditText>
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_expen_date"
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
             android:text="Date" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tv_expen_time"
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="5"
@@ -97,7 +97,7 @@
             android:inputType="date" />
 
         <EditText
-            android:id="@+id/txt_expen_hour"
+            android:id="@+id/txt_expen_time"
             android:layout_width="175dp"
             android:layout_column="1"
             android:layout_gravity="left|fill"
@@ -154,7 +154,7 @@
         android:text="Submit" />
 
     <Button
-        android:id="@+id/btn_expen_backtohome"
+        android:id="@+id/btn_expen_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
