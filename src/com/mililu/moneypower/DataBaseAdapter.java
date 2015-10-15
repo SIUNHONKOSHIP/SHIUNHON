@@ -20,8 +20,9 @@ public class DataBaseAdapter {
 	static final String DATABASE_CREATE_INCOME = "create table tbl_INCOME (ID_INC integer primary key autoincrement, NAME_INCOME  text); ";
 	static final String DATABASE_CREATE_EXPENDITURE = "create table tbl_EXPENDITURE (ID_EXP integer primary key autoincrement, NAME_EXP text); ";
 	static final String DATABASE_CREATE_EXP_DETAIL = "create table tbl_EXP_DETAIL (ID_EXP_DET integer primary key autoincrement, ID_EXP  integer, NAME_EXP_DET text); ";
-	static final String DATABASE_CREATE_DIARY_INC = "create table tbl_DIARY_INC (ID_DIA_INC integer primary key autoincrement, ID_INC integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
-	static final String DATABASE_CREATE_DIARY_EXP = "create table tbl_DIARY_EXP (ID_DIA_EXP integer primary key autoincrement, ID_EXP_DET integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
+	//static final String DATABASE_CREATE_DIARY_INC = "create table tbl_DIARY_INC (ID_DIA_INC integer primary key autoincrement, ID_INC integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
+	//static final String DATABASE_CREATE_DIARY_EXP = "create table tbl_DIARY_EXP (ID_DIA_EXP integer primary key autoincrement, ID_EXP_DET integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
+	static final String DATABASE_CREATE_DIARY = "CREATE TABLE `tbl_DIARY` (`ID_DIARY` INTEGER PRIMARY KEY AUTOINCREMENT, `ID_CATEGORY` INTEGER, `ID_WALLET` INTEGER, `AMOUNT` NUMERIC, `DAY` INTEGER, `MONTH` INTEGER, `YEAR` INTEGER, `TIME` TEXT, `TYPE` INTEGER, `NOTICE` TEXT);";
 	static final String DATABASE_INSERT_EXPENDITURE = "insert into tbl_EXPENDITURE (ID_EXP, NAME_EXP) values (1, 'Ăn uống'), (2, 'Đi lại'), (3, 'Dịch vụ sinh hoạt'), (4, 'Hưởng thụ'); ";
 	static final String DATABASE_INSERT_EXP_DET = "insert into tbl_EXP_DETAIL (ID_EXP_DET, ID_EXP, NAME_EXP_DET) values (1, 1, 'Đi chợ/siêu thị'), (2, 1, 'Cafe'), (3, 1, 'Cơm tiệm'), (4, 2, 'Gửi xe'), (5, 2, 'Xăng xe'), (6, 2, 'Rửa xe'), (7, 3, 'Điện thoại'), (8, 3, 'Điện'), (9, 3, 'Nước'), (10, 4, 'Du lịch'), (11, 4, 'Xem phim'); ";
 	static final String DATABASE_INSERT_INCOME = "insert into tbl_INCOME (ID_INC, NAME_INCOME) values (1, 'Lương'), (2, 'Thưởng'), (3, 'Lãi'), (4, 'Lãi tiết kiệm'), (5, 'Được cho/tặng'), (6, 'Khác'); ";
@@ -225,6 +226,10 @@ public class DataBaseAdapter {
         db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
+    public Cursor getListWalletOfUser2(int id_user) {
+    	Cursor cursor=db.query("tbl_WALLET", null, " ID_ACCOUNT=?", new String[]{String.valueOf(id_user)}, null, null, null);
+    	return cursor;
+	}
     
     public Cursor getCategoryIncomeCursor() {
         // Select All Query
@@ -271,5 +276,21 @@ public class DataBaseAdapter {
 		// Insert the row into your table
 		db.insert("tbl_DIARY_EXP", null, newValues);
 	}
+	public Cursor getDiaryIncome(){
+		String selectQuery = "SELECT tbl_DIARY_INC.MONEY, tbl_INCOME.NAME_INCOME, tbl_WALLET.NAME_WALLET, tbl_DIARY_INC.DATE, tbl_DIARY_INC.HOUR, tbl_DIARY_INC.NOTICE  FROM tbl_DIARY_INC, tbl_INCOME, tbl_WALLET WHERE  (tbl_WALLET.ID_WALLET = tbl_DIARY_INC.ID_WALLET AND tbl_INCOME.ID_INC = tbl_DIARY_INC.ID_INC) GROUP BY tbl_DIARY_INC.ID_DIA_INC";
+		db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+	}
+	public Cursor getDiaryExpen(){
+		String selectQuery = "SELECT tbl_DIARY_EXP.MONEY, tbl_EXP_DETAIL.NAME_EXP_DET, tbl_WALLET.NAME_WALLET, tbl_DIARY_EXP.DATE, tbl_DIARY_EXP.HOUR, tbl_DIARY_EXP.NOTICE  FROM tbl_DIARY_EXP, tbl_EXP_DETAIL, tbl_WALLET WHERE  (tbl_WALLET.ID_WALLET = tbl_DIARY_EXP.ID_WALLET AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY_EXP.ID_EXP_DET) GROUP BY tbl_DIARY_EXP.ID_DIA_EXP";
+		db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+	}
+	public Cursor getDiary(){
+		String selectQuery = "SELECT tbl_DIARY.AMOUNT, tbl_INCOME.NAME_INCOME, tbl_EXP_DETAIL.NAME_EXP_DET, tbl_WALLET.NAME_WALLET, tbl_DIARY.DATE, tbl_DIARY.TIME, tbl_DIARY.NOTICE FROM tbl_DIARY, tbl_EXP_DETAIL, tbl_INCOME, tbl_WALLET WHERE (((tbl_DIARY.TYPE = 1 AND tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC) OR (tbl_DIARY.TYPE = 2 AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY.ID_CATEGORY)) AND (tbl_DIARY.ID_WALLET = tbl_WALLET.ID_WALLET)) GROUP BY tbl_DIARY.ID_DIARY ORDER BY tbl_DIARY.DATE DESC, tbl_DIARY.TIME ";
+		db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+	}
+	
 }
 

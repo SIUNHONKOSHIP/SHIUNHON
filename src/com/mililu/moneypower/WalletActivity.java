@@ -35,6 +35,8 @@ public class WalletActivity extends Activity{
 	List<Wallet>list_wallet=new ArrayList<Wallet>();
 	int id_curent_user;
 	TextView txtTittle, txtBalance, txtAmount;
+	Cursor cursorWallet;
+	ListView lvWallet;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,35 +45,36 @@ public class WalletActivity extends Activity{
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_wallet);
 		
-		// Set font
-		txtTittle=(TextView)findViewById(R.id.textView1);
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-        txtTittle.setTypeface(font);
-        
-        txtBalance=(TextView)findViewById(R.id.textView2);
-        font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-        txtBalance.setTypeface(font);
-        
-        txtAmount=(TextView)findViewById(R.id.textView3);
-        font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
-        txtAmount.setTypeface(font);
+		// Get The Reference Of View
+	    txtTittle=(TextView)findViewById(R.id.textView1);
+	    txtBalance=(TextView)findViewById(R.id.textView2);
+	    txtAmount=(TextView)findViewById(R.id.textView3);
+	    btnBack=(Button)findViewById(R.id.btn_wallettohome);
+	    btnCreateWallet=(Button)findViewById(R.id.btn_createwallet);
+	    lvWallet = (ListView)findViewById(R.id.listView1);
 		
+	    // Set font
+        Typeface font_light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+        Typeface font_bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
+        txtTittle.setTypeface(font_light);
+        txtBalance.setTypeface(font_light);
+        txtAmount.setTypeface(font_bold);
+        
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
 	    
-	    // Get The Reference Of Buttons
-	    btnBack=(Button)findViewById(R.id.btn_wallettohome);
-	    btnCreateWallet=(Button)findViewById(R.id.btn_createwallet);
-	    
-	    // Set OnClick Listener on SignUp button 
+	    // Set OnClick Listener on button 
 	    btnBack.setOnClickListener(new MyEvent());
 	    btnCreateWallet.setOnClickListener(new MyEvent());
 	    
+	    // Set OnItemClick Listener on listview
+	    lvWallet.setOnItemClickListener(new MyEventItemOnClick());
+	    
+	    // Get data of Bundle
 	    Intent intent = getIntent();
 	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-	    // Load Data
 	    
 	}
 	@Override
@@ -81,11 +84,6 @@ public class WalletActivity extends Activity{
 		getTotalAmount(id_curent_user);
 	}
 	
-	/** HÃ m xÃ©t sá»± kiá»‡n nháº¥n nÃºt 
-	 * 
-	 * @author Thanh LiÃªm
-	 *
-	 */
 	private class MyEvent implements OnClickListener{
 		@Override
 		public void onClick(View v) {
@@ -97,14 +95,10 @@ public class WalletActivity extends Activity{
 			else if(v.getId()==R.id.btn_createwallet)
 			{
 				Bundle bundle=new Bundle();
-				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
 				Intent intent = new Intent (WalletActivity.this, CreateWalletActivity.class);
-				//Ä�Æ°a Bundle vÃ o Intent
 				intent.putExtra("DATA", bundle);
 				startActivity(intent);
-				//ShowWallet();
 			}
 		}
 	}
@@ -114,33 +108,25 @@ public class WalletActivity extends Activity{
 	}
 	
 	private void ShowWallet(){
-		db=openOrCreateDatabase("DARFTMONEYPOWER.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-		if(db!=null){
-			Cursor cursor=db.query("tbl_WALLET", null, "ID_ACCOUNT=?", new String[]{String.valueOf(id_curent_user)}, null, null, null);
-			if (cursor.getCount()<1){
-				Toast.makeText(WalletActivity.this, "You don't have any wallet !!", Toast.LENGTH_LONG).show();
-			}
-			else{
-				list_wallet.clear();
-				//startManagingCursor(cursor);
-				//Wallet header=new Wallet();
-				//header.setName("TÃªn VÃ­");
-				//header.setMoney("Sá»‘ Tiá»�n");
-				//list.add(header);
-				cursor.moveToFirst();
-				while(!cursor.isAfterLast()){
-					Wallet data=new Wallet();
-					data.setId_wallet(cursor.getInt(0));
-					data.setName(cursor.getString(1));
-					data.setMoney(cursor.getString(3));
-					list_wallet.add(data);
-					cursor.moveToNext();
-			 	}
-				cursor.close();
-				arrayadapter=new MyWalletArrayAdapter(WalletActivity.this, R.layout.layout_for_show_list, list_wallet);
-				final ListView lv= (ListView) findViewById(R.id.listView1);
-				lv.setAdapter(arrayadapter);
-				lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+		cursorWallet=dbAdapter.getListWalletOfUser(id_curent_user);
+		if (cursorWallet.getCount()<1){
+			Toast.makeText(WalletActivity.this, "You don't have any wallet !!", Toast.LENGTH_LONG).show();
+		}
+		else{
+			list_wallet.clear();
+			cursorWallet.moveToFirst();
+			while(!cursorWallet.isAfterLast()){
+				Wallet data=new Wallet();
+				data.setId_wallet(cursorWallet.getInt(cursorWallet.getColumnIndexOrThrow("ID_WALLET")));
+				data.setName(cursorWallet.getString(cursorWallet.getColumnIndexOrThrow("NAME_WALLET")));
+				data.setMoney(cursorWallet.getString(cursorWallet.getColumnIndexOrThrow("MONEY")));
+				list_wallet.add(data);
+				cursorWallet.moveToNext();
+		 	}
+			cursorWallet.close();
+			arrayadapter = new MyWalletArrayAdapter(WalletActivity.this, R.layout.layout_for_show_list, list_wallet);
+			lvWallet.setAdapter(arrayadapter);
+				lvWallet.setOnItemLongClickListener(new OnItemLongClickListener() {
 					@Override
 					public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 						// TODO Auto-generated method stub
@@ -177,26 +163,24 @@ public class WalletActivity extends Activity{
 						b.show();
 						return false;
 					}
-				}); // ket thÃºc hÃ m xÃ©t event cháº¡m lÃ¢u trÃªn 1 Ä‘á»‘i tÆ°á»£ng wallet
-				lv.setOnItemClickListener(new OnItemClickListener() {
-					 @Override
-					 public void onItemClick(AdapterView<?> arg0, View arg1,
-					 int arg2, long arg3) {
-					 // TODO Auto-generated method stub
-					 Toast.makeText(WalletActivity.this,"View :"+ list_wallet.get(arg2).toString(), Toast.LENGTH_LONG).show();
-					 /*Intent intent=new Intent(WalletActivity.this, CreateWalletActivity.class);
-					 Bundle bundle=new Bundle();
-					 bundle.putInt("KEY", 2);
-					 bundle.putString("getNameWallet", list.get(arg2).getName().toString());
-					 bundle.putString("getMoneyWallet", list.get(arg2).getMoney().toString());
-					 bundle.putInt("getIdWallet", list.get(arg2).getId_wallet());
-					 intent.putExtra("DATA", bundle);
-					 //wl=list.get(arg2);
-					 startActivity(intent);
-					 */
-					 }
-					 });
+				});
 			}
+	}
+	
+	private class MyEventItemOnClick implements OnItemClickListener{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			// TODO Auto-generated method stub
+			//Toast.makeText(WalletActivity.this,"View :"+ list_wallet.get(position).toString(), Toast.LENGTH_LONG).show();
+			
+		}
+	}
+	
+	private class MyEventItemOnLongClick implements OnItemLongClickListener{
+		@Override
+		public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+			// TODO Auto-generated method stub
+			return false;
 		}
 	}
 }
