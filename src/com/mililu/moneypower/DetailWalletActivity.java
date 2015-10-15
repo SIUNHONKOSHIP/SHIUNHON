@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -81,6 +84,28 @@ public class DetailWalletActivity extends Activity {
 			else if(v.getId()==R.id.btn_detailwallet_delete)
 			{
 				//// do something here
+				AlertDialog.Builder dialogmess = new Builder(DetailWalletActivity.this);
+				dialogmess.setTitle("Remove Wallet");
+				dialogmess.setMessage("Do you wanna delete " + txtTittle.getText() + "?");
+				dialogmess.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dbAdapter.deleteWallet(id_current_wallet);
+						Toast.makeText(DetailWalletActivity.this, "Delete Success", Toast.LENGTH_LONG).show();
+						DetailWalletActivity.this.finish();
+					}
+				});
+				dialogmess.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dialog.cancel();
+					}
+				});
+				dialogmess.show();
 			}
 		}
 	}
