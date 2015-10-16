@@ -25,7 +25,7 @@ public class DetailWalletActivity extends Activity {
 	DataBaseAdapter dbAdapter;
 	List<Diary>list_diary = new ArrayList<Diary>();
 	int id_curent_user, id_current_wallet;
-	TextView txtTittle;
+	TextView tvTittle, tvAmount, tvOriginalAmount, tvNotice;
 	ListView lvDiary;
 	Cursor cursorDiary;
 	
@@ -37,7 +37,10 @@ public class DetailWalletActivity extends Activity {
 		setContentView(R.layout.activity_detail_wallet);
 		
 		// Get The Reference Of View
-	    txtTittle=(TextView)findViewById(R.id.tv_detailwallet_title);
+	    tvTittle=(TextView)findViewById(R.id.tv_detailwallet_title);
+	    tvAmount=(TextView)findViewById(R.id.tv_detailwallet_amount);
+	    tvOriginalAmount=(TextView)findViewById(R.id.tv_detailwallet_originalamount);
+	    tvNotice=(TextView)findViewById(R.id.tv_detailwallet_notice);
 	    btnBack=(Button)findViewById(R.id.btn_detailwallet_back);
 	    btnDelete=(Button)findViewById(R.id.btn_detailwallet_delete);
 	    lvDiary = (ListView)findViewById(R.id.lv_detailwallet_listhistory);
@@ -63,7 +66,7 @@ public class DetailWalletActivity extends Activity {
 	    Bundle bundle = intent.getBundleExtra("DATA");
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
 	    id_current_wallet = bundle.getInt("ID_WALLET");
-	    txtTittle.setText(bundle.getString("NAME_WALLET"));
+	    tvTittle.setText(bundle.getString("NAME_WALLET"));
 	    
 	}
 	
@@ -71,6 +74,7 @@ public class DetailWalletActivity extends Activity {
 	protected void onStart(){
 		super.onStart();
 		ShowListDiary();
+		ShowInforWallet();
 	}
 	
 	private class MyEvent implements OnClickListener{
@@ -86,7 +90,7 @@ public class DetailWalletActivity extends Activity {
 				//// do something here
 				AlertDialog.Builder dialogmess = new Builder(DetailWalletActivity.this);
 				dialogmess.setTitle("Remove Wallet");
-				dialogmess.setMessage("Do you wanna delete " + txtTittle.getText() + "?");
+				dialogmess.setMessage("Do you wanna delete " + tvTittle.getText() + "?");
 				dialogmess.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 					
 					@Override
@@ -111,7 +115,7 @@ public class DetailWalletActivity extends Activity {
 	}
 	
 	private void ShowListDiary(){
-		cursorDiary=dbAdapter.getDiaryByWallet(id_current_wallet);
+		cursorDiary=dbAdapter.getDiaryOfWallet(id_current_wallet);
 		if (cursorDiary.getCount()<1){
 			Toast.makeText(DetailWalletActivity.this, "You don't have any history !!", Toast.LENGTH_LONG).show();
 		}
@@ -136,5 +140,14 @@ public class DetailWalletActivity extends Activity {
 			adtDeatailWalletArr = new AdapterDetailWalletArray(DetailWalletActivity.this, R.layout.layout_for_detail_wallet, list_diary);
 			lvDiary.setAdapter(adtDeatailWalletArr);
 		}
+	}
+	private void ShowInforWallet(){
+		String money = String.valueOf(dbAdapter.getAmountOfWallet(id_current_wallet));
+		int originalamount = dbAdapter.getOriginalAmountOfWallet(id_current_wallet);
+		String notice = dbAdapter.getDecriptionOfWallet(id_current_wallet);
+		
+		tvAmount.setText(money);
+		tvOriginalAmount.setText("Original Amount: " + originalamount);
+		tvNotice.setText(notice);
 	}
 }

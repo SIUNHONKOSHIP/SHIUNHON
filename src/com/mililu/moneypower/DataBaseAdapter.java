@@ -1,13 +1,10 @@
 package com.mililu.moneypower;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBaseAdapter {
 	static final String DATABASE_NAME = "DARFTMONEYPOWER.db";
@@ -16,13 +13,11 @@ public class DataBaseAdapter {
 	// TODO: Create public field for each column in your table.
 	// SQL Statement to create a new database.
 	static final String DATABASE_CREATE_ACCOUNT = "create table tbl_ACCOUNT (ID_ACCOUNT integer primary key autoincrement, USERNAME  text,PASSWORD text, FULLNAME text); ";
-	static final String DATABASE_CREATE_WALLET = "create table tbl_WALLET (ID_WALLET integer primary key autoincrement, NAME_WALLET  text,ID_ACCOUNT integer, MONEY numeric, DESCRIPTION text); ";
+	static final String DATABASE_CREATE_WALLET = "create table tbl_WALLET (ID_WALLET integer primary key autoincrement, NAME_WALLET  text,ID_ACCOUNT integer, MONEY numeric, ORIGINAL_AMOUNT numeric, DESCRIPTION text); ";
 	static final String DATABASE_CREATE_INCOME = "create table tbl_INCOME (ID_INC integer primary key autoincrement, NAME_INCOME  text); ";
 	static final String DATABASE_CREATE_EXPENDITURE = "create table tbl_EXPENDITURE (ID_EXP integer primary key autoincrement, NAME_EXP text); ";
 	static final String DATABASE_CREATE_EXP_DETAIL = "create table tbl_EXP_DETAIL (ID_EXP_DET integer primary key autoincrement, ID_EXP  integer, NAME_EXP_DET text); ";
-	//static final String DATABASE_CREATE_DIARY_INC = "create table tbl_DIARY_INC (ID_DIA_INC integer primary key autoincrement, ID_INC integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
-	//static final String DATABASE_CREATE_DIARY_EXP = "create table tbl_DIARY_EXP (ID_DIA_EXP integer primary key autoincrement, ID_EXP_DET integer, ID_WALLET integer, DATE text, HOUR text, MONEY numeric, NOTICE text); ";
-	static final String DATABASE_CREATE_DIARY = "CREATE TABLE `tbl_DIARY` (`ID_DIARY` INTEGER PRIMARY KEY AUTOINCREMENT, `ID_CATEGORY` INTEGER, `ID_WALLET` INTEGER, `AMOUNT` NUMERIC, `DAY` INTEGER, `MONTH` INTEGER, `YEAR` INTEGER, `TIME` TEXT, `TYPE` INTEGER, `NOTICE` TEXT);";
+	static final String DATABASE_CREATE_DIARY = "CREATE TABLE `tbl_DIARY` (`ID_DIARY` INTEGER PRIMARY KEY AUTOINCREMENT, `ID_CATEGORY` INTEGER, `ID_WALLET` INTEGER, `AMOUNT` NUMERIC, `ID_ACCOUNT` INTEGER, `DAY` INTEGER, `MONTH` INTEGER, `YEAR` INTEGER, `TIME` TEXT, `TYPE` INTEGER, `NOTICE` TEXT);";
 	static final String DATABASE_INSERT_EXPENDITURE = "insert into tbl_EXPENDITURE (ID_EXP, NAME_EXP) values (1, 'Ăn uống'), (2, 'Đi lại'), (3, 'Dịch vụ sinh hoạt'), (4, 'Hưởng thụ'); ";
 	static final String DATABASE_INSERT_EXP_DET = "insert into tbl_EXP_DETAIL (ID_EXP_DET, ID_EXP, NAME_EXP_DET) values (1, 1, 'Đi chợ/siêu thị'), (2, 1, 'Cafe'), (3, 1, 'Cơm tiệm'), (4, 2, 'Gửi xe'), (5, 2, 'Xăng xe'), (6, 2, 'Rửa xe'), (7, 3, 'Điện thoại'), (8, 3, 'Điện'), (9, 3, 'Nước'), (10, 4, 'Du lịch'), (11, 4, 'Xem phim'); ";
 	static final String DATABASE_INSERT_INCOME = "insert into tbl_INCOME (ID_INC, NAME_INCOME) values (1, 'Lương'), (2, 'Thưởng'), (3, 'Lãi'), (4, 'Lãi tiết kiệm'), (5, 'Được cho/tặng'), (6, 'Khác'); ";
@@ -160,27 +155,30 @@ public class DataBaseAdapter {
 		newValues.put("NAME_WALLET", namewallet);
 		newValues.put("ID_ACCOUNT",id_user);
 		newValues.put("MONEY", money);
+		newValues.put("ORIGINAL_AMOUNT", money);
 		newValues.put("DESCRIPTION", description);
-
 		// Insert the row into your table
 		db.insert("tbl_WALLET", null, newValues);
 	}
-	
-	/**
-	 * Update wallet from table WALLET
-	 * @param id_wallet
-	 * @param namewallet
-	 * @param money
-	 */
-	public void updateWallet(int id_wallet, String namewallet, int money){
+
+	public void updateWallet(int id_wallet, String namewallet, int money, int original_amount, String description){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
 		newValues.put("NAME_WALLET", namewallet);
-		//newValues.put("ID_ACCOUNT",id_user);
 		newValues.put("MONEY", money);
-		
+		newValues.put("ORIGINAL_AMOUNT", original_amount);
+		newValues.put("DESCRIPTION", description);
+		// Insert the row into your table
 		db.update("tbl_WALLET", newValues, "ID_WALLET =? ", new String[] {String.valueOf(id_wallet)});
 	}
+	public void updateWallet(int id_wallet, int money){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("MONEY", money);
+		// Insert the row into your table
+		db.update("tbl_WALLET", newValues, "ID_WALLET =? ", new String[] {String.valueOf(id_wallet)});
+	}
+	
 	/**
 	 * Delete wallet from table WALLET
 	 * @param id_wallet
@@ -189,17 +187,43 @@ public class DataBaseAdapter {
 		db.delete("tbl_WALLET", "ID_WALLET =?", new String[] {String.valueOf(id_wallet)});
 	}
 	
-	public int getAmountOfWallet(String id_wallet){
-		Cursor cursor=db.query("tbl_WALLET", null, " ID_WALLET=?", new String[]{id_wallet}, null, null, null);
+	public int getAmountOfWallet(int id_wallet){
+		Cursor cursor=db.query("tbl_WALLET", null, " ID_WALLET=?", new String[]{String.valueOf(id_wallet)}, null, null, null);
         if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
-        	return -1;
+        	return 0;
         }
 	    cursor.moveToFirst();
 		int amount = cursor.getInt(cursor.getColumnIndex("MONEY"));
 		cursor.close();
 		return amount;
+	}
+	
+	public int getOriginalAmountOfWallet(int id_wallet){
+		Cursor cursor=db.query("tbl_WALLET", null, " ID_WALLET=?", new String[]{String.valueOf(id_wallet)}, null, null, null);
+        if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return 0;
+        }
+	    cursor.moveToFirst();
+		int amount = cursor.getInt(cursor.getColumnIndex("ORIGINAL_AMOUNT"));
+		cursor.close();
+		return amount;
+	}
+	
+	public String getDecriptionOfWallet(int id_wallet){
+		Cursor cursor=db.query("tbl_WALLET", null, " ID_WALLET=?", new String[]{String.valueOf(id_wallet)}, null, null, null);
+        if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return " ";
+        }
+	    cursor.moveToFirst();
+		String noti = cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
+		cursor.close();
+		return noti;
 	}
 	
 	public int getTotalAmount(int id_user){
@@ -222,14 +246,15 @@ public class DataBaseAdapter {
 	   
     public Cursor getListWalletOfUser(int id_user) {
     	// Select All Query
-        String selectQuery = "SELECT ID_WALLET AS _id, * FROM tbl_WALLET WHERE ID_ACCOUNT=" + id_user;
+        String selectQuery = "SELECT ID_WALLET AS _id, * FROM tbl_WALLET WHERE ID_ACCOUNT=1"; //+ id_user;
         db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
-    public Cursor getListWalletOfUser2(int id_user) {
+    
+    /* public Cursor getListWalletOfUser2(int id_user) {
     	Cursor cursor=db.query("tbl_WALLET", null, " ID_ACCOUNT=?", new String[]{String.valueOf(id_user)}, null, null, null);
     	return cursor;
-	}
+	} */
     
     public Cursor getCategoryIncomeCursor() {
         // Select All Query
@@ -257,6 +282,7 @@ public class DataBaseAdapter {
 		// Assign values for each row.
 		newValues.put("ID_CATEGORY", diary.getId_category());
 		newValues.put("ID_WALLET",diary.getId_wallet());
+		newValues.put("ID_ACCOUNT",diary.getId_account());
 		newValues.put("AMOUNT", diary.getAmount());
 		newValues.put("DAY", diary.getDay());
 		newValues.put("MONTH", diary.getMonth());
@@ -268,7 +294,7 @@ public class DataBaseAdapter {
 		db.insert("tbl_DIARY", null, newValues);
 	}
     
-	public Cursor getDiaryByWallet(int id_wallet){
+	public Cursor getDiaryOfWallet(int id_wallet){
 		String selectQuery = "SELECT tbl_DIARY.AMOUNT, tbl_INCOME.NAME_INCOME, tbl_EXP_DETAIL.NAME_EXP_DET, tbl_DIARY.DAY, tbl_DIARY.MONTH, tbl_DIARY.YEAR, tbl_DIARY.TIME, tbl_DIARY.TYPE, tbl_DIARY.NOTICE FROM tbl_DIARY, tbl_EXP_DETAIL, tbl_INCOME WHERE (((tbl_DIARY.TYPE = 1 AND tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC) OR (tbl_DIARY.TYPE = 2 AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY.ID_CATEGORY)) AND (tbl_DIARY.ID_WALLET = " + id_wallet +")) GROUP BY tbl_DIARY.ID_DIARY ORDER BY tbl_DIARY.YEAR DESC, tbl_DIARY.MONTH DESC, tbl_DIARY.DAY DESC, tbl_DIARY.TIME;";
 		db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);

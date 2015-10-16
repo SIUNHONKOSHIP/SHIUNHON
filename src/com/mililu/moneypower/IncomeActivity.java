@@ -161,13 +161,14 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		Toast.makeText(getApplicationContext(), "Please insert amount, date and hour", Toast.LENGTH_LONG).show();
     	}
     	else {
-    		int curentmoney = dbAdapter.getAmountOfWallet(String.valueOf(id_wallet));
+    		int curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
     		int newmoney = curentmoney + Integer.valueOf(mAmount);
     		
     		Diary diary = new Diary();
     		diary.setAmount(Integer.valueOf(mAmount));
     		diary.setId_wallet(id_wallet);
     		diary.setId_category(id_income);
+    		diary.setId_account(id_curent_user);
     		diary.setDay(mDay);
     		diary.setMonth(mMonth);
     		diary.setYear(mYear);
@@ -176,7 +177,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		diary.setNotice(mNotice);
     		
     		dbAdapter.insertDiary(diary);
-    		dbAdapter.updateWallet(id_wallet, name_wallet, newmoney);
+    		dbAdapter.updateWallet(id_wallet, newmoney);
     		dbAdapter.close();
     		Toast.makeText(getApplicationContext(), "thanh cong", Toast.LENGTH_LONG).show();
     		ClearTextBox();

@@ -8,6 +8,7 @@ public class Diary {
 	private String name_expen;
 	private int id_wallet;
 	private String name_wallet;
+	private int id_account;
 	private int day;
 	private int month;
 	private int year;
@@ -100,4 +101,11 @@ public class Diary {
 	public void setNotice(String notice) {
 		this.notice = notice;
 	}
+	public int getId_account() {
+		return id_account;
+	}
+	public void setId_account(int id_account) {
+		this.id_account = id_account;
+	}
+	
 }

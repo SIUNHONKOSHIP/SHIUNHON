@@ -91,7 +91,7 @@ public class CreateWalletActivity extends Activity {
 		}
 		else{
 			// Save the Data in Database
-			dbAdapter.insertWallet(namewallet, Integer.valueOf(money), id, descrip);
+			dbAdapter.insertWallet(namewallet, Integer.valueOf(money),  id, descrip);
 			Toast.makeText(getApplicationContext(), "Wallet has been created 😏", Toast.LENGTH_LONG).show();
 			CreateWalletActivity.this.finish();
 		}

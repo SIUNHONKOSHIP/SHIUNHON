@@ -34,11 +34,50 @@
 
     </GridLayout>
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="60dp"
+        android:columnCount="1" >
+
+        <TextView
+            android:id="@+id/tv_detailwallet_titlebalance"
+            android:layout_column="0"
+            android:layout_gravity="fill_horizontal"
+            android:layout_row="0"
+            android:gravity="center"
+            android:text="BALANCE"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tv_detailwallet_amount"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tv_detailwallet_originalamount"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_detailwallet_notice"
+            android:layout_column="0"
+            android:layout_gravity="fill_horizontal"
+            android:layout_row="3"
+            android:gravity="center"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </GridLayout>
+
     <ListView
         android:id="@+id/lv_detailwallet_listhistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp" >
+        android:layout_marginTop="150dp" >
 
     </ListView>
 
