@@ -10,9 +10,12 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -20,6 +23,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -34,13 +38,19 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     String name_wallet, name_income;
     int mYear, mMonth, mDay, mHour, mMinute;
     Dialog mDialog;
+    TextView tvTittle, tvAmount, tvDes, tvWallet, tvCate, tvDate, tvTime;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_income);
         
         Intent intent = getIntent();
 	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
+	    
+	    Typeface light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
         
@@ -65,11 +75,31 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         btnTime.setOnClickListener(new MyEvent());
         
         txtAmount = (EditText)findViewById(R.id.txt_income_amount);
+        txtAmount.setTypeface(light);
         txtNotice = (EditText)findViewById(R.id.txt_income_notice);
+        txtNotice.setTypeface(light);
         txtDate = (EditText)findViewById(R.id.txt_income_date);
+        txtDate.setTypeface(light);
         txtTime = (EditText)findViewById(R.id.txt_income_time);
+        txtTime.setTypeface(light);
+        
         setCurrentDate();
         setCurrentTime();
+        
+        tvTittle = (TextView)findViewById(R.id.tv_income);
+        tvTittle.setTypeface(light);
+        tvAmount = (TextView)findViewById(R.id.tv_income_amount);
+        tvAmount.setTypeface(light);
+        tvDes = (TextView)findViewById(R.id.tv_income_notice);      
+        tvDes.setTypeface(light);
+        tvWallet = (TextView)findViewById(R.id.tv_income_walletname);
+        tvWallet.setTypeface(light);
+        tvCate = (TextView)findViewById(R.id.tv_income_category);
+        tvCate.setTypeface(light);
+        tvDate = (TextView)findViewById(R.id.tv_income_date);
+        tvDate.setTypeface(light);
+        tvTime = (TextView)findViewById(R.id.tv_income_time);
+        tvTime.setTypeface(light);
     }
     /**
 	 * thiet lap ngay thang nam hien tai
