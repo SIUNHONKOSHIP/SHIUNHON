@@ -115,11 +115,8 @@ public class HomeActivity extends Activity{
 			if(v.getId()==R.id.btn_home_income)
 			{
 				Bundle bundle=new Bundle();
-				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
 				Intent intent = new Intent (HomeActivity.this, IncomeActivity.class);
-				//Ä�Æ°a Bundle vÃ o Intent
 				intent.putExtra("DATA_ACCOUNT", bundle);
 				startActivity(intent);
 			}
@@ -144,9 +141,9 @@ public class HomeActivity extends Activity{
 				startActivity(intent);
 			}
 			else if(v.getId()==R.id.btn_home_statistic) {
-				//Intent intent = new Intent (HomeActivity.this, StatisticActivity.class);
-				//startActivity(intent);
-				Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent (HomeActivity.this, DiaryActivity.class);
+				startActivity(intent);
+				//Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
