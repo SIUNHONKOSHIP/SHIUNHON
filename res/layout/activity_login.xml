@@ -28,12 +28,10 @@
             android:ems="10"
             android:gravity="center_vertical|start"
             android:hint="Username"
+            android:text="admin"
             android:textColor="#33CCFF"
             android:textColorHint="#CCFFFFFF"
-            android:textColorLink="#CCFFFFFF"
-            android:text="lqnhu"
-             />
-
+            android:textColorLink="#CCFFFFFF" />
 
         <EditText
             android:id="@+id/txt_login_password"

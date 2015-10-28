@@ -69,6 +69,10 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".DiaryActivity"></activity>
+        
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".CreateCategoryIncomeActivity"></activity>
     </application>
 
 </manifest>

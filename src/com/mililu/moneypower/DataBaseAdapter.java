@@ -251,11 +251,14 @@ public class DataBaseAdapter {
         return db.rawQuery(selectQuery, null);
     }
     
-    /* public Cursor getListWalletOfUser2(int id_user) {
-    	Cursor cursor=db.query("tbl_WALLET", null, " ID_ACCOUNT=?", new String[]{String.valueOf(id_user)}, null, null, null);
-    	return cursor;
-	} */
-    
+	public void insertCategoryIncome(String nameincome){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("NAME_INCOME", nameincome);
+		// Insert the row into your table
+		db.insert("tbl_INCOME", null, newValues);
+	}
+	
     public Cursor getCategoryIncomeCursor() {
         // Select All Query
         String selectQuery = "SELECT ID_INC AS _id, * FROM tbl_INCOME";

@@ -101,17 +101,19 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         tvTime = (TextView)findViewById(R.id.tv_income_time);
         tvTime.setTypeface(light);
     }
+    
     /**
-	 * thiet lap ngay thang nam hien tai
-	 */
-	 public void setCurrentDate(){
-		 Calendar cal=Calendar.getInstance();
-		 mDay=cal.get(Calendar.DAY_OF_MONTH);
-		 mMonth=cal.get(Calendar.MONTH);
-		 mYear=cal.get(Calendar.YEAR);
-		 txtDate.setText(mDay+"-"+(mMonth+1)+"-"+mYear);
-	 }
-    /**
+     * thiet lap ngay thang nam hien tai
+     */
+	public void setCurrentDate(){
+		Calendar cal=Calendar.getInstance();
+		mDay=cal.get(Calendar.DAY_OF_MONTH);
+		mMonth=(cal.get(Calendar.MONTH)+1);
+		mYear=cal.get(Calendar.YEAR);
+		txtDate.setText(mDay+"-"+(mMonth)+"-"+mYear);
+	}
+    
+	 /**
 	 * thiet lap gio hien tai
 	 */
 	 public void setCurrentTime(){
@@ -124,7 +126,6 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
      * Function to load the spinner data from SQLite database
      * */    
     private void loadSpinnerDataWallet() {
-    	//Toast.makeText(getApplicationContext(), "ID: " + id_curent_user, Toast.LENGTH_LONG).show();
     	dbAdapter = new DataBaseAdapter(getApplicationContext());
 
         // Spinner Drop down cursor
@@ -177,6 +178,9 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 			else if(v.getId() == R.id.btn_income_time){
 				showDialog(2);
 			}
+			else if(v.getId() == R.id.btn_income_createcategory){
+				DoCreateCategoryIncome();
+			}
 		}
 	}
     
@@ -212,6 +216,10 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		Toast.makeText(getApplicationContext(), "thanh cong", Toast.LENGTH_LONG).show();
     		ClearTextBox();
     	}
+    }
+    private void DoCreateCategoryIncome(){
+    	Intent intent = new Intent (IncomeActivity.this, CreateCategoryIncomeActivity.class);
+		startActivity(intent);
     }
     
     private void ClearTextBox(){

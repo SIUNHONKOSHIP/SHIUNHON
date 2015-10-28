@@ -103,8 +103,6 @@ public class HomeActivity extends Activity{
 	            selectItemFromDrawer(position);
 	        }
 	    });
-	    
-	    Toast.makeText(HomeActivity.this, String.valueOf(id_curent_user), Toast.LENGTH_LONG).show();
 	}
 	
 	private class MyEvent implements OnClickListener{

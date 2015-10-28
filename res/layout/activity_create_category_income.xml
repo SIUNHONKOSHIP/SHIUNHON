@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:columnCount="3"
+        android:rowCount="1" >
+
+        <Button
+            android:id="@+id/btn_createcategoryincome_back"
+            android:layout_column="0"
+            android:layout_gravity="left|center_vertical"
+            android:layout_row="0"
+            android:text="Back" />
+
+        <Button
+            android:id="@+id/btn_createcategoryincome_OK"
+            android:layout_column="2"
+            android:layout_gravity="right|center_vertical"
+            android:layout_row="0"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="OK" />
+
+        <TextView
+            android:id="@+id/tv_createcategoryincome_tittle"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:layout_row="0"
+            android:text="Create Income" />
+
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp" >
+
+        <TextView
+            android:id="@+id/tv_createcategoryincome_nameincome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ten thu nhap" />
+
+        <EditText
+            android:id="@+id/txt_createcategoryincome_nameincome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+</FrameLayout>
