@@ -3,6 +3,7 @@ package com.mililu.moneypower;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,8 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,12 +58,8 @@ public class LoginActivity extends Activity {
 	    // Set OnClick Listener on SignUp button 
 	    btnLogin.setOnClickListener(new MyEvent());
 	    btnRegister.setOnClickListener(new MyEvent());
-	    //
 	}
-	
-	/** Ham tao su kien khi nhan button
-	 *
-	 */
+
 	private class MyEvent implements OnClickListener {
 		@Override
 		public void onClick(View v) {
@@ -83,17 +82,11 @@ public class LoginActivity extends Activity {
 		CreateDB();
 	}
 	
-	/**
-	 * Create Database
-	 */
 	private void CreateDB() {
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
 	}
-	
-	/** Ham xu ly dang nhap
-	 * 
-	 */
+
 	public void Login(){
 		String username = txtUserName.getText().toString(); 
 		String password = txtPassword.getText().toString(); 
@@ -140,10 +133,7 @@ public class LoginActivity extends Activity {
 			mAccountCorsor.close();
 		}
 	}
-	
-	/** 
-	 * Delete database
-	 */
+
 	public void DeleteDB(){
 		String msg = "";
 		if (deleteDatabase("DARFTMONEYPOWER.db")==true){
@@ -152,11 +142,9 @@ public class LoginActivity extends Activity {
 		else{
 			msg = "Failed!";
 		}
-		Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_LONG).show();
+		Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
 	}
-	/**
-	 * Delete and create Database again
-	 */
+
 	public void ResetDatabase() {
 		AlertDialog.Builder b = new Builder(LoginActivity.this);
 		b.setTitle("Reset Database");
@@ -167,6 +155,7 @@ public class LoginActivity extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				DeleteDB();
 				CreateDB();
+				Toast.makeText(LoginActivity.this, "Database has been reset 😎", Toast.LENGTH_SHORT).show();
 			}
 		});
 		b.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -177,8 +166,9 @@ public class LoginActivity extends Activity {
 			}
 		});
 		b.show();
-		Toast.makeText(LoginActivity.this, "Database has been reset 😎", Toast.LENGTH_LONG).show();
+		
 	}
+	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -209,4 +199,30 @@ public class LoginActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+	    View v = getCurrentFocus();
+
+	    if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && 
+	            v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
+	        int scrcoords[] = new int[2];
+	        v.getLocationOnScreen(scrcoords);
+	        float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+	        float y = ev.getRawY() + v.getTop() - scrcoords[1];
+
+	        if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
+	            hideKeyboard(this);
+	    }
+	    return super.dispatchTouchEvent(ev);
+	}
+
+	public static void hideKeyboard(Activity activity) {
+	    if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+	        InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+	        imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+	    }
+	}
+		
+
 }
