@@ -246,7 +246,7 @@ public class DataBaseAdapter {
 	   
     public Cursor getListWalletOfUser(int id_user) {
     	// Select All Query
-        String selectQuery = "SELECT ID_WALLET AS _id, * FROM tbl_WALLET WHERE ID_ACCOUNT=1"; //+ id_user;
+        String selectQuery = "SELECT ID_WALLET AS _id, * FROM tbl_WALLET WHERE ID_ACCOUNT=" + id_user; //+ id_user;
         db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
@@ -303,14 +303,14 @@ public class DataBaseAdapter {
         return db.rawQuery(selectQuery, null);
 	}
 	
-	public Cursor getListDateOfDiary(){ // get date from all wallet. result return day, month, year
-		String selectQuery = "SELECT tbl_DIARY.DAY, tbl_DIARY.MONTH, tbl_DIARY.YEAR FROM tbl_DIARY, tbl_EXP_DETAIL, tbl_INCOME GROUP BY tbl_DIARY.DAY, tbl_DIARY.MONTH, tbl_DIARY.YEAR  ORDER BY tbl_DIARY.YEAR DESC, tbl_DIARY.MONTH DESC, tbl_DIARY.DAY DESC, tbl_DIARY.TIME;";
+	public Cursor getListDateOfDiary(int id_account){ // get date from all wallet. result return day, month, year
+		String selectQuery = "SELECT tbl_DIARY.DAY, tbl_DIARY.MONTH, tbl_DIARY.YEAR FROM tbl_DIARY WHERE tbl_DIARY.ID_ACCOUNT = " + id_account + " GROUP BY tbl_DIARY.DAY, tbl_DIARY.MONTH, tbl_DIARY.YEAR  ORDER BY tbl_DIARY.YEAR DESC, tbl_DIARY.MONTH DESC, tbl_DIARY.DAY DESC, tbl_DIARY.TIME;";
 		db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 	}
 	
-	public Cursor getDiaryByDate(int day, int month, int year){ // result return amount, name giao dich, name wallet, type , notice
-		String selectQuery = "SELECT tbl_DIARY.ID_DIARY, tbl_DIARY.AMOUNT, tbl_INCOME.NAME_INCOME, tbl_EXP_DETAIL.NAME_EXP_DET,tbl_WALLET.NAME_WALLET, tbl_DIARY.TYPE, tbl_DIARY.NOTICE FROM tbl_DIARY, tbl_EXP_DETAIL, tbl_INCOME, tbl_WALLET WHERE (((tbl_DIARY.TYPE = 1 AND tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC) OR (tbl_DIARY.TYPE = 2 AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY.ID_CATEGORY)) AND (tbl_DIARY.ID_WALLET = tbl_WALLET.ID_WALLET) AND (tbl_DIARY.DAY = "+ day + " AND tbl_DIARY.MONTH = "+month+" AND tbl_DIARY.YEAR = "+year+")) GROUP BY tbl_DIARY.ID_DIARY ORDER BY  tbl_DIARY.TIME;";
+	public Cursor getDiaryByDate(int day, int month, int year, int id_account){ // result return amount, name giao dich, name wallet, type , notice
+		String selectQuery = "SELECT tbl_DIARY.ID_DIARY, tbl_DIARY.AMOUNT, tbl_INCOME.NAME_INCOME, tbl_EXP_DETAIL.NAME_EXP_DET,tbl_WALLET.NAME_WALLET, tbl_DIARY.TYPE, tbl_DIARY.NOTICE FROM tbl_DIARY, tbl_EXP_DETAIL, tbl_INCOME, tbl_WALLET WHERE (((tbl_DIARY.TYPE = 1 AND tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC) OR (tbl_DIARY.TYPE = 2 AND tbl_EXP_DETAIL.ID_EXP_DET = tbl_DIARY.ID_CATEGORY)) AND (tbl_DIARY.ID_WALLET = tbl_WALLET.ID_WALLET) AND (tbl_DIARY.DAY = "+ day + " AND tbl_DIARY.MONTH = "+month+" AND tbl_DIARY.YEAR = "+year+") AND (tbl_DIARY.ID_ACCOUNT = " + id_account + ")) GROUP BY tbl_DIARY.ID_DIARY ORDER BY  tbl_DIARY.TIME;";
 		db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 	}

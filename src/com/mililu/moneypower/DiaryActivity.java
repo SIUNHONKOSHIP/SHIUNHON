@@ -20,7 +20,7 @@ public class DiaryActivity extends ExpandableListActivity{
 	
 	private ArrayList<String> parentItems = new ArrayList<String>();
 	private ArrayList<Object> childItems = new ArrayList<Object>();
-	
+	int id_curent_user;
 	ArrayList<Diary> child; 
 	
 	ExpandableListView expandableList;
@@ -47,10 +47,7 @@ public class DiaryActivity extends ExpandableListActivity{
 		expandableList.setGroupIndicator(null);
 		expandableList.setClickable(true);
 
-		//setGroupParents();
-		//setChildData();
-		setDATA();
-		//test();
+		
 		
 		adapter = new AdapterDiary(parentItems, childItems);
 		
@@ -58,6 +55,13 @@ public class DiaryActivity extends ExpandableListActivity{
 		expandableList.setAdapter(adapter);
 		expandableList.setOnChildClickListener(this);
 		
+		Intent intent = getIntent();
+	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
+	    id_curent_user = bundle.getInt("ID_ACCOUNT");
+		
+		
+		
+		setDATA();
 		/// ham mo toan bo group
 		for (int i = 0; i < adapter.getGroupCount(); i++){
 			expandableList.expandGroup(i);
@@ -65,7 +69,7 @@ public class DiaryActivity extends ExpandableListActivity{
 	}
 
 	public void setDATA(){
-		cursorDiaryDate=dbAdapter.getListDateOfDiary();
+		cursorDiaryDate=dbAdapter.getListDateOfDiary(id_curent_user);
 		if (cursorDiaryDate.getCount()<1){
 			Toast.makeText(DiaryActivity.this, "You don't have any history !!", Toast.LENGTH_SHORT).show();
 		}
@@ -78,7 +82,7 @@ public class DiaryActivity extends ExpandableListActivity{
 				
 				parentItems.add(day +"/"+ month +"/"+ year);
 				
-				cursorDiaryData = dbAdapter.getDiaryByDate(day, month, year);
+				cursorDiaryData = dbAdapter.getDiaryByDate(day, month, year, id_curent_user );
 				cursorDiaryData.moveToFirst();
 				
 				child = new ArrayList<Diary>();

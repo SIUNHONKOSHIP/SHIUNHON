@@ -82,9 +82,9 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 	 public void setCurrentDate(){
 		 Calendar cal=Calendar.getInstance();
 		 mDay=cal.get(Calendar.DAY_OF_MONTH);
-		 mMonth=cal.get(Calendar.MONTH);
+		 mMonth=(cal.get(Calendar.MONTH)+1);
 		 mYear=cal.get(Calendar.YEAR);
-		 txtDate.setText(mDay+"-"+(mMonth+1)+"-"+mYear);
+		 txtDate.setText(mDay+"-"+(mMonth)+"-"+mYear);
 	 }
     /**
 	 * thiet lap gio hien tai
@@ -199,7 +199,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     		dbAdapter.insertDiary(diary);
     		dbAdapter.updateWallet(id_wallet, newmoney);
     		dbAdapter.close();
-    		//Toast.makeText(getApplicationContext(), dbAdapter.getAmountOfWallet(String.valueOf(id_wallet)), Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(), "Thanh Cong", Toast.LENGTH_SHORT).show();
     		ClearTextBox();
     	}
     }
@@ -246,9 +246,9 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 		 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			 // TODO Auto-generated method stub
 			 mYear=year;
-			 mMonth=monthOfYear;
+			 mMonth=monthOfYear + 1;
 			 mDay=dayOfMonth;
-			 txtDate.setText(mDay+"-"+(mMonth+1)+"-"+mYear);
+			 txtDate.setText(mDay+"-"+(mMonth)+"-"+mYear);
 		 }
 	 };
 	 private TimePickerDialog.OnTimeSetListener timeChange = new OnTimeSetListener() {
@@ -265,10 +265,10 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 	 protected Dialog onCreateDialog(int id) {
 		 // TODO Auto-generated method stub
 		 if(id==1){
-			 return new DatePickerDialog(this, dateChange, mYear, mMonth, mDay);
+			 return new DatePickerDialog(this, dateChange, mYear, mMonth-1, mDay);
 		 }
 		 else if(id==2){
-			 return new TimePickerDialog(this, timeChange, mHour, mMinute, false );
+			 return new TimePickerDialog(this, timeChange, mHour, mMinute, true );
 		 }
 		 return null;
 	 }

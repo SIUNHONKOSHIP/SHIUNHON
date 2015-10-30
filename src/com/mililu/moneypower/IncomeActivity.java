@@ -260,9 +260,9 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 		 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			 // TODO Auto-generated method stub
 			 mYear=year;
-			 mMonth=monthOfYear;
+			 mMonth=monthOfYear+1;
 			 mDay=dayOfMonth;
-			 txtDate.setText(mDay+"-"+(mMonth+1)+"-"+mYear);
+			 txtDate.setText(mDay+"-"+(mMonth)+"-"+mYear);
 		 }
 	 };
 	 private TimePickerDialog.OnTimeSetListener timeChange = new OnTimeSetListener() {
@@ -279,7 +279,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 	 protected Dialog onCreateDialog(int id) {
 		 // TODO Auto-generated method stub
 		 if(id==1){
-			 return new DatePickerDialog(this, dateChange, mYear, mMonth, mDay);
+			 return new DatePickerDialog(this, dateChange, mYear, mMonth-1, mDay);
 		 }
 		 else if(id==2){
 			 return new TimePickerDialog(this, timeChange, mHour, mMinute, false );

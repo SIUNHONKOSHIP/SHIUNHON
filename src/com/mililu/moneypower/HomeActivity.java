@@ -82,7 +82,8 @@ public class HomeActivity extends Activity{
 	    mNavItems.add(new NavItem("Wallet", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Income", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Expenture", "", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Category", "Income/Expenditure", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Category", "Category of Income & Expenditure", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Diary", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Report", "", R.drawable.ic_launcher));
 	    mNavItems.add(new NavItem("About us", "Information about this app", R.drawable.icon_info));
 	    mNavItems.add(new NavItem("Logout", "", R.drawable.icon_info));
@@ -120,28 +121,20 @@ public class HomeActivity extends Activity{
 			}
 			else if(v.getId()==R.id.btn_home_expenditure) {
 				Bundle bundle=new Bundle();
-				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
 				Intent intent = new Intent (HomeActivity.this, ExpenditureActivity.class);
-				//Ä�Æ°a Bundle vÃ o Intent
 				intent.putExtra("DATA_ACCOUNT", bundle);
 				startActivity(intent);
 			}
 			else if(v.getId()==R.id.btn_home_wallet) {
 				Bundle bundle=new Bundle();
-				//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
 				Intent intent = new Intent (HomeActivity.this, WalletActivity.class);
-				//Ä�Æ°a Bundle vÃ o Intent
 				intent.putExtra("DATA_ACCOUNT", bundle);
 				startActivity(intent);
 			}
 			else if(v.getId()==R.id.btn_home_statistic) {
-				Intent intent = new Intent (HomeActivity.this, DiaryActivity.class);
-				startActivity(intent);
-				//Toast.makeText(HomeActivity.this, "Under deverlopment.", Toast.LENGTH_LONG).show();
+				Toast.makeText(HomeActivity.this, "Under developing", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
@@ -154,37 +147,42 @@ public class HomeActivity extends Activity{
 	 
 		if (position == 0){ /// selected wallet
 			Bundle bundle=new Bundle();
-			//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
 			Intent intent = new Intent (HomeActivity.this, WalletActivity.class);
-			//Ä�Æ°a Bundle vÃ o Intent
 			intent.putExtra("DATA_ACCOUNT", bundle);
 			startActivity(intent);
 		}
 		else if (position == 1){  /// selected income
 			Bundle bundle=new Bundle();
-			//Ä‘Æ°a dá»¯ liá»‡u riÃªng láº» vÃ o Bundle
 			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			// Táº¡o Intend Ä‘á»ƒ má»Ÿ HomeActivity
 			Intent intent = new Intent (HomeActivity.this, IncomeActivity.class);
-			//Ä�Æ°a Bundle vÃ o Intent
 			intent.putExtra("DATA_ACCOUNT", bundle);
 			startActivity(intent);
 		}
 		else if (position == 2){ ///selected expenditure
-			Toast.makeText(HomeActivity.this, "You have just select Expenture", Toast.LENGTH_LONG).show();
+			Bundle bundle=new Bundle();
+			bundle.putInt("ID_ACCOUNT", id_curent_user);
+			Intent intent = new Intent (HomeActivity.this, ExpenditureActivity.class);
+			intent.putExtra("DATA_ACCOUNT", bundle);
+			startActivity(intent);
 		}
 		else if (position == 3){ ///selected category
 			Toast.makeText(HomeActivity.this, "You have just select Category", Toast.LENGTH_LONG).show();
 		}
-		else if (position == 4){ ///selected report
+		else if (position == 4){ ///selected Diary
+			Bundle bundle=new Bundle();
+			bundle.putInt("ID_ACCOUNT", id_curent_user);
+			Intent intent = new Intent (HomeActivity.this, DiaryActivity.class);
+			intent.putExtra("DATA_ACCOUNT", bundle);
+			startActivity(intent);
+		}
+		else if (position == 5){ ///selected report
 			Toast.makeText(HomeActivity.this, "You have just select Report", Toast.LENGTH_LONG).show();
 		}
-		else if (position == 5){ ///selected about us
+		else if (position == 6){ ///selected about us
 			Toast.makeText(HomeActivity.this, "You have just select About us", Toast.LENGTH_LONG).show();
 		}
-		else if (position == 6){ ///selected logout
+		else if (position == 7){ ///selected logout
 			HomeActivity.this.finish();
 		}		
 	    mDrawerList.setItemChecked(position, true);
