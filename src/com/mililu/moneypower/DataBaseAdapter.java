@@ -314,5 +314,45 @@ public class DataBaseAdapter {
 		db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 	}
+	
+	public int getTotalIncome(int month, int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1) AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
+	
+	public int getTotalExpenditure(int month, int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2) AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
 }
 

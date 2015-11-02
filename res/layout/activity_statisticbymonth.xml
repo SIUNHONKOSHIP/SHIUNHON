@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp" >
+
+        <Button
+            android:id="@+id/btn_statisticbymonth_back"
+            android:layout_gravity="left|center_vertical"
+            android:text="Back" />
+
+        <TextView
+            android:id="@+id/tv_statisticbymonth_title"
+            android:layout_gravity="center"
+            android:text="TextView" />
+
+
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical" >
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/btn_statisticbymonth_perviousmonth"
+                android:layout_gravity="left"
+                android:text="&lt;" />
+
+            <TextView
+                android:id="@+id/tv_statisticbymonth_date"
+                android:layout_gravity="center"
+                android:text="TextView" />
+
+            <Button
+                android:id="@+id/btn_statisticbymonth_nextmonth"
+                android:layout_width="wrap_content"
+                android:layout_gravity="right"
+                android:text=">" />
+
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/tv_statisticbymonth_totalincome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Income: " />
+
+        <TextView
+            android:id="@+id/tv_statisticbymonth_totalexpenditure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expenditure: " />
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+    </LinearLayout>
+
+</FrameLayout>

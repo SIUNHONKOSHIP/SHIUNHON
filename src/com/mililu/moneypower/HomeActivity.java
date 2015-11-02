@@ -28,7 +28,7 @@ public class HomeActivity extends Activity{
 	 
 	ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 	
-	Button btnWallet, btnIncome, btnExpenditure, btnStatistic;
+	Button btnMenu, btnWallet, btnIncome, btnExpenditure, btnStatistic;
 	TextView lableFullname, lableUsername;
 	DataBaseAdapter dbAdapter;
 	int id_curent_user;
@@ -51,7 +51,10 @@ public class HomeActivity extends Activity{
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
 	    fullname_current_user = bundle.getString("FULLNAME_ACCOUNT");
 	    username_current_user = bundle.getString("USERNAME_ACCOUNT");
+	    
 	    // Get The Reference Of Buttons and Edit Text
+	    btnMenu = (Button)findViewById(R.id.btn_home_menu);
+	    
 	    btnWallet=(Button)findViewById(R.id.btn_home_wallet);
 	    Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
 	    btnWallet.setTypeface(font);
@@ -73,17 +76,20 @@ public class HomeActivity extends Activity{
 	    lableFullname.setText(fullname_current_user);
 	    lableUsername.setText(username_current_user);
 	    
-	    // Set OnClick Listener on SignUp button 
+	    // Set OnClick Listener
+	    
 	    btnIncome.setOnClickListener(new MyEvent());
 	    btnExpenditure.setOnClickListener(new MyEvent());
 	    btnWallet.setOnClickListener(new MyEvent());
 	    btnStatistic.setOnClickListener(new MyEvent());
+	    btnMenu.setOnClickListener(new MyEvent());
 	    
+	    // Add list menu
 	    mNavItems.add(new NavItem("Wallet", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Income", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Expenture", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Category", "Category of Income & Expenditure", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Diary", "", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Diary", "Everything you have wrote", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Report", "", R.drawable.ic_launcher));
 	    mNavItems.add(new NavItem("About us", "Information about this app", R.drawable.icon_info));
 	    mNavItems.add(new NavItem("Logout", "", R.drawable.icon_info));
@@ -104,6 +110,8 @@ public class HomeActivity extends Activity{
 	            selectItemFromDrawer(position);
 	        }
 	    });
+	    
+	    
 	}
 	
 	private class MyEvent implements OnClickListener{
@@ -134,7 +142,14 @@ public class HomeActivity extends Activity{
 				startActivity(intent);
 			}
 			else if(v.getId()==R.id.btn_home_statistic) {
-				Toast.makeText(HomeActivity.this, "Under developing", Toast.LENGTH_LONG).show();
+				Bundle bundle=new Bundle();
+				bundle.putInt("ID_ACCOUNT", id_curent_user);
+				Intent intent = new Intent (HomeActivity.this, StatisticbyMonthActivity.class);
+				intent.putExtra("DATA_ACCOUNT", bundle);
+				startActivity(intent);
+			}
+			else if (v.getId()==R.id.btn_home_menu){
+				mDrawerLayout.openDrawer(mDrawerPane);
 			}
 		}
 	}
@@ -177,7 +192,11 @@ public class HomeActivity extends Activity{
 			startActivity(intent);
 		}
 		else if (position == 5){ ///selected report
-			Toast.makeText(HomeActivity.this, "You have just select Report", Toast.LENGTH_LONG).show();
+			Bundle bundle=new Bundle();
+			bundle.putInt("ID_ACCOUNT", id_curent_user);
+			Intent intent = new Intent (HomeActivity.this, StatisticbyMonthActivity.class);
+			intent.putExtra("DATA_ACCOUNT", bundle);
+			startActivity(intent);
 		}
 		else if (position == 6){ ///selected about us
 			Toast.makeText(HomeActivity.this, "You have just select About us", Toast.LENGTH_LONG).show();

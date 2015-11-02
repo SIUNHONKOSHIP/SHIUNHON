@@ -73,6 +73,10 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".CreateCategoryIncomeActivity"></activity>
+        
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".StatisticbyMonthActivity"></activity>
     </application>
 
 </manifest>
