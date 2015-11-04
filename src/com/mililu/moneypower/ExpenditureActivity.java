@@ -45,6 +45,10 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
         Intent intent = getIntent();
 	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
 	    
+	 // Create a instance of SQLite Database
+	    dbAdapter =new DataBaseAdapter(this);
+	    dbAdapter = dbAdapter.open();
+	    
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
         
         // Spinner element
@@ -100,7 +104,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
      * */    
     private void loadSpinnerDataWallet() {
     	//Toast.makeText(getApplicationContext(), "ID: " + id_curent_user, Toast.LENGTH_LONG).show();
-    	dbAdapter = new DataBaseAdapter(getApplicationContext());
+    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
 
         // Spinner Drop down cursor
         walletsCursor = dbAdapter.getListWalletOfUser(id_curent_user);
@@ -119,7 +123,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
      * Load category income into spinner
      */
     private void loadSpinnerDataCategoryExpen() {
-    	dbAdapter = new DataBaseAdapter(getApplicationContext());
+    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
         // Spinner Drop down cursor
         categoryExpenCursor = dbAdapter.getCategoryExpenCursor();
         // map the cursor column names to the TextView ids in the layout
@@ -136,7 +140,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     }
     
     private void loadSpinnerDataCategoryExpenDetail(int id) {
-    	dbAdapter = new DataBaseAdapter(getApplicationContext());
+    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
         // Spinner Drop down cursor
         categoryExpenDetailCursor = dbAdapter.getCategoryExpenDetail(id);
         // map the cursor column names to the TextView ids in the layout
@@ -175,9 +179,8 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     private void DoInsertExpen(){
     	String mAmount = txtAmount.getText().toString();
     	String mNotice = txtNotice.getText().toString();
-    	String mDate = txtDate.getText().toString();
     	String mTime = txtTime.getText().toString();
-    	if(mAmount.equals("")||mDate.equals("")||mTime.equals("")){
+    	if(mAmount.equals("")){
     		Toast.makeText(getApplicationContext(), "Please insert information", Toast.LENGTH_LONG).show();
     	}
     	else {
@@ -198,7 +201,6 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     		
     		dbAdapter.insertDiary(diary);
     		dbAdapter.updateWallet(id_wallet, newmoney);
-    		dbAdapter.close();
     		Toast.makeText(getApplicationContext(), "Thanh Cong", Toast.LENGTH_SHORT).show();
     		ClearTextBox();
     	}

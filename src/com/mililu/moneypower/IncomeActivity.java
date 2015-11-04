@@ -53,6 +53,10 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         Intent intent = getIntent();
 	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
 	    
+	    // Create a instance of SQLite Database
+	    dbAdapter =new DataBaseAdapter(this);
+	    dbAdapter = dbAdapter.open();
+	    
 	    Typeface light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    
 	    id_curent_user = bundle.getInt("ID_ACCOUNT");
@@ -129,7 +133,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
      * Function to load the spinner data from SQLite database
      * */    
     private void loadSpinnerDataWallet() {
-    	dbAdapter = new DataBaseAdapter(getApplicationContext());
+    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
 
         // Spinner Drop down cursor
         walletsCursor = dbAdapter.getListWalletOfUser(id_curent_user);
@@ -148,7 +152,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
      * Load category income into spinner
      */
     private void loadSpinnerDataCategoryIncome() {
-    	dbAdapter = new DataBaseAdapter(getApplicationContext());
+    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
         // Spinner Drop down cursor
         categoryIncomeCursor = dbAdapter.getCategoryIncomeCursor();
         // map the cursor column names to the TextView ids in the layout
@@ -190,10 +194,9 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     private void DoInsertIncome(){
     	String mAmount = txtAmount.getText().toString();
     	String mNotice = txtNotice.getText().toString();
-    	//String mDate = txtDate.getText().toString();
     	String mTime = txtTime.getText().toString();
     	
-    	
+    	//dbAdapter.open();
     	if(mAmount.equals("")||txtDate.getText().equals("")||txtTime.getText().equals("")){
     		Toast.makeText(getApplicationContext(), "Please insert amount, date and hour", Toast.LENGTH_LONG).show();
     	}
@@ -215,7 +218,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		
     		dbAdapter.insertDiary(diary);
     		dbAdapter.updateWallet(id_wallet, newmoney);
-    		dbAdapter.close();
+    		//dbAdapter.close();
     		Toast.makeText(getApplicationContext(), "thanh cong", Toast.LENGTH_LONG).show();
     		ClearTextBox();
     	}

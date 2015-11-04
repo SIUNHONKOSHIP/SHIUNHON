@@ -354,5 +354,31 @@ public class DataBaseAdapter {
 		cursor.close();
 		return amount;
 	}
+	
+	public Cursor getListIncomeOfMonth(int month, int year, int id_account){ // get date from all wallet. result return day, month, year
+		String selectQuery = "SELECT tbl_DIARY.ID_CATEGORY, tbl_INCOME.NAME_INCOME FROM tbl_DIARY, tbl_INCOME WHERE (((tbl_DIARY.TYPE = 1) AND (tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC)) AND (tbl_DIARY.MONTH = "+month+" AND tbl_DIARY.YEAR = "+year+") AND (tbl_DIARY.ID_ACCOUNT = " + id_account + ") ) GROUP BY tbl_DIARY.ID_CATEGORY;";
+		db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+	}
+	
+	public int CalculateIncomeByMonth(int id_category, int month, int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1 AND ID_CATEGORY = " + id_category + ") AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
 }
 

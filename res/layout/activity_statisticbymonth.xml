@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical" >
 
     <GridLayout
         android:layout_width="match_parent"
@@ -32,18 +33,24 @@
 
             <Button
                 android:id="@+id/btn_statisticbymonth_perviousmonth"
-                android:layout_gravity="left"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
                 android:text="&lt;" />
 
             <TextView
                 android:id="@+id/tv_statisticbymonth_date"
-                android:layout_gravity="center"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical|center"
+                android:layout_row="0"
                 android:text="TextView" />
 
             <Button
                 android:id="@+id/btn_statisticbymonth_nextmonth"
                 android:layout_width="wrap_content"
-                android:layout_gravity="right"
+                android:layout_column="0"
+                android:layout_gravity="right|center_vertical"
+                android:layout_row="0"
                 android:text=">" />
 
         </GridLayout>
@@ -61,9 +68,15 @@
             android:text="Expenditure: " />
 
         <ListView
-            android:id="@+id/listView1"
+            android:id="@+id/lv_statisticbymonth_income"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="260dp" >
+        </ListView>
+
+        <ListView
+            android:id="@+id/lv_statisticbymonth_expenditure"
+            android:layout_width="match_parent"
+            android:layout_height="260dp" >
         </ListView>
 
     </LinearLayout>
