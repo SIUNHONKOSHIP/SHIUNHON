@@ -190,6 +190,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     		Diary diary = new Diary();
     		diary.setAmount(Integer.valueOf(mAmount));
     		diary.setId_wallet(id_wallet);
+    		diary.setId_parent_category(id_expen);
     		diary.setId_category(id_expen_detail);
     		diary.setId_account(id_curent_user);
     		diary.setDay(mDay);

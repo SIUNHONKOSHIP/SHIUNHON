@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent"
+   android:layout_height="fill_parent">
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp" >
+        android:layout_height="70dp" >
 
         <Button
             android:id="@+id/btn_statisticbymonth_back"
-            android:layout_gravity="left|center_vertical"
+            android:layout_gravity="center_vertical|start"
             android:text="Back" />
 
         <TextView
             android:id="@+id/tv_statisticbymonth_title"
             android:layout_gravity="center"
-            android:text="TextView" />
-
+            android:text="Statistic"
+            android:textSize="26sp" />
 
     </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         android:orientation="vertical" >
 
         <GridLayout
@@ -34,7 +33,7 @@
             <Button
                 android:id="@+id/btn_statisticbymonth_perviousmonth"
                 android:layout_column="0"
-                android:layout_gravity="left|center_vertical"
+                android:layout_gravity="center_vertical|start"
                 android:layout_row="0"
                 android:text="&lt;" />
 
@@ -43,13 +42,14 @@
                 android:layout_column="0"
                 android:layout_gravity="center_vertical|center"
                 android:layout_row="0"
-                android:text="TextView" />
+                android:text="Date"
+                android:textSize="22sp" />
 
             <Button
                 android:id="@+id/btn_statisticbymonth_nextmonth"
                 android:layout_width="wrap_content"
                 android:layout_column="0"
-                android:layout_gravity="right|center_vertical"
+                android:layout_gravity="center_vertical|end"
                 android:layout_row="0"
                 android:text=">" />
 
@@ -59,26 +59,62 @@
             android:id="@+id/tv_statisticbymonth_totalincome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Income: " />
+            android:layout_margin="5dp"
+            android:text="Income: "
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_statisticbymonth_totalexpenditure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expenditure: " />
+            android:layout_margin="5dp"
+            android:text="Expenditure: "
+            android:textSize="18sp" />
 
-        <ListView
-            android:id="@+id/lv_statisticbymonth_income"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="260dp" >
-        </ListView>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/lv_statisticbymonth_expenditure"
+            <TextView
+                android:id="@+id/tv_statisticbymonth_titleincome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#b0c4de"
+                android:gravity="center"
+                android:text="Income"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ListView
+                android:id="@+id/lv_statisticbymonth_income"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="260dp" >
-        </ListView>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_statisticbymonth_titleexpend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#b0c4de"
+                android:gravity="center"
+                android:text="Expenditure"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ListView
+                android:id="@+id/lv_statisticbymonth_expenditure"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" >
+            </ListView>
+
+        </LinearLayout>
 
     </LinearLayout>
+</RelativeLayout>
 
-</FrameLayout>

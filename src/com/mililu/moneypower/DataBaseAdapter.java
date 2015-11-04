@@ -17,7 +17,7 @@ public class DataBaseAdapter {
 	static final String DATABASE_CREATE_INCOME = "create table tbl_INCOME (ID_INC integer primary key autoincrement, NAME_INCOME  text); ";
 	static final String DATABASE_CREATE_EXPENDITURE = "create table tbl_EXPENDITURE (ID_EXP integer primary key autoincrement, NAME_EXP text); ";
 	static final String DATABASE_CREATE_EXP_DETAIL = "create table tbl_EXP_DETAIL (ID_EXP_DET integer primary key autoincrement, ID_EXP  integer, NAME_EXP_DET text); ";
-	static final String DATABASE_CREATE_DIARY = "CREATE TABLE `tbl_DIARY` (`ID_DIARY` INTEGER PRIMARY KEY AUTOINCREMENT, `ID_CATEGORY` INTEGER, `ID_WALLET` INTEGER, `AMOUNT` NUMERIC, `ID_ACCOUNT` INTEGER, `DAY` INTEGER, `MONTH` INTEGER, `YEAR` INTEGER, `TIME` TEXT, `TYPE` INTEGER, `NOTICE` TEXT);";
+	static final String DATABASE_CREATE_DIARY = "CREATE TABLE `tbl_DIARY` (`ID_DIARY` INTEGER PRIMARY KEY AUTOINCREMENT, `ID_PARENT_CATEGORY` INTEGER, `ID_CATEGORY` INTEGER, `ID_WALLET` INTEGER, `AMOUNT` NUMERIC, `ID_ACCOUNT` INTEGER, `DAY` INTEGER, `MONTH` INTEGER, `YEAR` INTEGER, `TIME` TEXT, `TYPE` INTEGER, `NOTICE` TEXT);";
 	static final String DATABASE_INSERT_EXPENDITURE = "insert into tbl_EXPENDITURE (ID_EXP, NAME_EXP) values (1, 'Ăn uống'), (2, 'Đi lại'), (3, 'Dịch vụ sinh hoạt'), (4, 'Hưởng thụ'); ";
 	static final String DATABASE_INSERT_EXP_DET = "insert into tbl_EXP_DETAIL (ID_EXP_DET, ID_EXP, NAME_EXP_DET) values (1, 1, 'Đi chợ/siêu thị'), (2, 1, 'Cafe'), (3, 1, 'Cơm tiệm'), (4, 2, 'Gửi xe'), (5, 2, 'Xăng xe'), (6, 2, 'Rửa xe'), (7, 3, 'Điện thoại'), (8, 3, 'Điện'), (9, 3, 'Nước'), (10, 4, 'Du lịch'), (11, 4, 'Xem phim'); ";
 	static final String DATABASE_INSERT_INCOME = "insert into tbl_INCOME (ID_INC, NAME_INCOME) values (1, 'Lương'), (2, 'Thưởng'), (3, 'Lãi'), (4, 'Lãi tiết kiệm'), (5, 'Được cho/tặng'), (6, 'Khác'); ";
@@ -283,6 +283,7 @@ public class DataBaseAdapter {
     public void insertDiary(Diary diary){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
+		newValues.put("ID_PARENT_CATEGORY", diary.getId_parent_category());
 		newValues.put("ID_CATEGORY", diary.getId_category());
 		newValues.put("ID_WALLET",diary.getId_wallet());
 		newValues.put("ID_ACCOUNT",diary.getId_account());
@@ -361,8 +362,34 @@ public class DataBaseAdapter {
         return db.rawQuery(selectQuery, null);
 	}
 	
+	public Cursor getListExpenditureOfMonth(int month, int year, int id_account){ // get date from all wallet. result return day, month, year
+		String selectQuery = "SELECT tbl_DIARY.ID_PARENT_CATEGORY, tbl_EXPENDITURE.NAME_EXP FROM tbl_DIARY, tbl_EXPENDITURE WHERE (((tbl_DIARY.TYPE = 2) AND (tbl_DIARY.ID_PARENT_CATEGORY = tbl_EXPENDITURE.ID_EXP)) AND (tbl_DIARY.MONTH = "+month+" AND tbl_DIARY.YEAR = "+year+") AND (tbl_DIARY.ID_ACCOUNT = " + id_account + ") ) GROUP BY tbl_DIARY.ID_PARENT_CATEGORY;";
+		db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+	}
+	
 	public int CalculateIncomeByMonth(int id_category, int month, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1 AND ID_CATEGORY = " + id_category + ") AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
+	
+	public int CalculateExpendByMonth(int id_category, int month, int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2 AND ID_PARENT_CATEGORY = " + id_category + ") AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
         int amount = 0;

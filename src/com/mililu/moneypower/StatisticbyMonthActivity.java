@@ -77,6 +77,7 @@ public class StatisticbyMonthActivity extends Activity{
 		getTotalIncome(mMonth, mYear, id_curent_user);
 	    getTotalExpenditure(mMonth, mYear, id_curent_user);
 	    CalcultateIncome();
+	    CalcultateExpenditure();
 	}
 	
 	private class MyEvent implements OnClickListener{
@@ -98,6 +99,7 @@ public class StatisticbyMonthActivity extends Activity{
 				getTotalIncome(mMonth, mYear, id_curent_user);
 			    getTotalExpenditure(mMonth, mYear, id_curent_user);
 			    CalcultateIncome();
+			    CalcultateExpenditure();
 			}
 			if (v.getId()==R.id.btn_statisticbymonth_nextmonth){
 				if ((mMonth < 12) && (mMonth > 0)){
@@ -111,6 +113,7 @@ public class StatisticbyMonthActivity extends Activity{
 				getTotalIncome(mMonth, mYear, id_curent_user);
 			    getTotalExpenditure(mMonth, mYear, id_curent_user);
 			    CalcultateIncome();
+			    CalcultateExpenditure();
 			}
 		}
 	}
@@ -147,6 +150,32 @@ public class StatisticbyMonthActivity extends Activity{
 			list_income.add("NODATA");
 			adapterIncome = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_income);
 			lvStatisticIncome.setAdapter(adapterIncome);
+		}
+	}
+	
+	private void CalcultateExpenditure(){
+		int balance = 0;
+		list_expenditure.clear();
+		cursorExpen = dbAdapter.getListExpenditureOfMonth(mMonth, mYear, id_curent_user);
+		if (cursorExpen.getCount()>0){
+			
+			cursorExpen.moveToFirst();
+			while(!cursorExpen.isAfterLast()){
+				String name = cursorExpen.getString(cursorExpen.getColumnIndexOrThrow("NAME_EXP"));
+				int id_expend = cursorExpen.getInt(cursorExpen.getColumnIndexOrThrow("ID_PARENT_CATEGORY"));
+				balance = dbAdapter.CalculateExpendByMonth(id_expend, mMonth, mYear, id_curent_user);
+				double rate = Double.valueOf(balance*100/mExpenditure);
+				list_expenditure.add(name + ": " + balance + " (" + rate + "%)");
+				cursorExpen.moveToNext();
+			}
+			cursorExpen.close();
+			adapterExpenditure = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_expenditure);
+			lvStatisticExpen.setAdapter(adapterExpenditure);
+		}
+		else {
+			list_expenditure.add("NODATA");
+			adapterExpenditure = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_expenditure);
+			lvStatisticExpen.setAdapter(adapterExpenditure);
 		}
 	}
 	

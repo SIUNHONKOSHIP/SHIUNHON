@@ -206,6 +206,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		
     		Diary diary = new Diary();
     		diary.setAmount(Integer.valueOf(mAmount));
+    		diary.setId_parent_category(id_income);
     		diary.setId_wallet(id_wallet);
     		diary.setId_category(id_income);
     		diary.setId_account(id_curent_user);

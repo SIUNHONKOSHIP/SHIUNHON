@@ -3,6 +3,7 @@ package com.mililu.moneypower;
 public class Diary {
 	private int id_diary;
 	private int id_category;
+	private int id_parent_category;
 	private String name_categoy;
 	private String name_income;
 	private String name_expen;
@@ -107,5 +108,10 @@ public class Diary {
 	public void setId_account(int id_account) {
 		this.id_account = id_account;
 	}
-	
+	public int getId_parent_category() {
+		return id_parent_category;
+	}
+	public void setId_parent_category(int id_parent_category) {
+		this.id_parent_category = id_parent_category;
+	}
 }
