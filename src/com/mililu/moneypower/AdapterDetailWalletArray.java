@@ -1,5 +1,6 @@
 package com.mililu.moneypower;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import android.app.Activity;
@@ -58,7 +59,8 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 		else {
 			Date.setText(data.getDay() + "/" + data.getMonth() + "/" + data.getYear());
 		}
-		Amount.setText(String.valueOf(data.getAmount())==null?"":data.getAmount() + "VND");
+		//Amount.setText(String.valueOf(data.getAmount())==null?"":data.getAmount() + "VND");
+		Amount.setText(NumberFormat.getCurrencyInstance().format(data.getAmount()));
 		Notice.setText(data.getNotice()==null?"":data.getNotice().toString());
 		
 		return row;

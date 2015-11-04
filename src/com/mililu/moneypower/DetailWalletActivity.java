@@ -1,5 +1,6 @@
 package com.mililu.moneypower;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,8 +143,8 @@ public class DetailWalletActivity extends Activity {
 		}
 	}
 	private void ShowInforWallet(){
-		String money = String.valueOf(dbAdapter.getAmountOfWallet(id_current_wallet));
-		int originalamount = dbAdapter.getOriginalAmountOfWallet(id_current_wallet);
+		String money = NumberFormat.getCurrencyInstance().format(dbAdapter.getAmountOfWallet(id_current_wallet));
+		String originalamount = NumberFormat.getCurrencyInstance().format(dbAdapter.getOriginalAmountOfWallet(id_current_wallet));
 		String notice = dbAdapter.getDecriptionOfWallet(id_current_wallet);
 		
 		tvAmount.setText(money);

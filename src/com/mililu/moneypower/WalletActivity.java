@@ -1,5 +1,6 @@
 package com.mililu.moneypower;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +105,7 @@ public class WalletActivity extends Activity{
 	}
 	private void getTotalAmount(int id_user){
 		int mBalance = dbAdapter.getTotalAmount(id_user);
-		txtTotalAmount.setText(String.valueOf(mBalance));
+		txtTotalAmount.setText(NumberFormat.getCurrencyInstance().format(mBalance)); // NumberFormat.getCurrencyInstance().format(mBalance) dinh dang so tien 
 	}
 	
 	private void ShowWallet(){
@@ -119,7 +120,8 @@ public class WalletActivity extends Activity{
 				Wallet data=new Wallet();
 				data.setId_wallet(cursorWallet.getInt(cursorWallet.getColumnIndexOrThrow("ID_WALLET")));
 				data.setName(cursorWallet.getString(cursorWallet.getColumnIndexOrThrow("NAME_WALLET")));
-				data.setMoney(cursorWallet.getString(cursorWallet.getColumnIndexOrThrow("MONEY")));
+				int money = cursorWallet.getInt(cursorWallet.getColumnIndexOrThrow("MONEY"));
+				data.setMoney(NumberFormat.getCurrencyInstance().format(money));
 				list_wallet.add(data);
 				cursorWallet.moveToNext();
 		 	}

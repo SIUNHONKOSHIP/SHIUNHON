@@ -1,6 +1,7 @@
 package com.mililu.moneypower;
 
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -120,11 +121,11 @@ public class StatisticbyMonthActivity extends Activity{
 	
 	private void getTotalIncome(int month, int year, int id_user){
 		mIncome = dbAdapter.getTotalIncome(month, year, id_user);
-		txtTotalIncome.setText("Toatal Income: " + mIncome);
+		txtTotalIncome.setText("Toatal Income: " + NumberFormat.getCurrencyInstance().format(mIncome));
 	}
 	private void getTotalExpenditure(int month, int year, int id_user){
 		mExpenditure = dbAdapter.getTotalExpenditure(month, year, id_user);
-		txtTotalExpenditure.setText("Total Expenditure: " + mExpenditure);
+		txtTotalExpenditure.setText("Total Expenditure: " + NumberFormat.getCurrencyInstance().format(mExpenditure));
 	}
 	
 	private void CalcultateIncome(){
@@ -139,7 +140,7 @@ public class StatisticbyMonthActivity extends Activity{
 				int id_income = cursorIncome.getInt(cursorIncome.getColumnIndexOrThrow("ID_CATEGORY"));
 				balance = dbAdapter.CalculateIncomeByMonth(id_income, mMonth, mYear, id_curent_user);
 				double rate = balance*100/mIncome;
-				list_income.add(name + ": " + balance + " (" + rate + "%)");
+				list_income.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorIncome.moveToNext();
 			}
 			cursorIncome.close();
@@ -165,7 +166,7 @@ public class StatisticbyMonthActivity extends Activity{
 				int id_expend = cursorExpen.getInt(cursorExpen.getColumnIndexOrThrow("ID_PARENT_CATEGORY"));
 				balance = dbAdapter.CalculateExpendByMonth(id_expend, mMonth, mYear, id_curent_user);
 				double rate = Double.valueOf(balance*100/mExpenditure);
-				list_expenditure.add(name + ": " + balance + " (" + rate + "%)");
+				list_expenditure.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorExpen.moveToNext();
 			}
 			cursorExpen.close();

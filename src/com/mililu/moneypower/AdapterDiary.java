@@ -1,5 +1,6 @@
 package com.mililu.moneypower;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -38,7 +39,7 @@ public class AdapterDiary extends BaseExpandableListAdapter {
 
 		String mName = "";
 		String mWallet = child.get(childPosition).getName_wallet();
-		String mAmount = String.valueOf(child.get(childPosition).getAmount());
+		String mAmount = NumberFormat.getCurrencyInstance().format((child.get(childPosition).getAmount()));
 		String mNotice = child.get(childPosition).getNotice();
 		int mType = child.get(childPosition).getType();
 		if (mType == 1){
