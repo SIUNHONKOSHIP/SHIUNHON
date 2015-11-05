@@ -1,6 +1,7 @@
 package com.mililu.moneypower;
 
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,10 +12,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager.LayoutParams;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -79,6 +83,8 @@ public class StatisticbyMonthActivity extends Activity{
 	    getTotalExpenditure(mMonth, mYear, id_curent_user);
 	    CalcultateIncome();
 	    CalcultateExpenditure();
+	    setListViewHeightBasedOnChildren(lvStatisticExpen);
+	    setListViewHeightBasedOnChildren(lvStatisticIncome);
 	}
 	
 	private class MyEvent implements OnClickListener{
@@ -101,6 +107,8 @@ public class StatisticbyMonthActivity extends Activity{
 			    getTotalExpenditure(mMonth, mYear, id_curent_user);
 			    CalcultateIncome();
 			    CalcultateExpenditure();
+			    setListViewHeightBasedOnChildren(lvStatisticExpen);
+			    setListViewHeightBasedOnChildren(lvStatisticIncome);
 			}
 			if (v.getId()==R.id.btn_statisticbymonth_nextmonth){
 				if ((mMonth < 12) && (mMonth > 0)){
@@ -115,6 +123,8 @@ public class StatisticbyMonthActivity extends Activity{
 			    getTotalExpenditure(mMonth, mYear, id_curent_user);
 			    CalcultateIncome();
 			    CalcultateExpenditure();
+			    setListViewHeightBasedOnChildren(lvStatisticExpen);
+			    setListViewHeightBasedOnChildren(lvStatisticIncome);
 			}
 		}
 	}
@@ -129,7 +139,7 @@ public class StatisticbyMonthActivity extends Activity{
 	}
 	
 	private void CalcultateIncome(){
-		int balance = 0;
+		double balance = 0;
 		list_income.clear();
 		cursorIncome = dbAdapter.getListIncomeOfMonth(mMonth, mYear, id_curent_user);
 		if (cursorIncome.getCount()>0){
@@ -139,7 +149,7 @@ public class StatisticbyMonthActivity extends Activity{
 				String name = cursorIncome.getString(cursorIncome.getColumnIndexOrThrow("NAME_INCOME"));
 				int id_income = cursorIncome.getInt(cursorIncome.getColumnIndexOrThrow("ID_CATEGORY"));
 				balance = dbAdapter.CalculateIncomeByMonth(id_income, mMonth, mYear, id_curent_user);
-				double rate = balance*100/mIncome;
+				String rate = new DecimalFormat("##.##").format(balance*100/mIncome);
 				list_income.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorIncome.moveToNext();
 			}
@@ -155,7 +165,7 @@ public class StatisticbyMonthActivity extends Activity{
 	}
 	
 	private void CalcultateExpenditure(){
-		int balance = 0;
+		double balance = 0;
 		list_expenditure.clear();
 		cursorExpen = dbAdapter.getListExpenditureOfMonth(mMonth, mYear, id_curent_user);
 		if (cursorExpen.getCount()>0){
@@ -165,7 +175,7 @@ public class StatisticbyMonthActivity extends Activity{
 				String name = cursorExpen.getString(cursorExpen.getColumnIndexOrThrow("NAME_EXP"));
 				int id_expend = cursorExpen.getInt(cursorExpen.getColumnIndexOrThrow("ID_PARENT_CATEGORY"));
 				balance = dbAdapter.CalculateExpendByMonth(id_expend, mMonth, mYear, id_curent_user);
-				double rate = Double.valueOf(balance*100/mExpenditure);
+				String rate = new DecimalFormat("##.##").format(balance*100/mExpenditure);
 				list_expenditure.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorExpen.moveToNext();
 			}
@@ -185,5 +195,29 @@ public class StatisticbyMonthActivity extends Activity{
 		mMonth=(cal.get(Calendar.MONTH)+1);
 		mYear=cal.get(Calendar.YEAR);
 		txtDate.setText((mMonth)+"-"+mYear);
+	}
+	
+	/**** Method for Setting the Height of the ListView dynamically.
+	 **** Hack to fix the issue of not showing all the items of the ListView
+	 **** when placed inside a ScrollView  ****/
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+	    ListAdapter listAdapter = listView.getAdapter();
+	    if (listAdapter == null)
+	        return;
+
+	    int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.UNSPECIFIED);
+	    int totalHeight = 0;
+	    View view = null;
+	    for (int i = 0; i < listAdapter.getCount(); i++) {
+	        view = listAdapter.getView(i, view, listView);
+	        if (i == 0)
+	            view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LayoutParams.WRAP_CONTENT));
+
+	        view.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+	        totalHeight += view.getMeasuredHeight();
+	    }
+	    ViewGroup.LayoutParams params = listView.getLayoutParams();
+	    params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+	    listView.setLayoutParams(params);
 	}
 }
