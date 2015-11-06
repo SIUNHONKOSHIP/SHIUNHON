@@ -182,7 +182,11 @@ public class HomeActivity extends Activity{
 			startActivity(intent);
 		}
 		else if (position == 3){ ///selected category
-			Toast.makeText(HomeActivity.this, "You have just select Category", Toast.LENGTH_LONG).show();
+			Bundle bundle=new Bundle();
+			bundle.putInt("ID_ACCOUNT", id_curent_user);
+			Intent intent = new Intent (HomeActivity.this, CategoryExpenditureActivity.class);
+			intent.putExtra("DATA", bundle);
+			startActivity(intent);
 		}
 		else if (position == 4){ ///selected Diary
 			Bundle bundle=new Bundle();

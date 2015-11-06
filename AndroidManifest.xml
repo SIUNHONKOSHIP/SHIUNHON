@@ -77,6 +77,13 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".StatisticbyMonthActivity"></activity>
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".CategoryIncomeActivity"></activity>
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".CategoryExpenditureActivity"></activity>
+        
     </application>
 
 </manifest>
