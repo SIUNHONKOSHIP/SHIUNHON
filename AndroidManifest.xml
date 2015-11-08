@@ -83,6 +83,9 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".CategoryExpenditureActivity"></activity>
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".CategoryActivity"></activity>
         
     </application>
 

@@ -70,8 +70,8 @@ public final class R {
         public static final int LinearLayout1=0x7f080080;
         public static final int action_settings=0x7f080084;
         public static final int avatar=0x7f080038;
-        public static final int btn_categoryincome_back=0x7f080000;
-        public static final int btn_categoryincome_create=0x7f080002;
+        public static final int btn_category_back=0x7f080000;
+        public static final int btn_category_create=0x7f080002;
         public static final int btn_createcategoryincome_OK=0x7f080005;
         public static final int btn_createcategoryincome_back=0x7f080004;
         public static final int btn_createwallet_back=0x7f080009;
@@ -134,7 +134,7 @@ public final class R {
         public static final int spn_income_danhmuc=0x7f08004b;
         public static final int spn_income_wallet=0x7f080048;
         public static final int tableRow1=0x7f080076;
-        public static final int tv_categoryincome_title=0x7f080001;
+        public static final int tv_category_tittle=0x7f080001;
         public static final int tv_createcategoryincome_nameincome=0x7f080007;
         public static final int tv_createcategoryincome_tittle=0x7f080006;
         public static final int tv_createwallet_title=0x7f08000a;
@@ -202,26 +202,27 @@ public final class R {
         public static final int txt_register_username=0x7f08005c;
     }
     public static final class layout {
-        public static final int activity_category_income=0x7f030000;
-        public static final int activity_create_category_income=0x7f030001;
-        public static final int activity_create_wallet=0x7f030002;
-        public static final int activity_detail_wallet=0x7f030003;
-        public static final int activity_diary=0x7f030004;
-        public static final int activity_expenditure=0x7f030005;
-        public static final int activity_home=0x7f030006;
-        public static final int activity_income=0x7f030007;
-        public static final int activity_intro=0x7f030008;
-        public static final int activity_login=0x7f030009;
-        public static final int activity_register=0x7f03000a;
-        public static final int activity_statisticbymonth=0x7f03000b;
-        public static final int activity_wallet=0x7f03000c;
-        public static final int drawer_item=0x7f03000d;
-        public static final int layout_for_category_group=0x7f03000e;
-        public static final int layout_for_category_item=0x7f03000f;
-        public static final int layout_for_detail_wallet=0x7f030010;
-        public static final int layout_for_diary_group=0x7f030011;
-        public static final int layout_for_diary_item=0x7f030012;
-        public static final int layout_for_list_wallet=0x7f030013;
+        public static final int activity_category=0x7f030000;
+        public static final int activity_category_income=0x7f030001;
+        public static final int activity_create_category_income=0x7f030002;
+        public static final int activity_create_wallet=0x7f030003;
+        public static final int activity_detail_wallet=0x7f030004;
+        public static final int activity_diary=0x7f030005;
+        public static final int activity_expenditure=0x7f030006;
+        public static final int activity_home=0x7f030007;
+        public static final int activity_income=0x7f030008;
+        public static final int activity_intro=0x7f030009;
+        public static final int activity_login=0x7f03000a;
+        public static final int activity_register=0x7f03000b;
+        public static final int activity_statisticbymonth=0x7f03000c;
+        public static final int activity_wallet=0x7f03000d;
+        public static final int drawer_item=0x7f03000e;
+        public static final int layout_for_category_group=0x7f03000f;
+        public static final int layout_for_category_item=0x7f030010;
+        public static final int layout_for_detail_wallet=0x7f030011;
+        public static final int layout_for_diary_group=0x7f030012;
+        public static final int layout_for_diary_item=0x7f030013;
+        public static final int layout_for_list_wallet=0x7f030014;
     }
     public static final class menu {
         public static final int home_menu=0x7f070000;

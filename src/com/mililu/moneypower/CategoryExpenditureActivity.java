@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import android.support.v4.app.Fragment;
@@ -30,7 +32,8 @@ public class CategoryExpenditureActivity extends ExpandableListActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// this is not really  necessary as ExpandableListActivity contains an ExpandableList
 		//setContentView(R.layout.main);
 		

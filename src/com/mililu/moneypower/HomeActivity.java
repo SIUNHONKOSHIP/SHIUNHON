@@ -184,7 +184,7 @@ public class HomeActivity extends Activity{
 		else if (position == 3){ ///selected category
 			Bundle bundle=new Bundle();
 			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			Intent intent = new Intent (HomeActivity.this, CategoryExpenditureActivity.class);
+			Intent intent = new Intent (HomeActivity.this, CategoryActivity.class);
 			intent.putExtra("DATA", bundle);
 			startActivity(intent);
 		}
