@@ -2,6 +2,8 @@ package com.mililu.moneypower;
 
 import java.util.Calendar;
 
+import com.mililu.moneypower.classobject.Diary;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -67,8 +69,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         // Spinner click listener
         spinnerWallet.setOnItemSelectedListener(this);
         spinnerCategoryIncome.setOnItemSelectedListener(this);
-        loadSpinnerDataWallet();
-        loadSpinnerDataCategoryIncome();
+        
         
         btnSubmit = (Button)findViewById(R.id.btn_income_submit);
         btnSubmit.setOnClickListener(new MyEvent()); 
@@ -109,7 +110,19 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         tvTime.setTypeface(light);
     }
     
-    /**
+    
+    
+    @Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		loadSpinnerDataWallet();
+        loadSpinnerDataCategoryIncome();
+	}
+
+
+
+	/**
      * thiet lap ngay thang nam hien tai
      */
 	public void setCurrentDate(){

@@ -9,25 +9,32 @@
 
 	    <GridLayout
 	        android:layout_width="match_parent"
-	        android:layout_height="70dp" >
+	        android:layout_height="40dp"
+	        android:layout_margin="5dp" >
 	
 	        <Button
 	            android:id="@+id/btn_statisticbymonth_back"
-	            android:layout_gravity="center_vertical|start"
-	            android:text="Back" />
+	            android:layout_width="25dp"
+      		 	android:layout_height="25dp"
+	            android:layout_gravity="left|center_vertical"
+    	        android:layout_marginLeft="10dp"
+        	    android:background="@drawable/wallet_list_back" />
 	
 	        <TextView
 	            android:id="@+id/tv_statisticbymonth_title"
-	            android:layout_gravity="center"
-	            android:text="Statistic"
-	            android:textSize="26sp" />
+                android:layout_column="0"
+          		android:layout_gravity="center"
+            	android:layout_row="0"
+            	android:text="Statistic by month"
+            	android:textColor="#33ccff"
+            	android:textSize="18sp" />
 	
 	    </GridLayout>
 	
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:layout_marginTop="70dp"
+	        android:layout_marginTop="50dp"
 	        android:orientation="vertical" >
 	
 	        <GridLayout

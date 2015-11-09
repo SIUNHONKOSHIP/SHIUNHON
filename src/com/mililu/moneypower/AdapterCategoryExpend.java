@@ -1,6 +1,5 @@
 package com.mililu.moneypower;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;

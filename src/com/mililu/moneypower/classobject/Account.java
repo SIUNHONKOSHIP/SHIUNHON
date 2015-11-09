@@ -1,4 +1,4 @@
-package com.mililu.moneypower;
+package com.mililu.moneypower.classobject;
 
 public class Account {
 	private int id_account;

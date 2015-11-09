@@ -2,6 +2,8 @@ package com.mililu.moneypower;
 
 import java.util.List;
 
+import com.mililu.moneypower.classobject.Income;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -31,7 +33,7 @@ public class ArrayAdapterCategoryIncome extends ArrayAdapter<Income>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		//if (convertView == null){
+		if (convertView == null){
 			LayoutInflater flater = context.getLayoutInflater();
 			View row = flater.inflate(layout, parent,false);
 			
@@ -44,7 +46,7 @@ public class ArrayAdapterCategoryIncome extends ArrayAdapter<Income>{
 			Income data=list.get(position);
 			incomename.setText(data.getName()==null?"":data.getName().toString());
 			return row;
-		//	}
-		//return convertView;
+			}
+		return convertView;
 	}
 }

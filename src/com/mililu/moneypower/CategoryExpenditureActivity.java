@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-import android.support.v4.app.Fragment;
 
 public class CategoryExpenditureActivity extends ExpandableListActivity{
 	

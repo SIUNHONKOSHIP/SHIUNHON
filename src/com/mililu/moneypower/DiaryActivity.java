@@ -1,7 +1,8 @@
 package com.mililu.moneypower;
 
 import java.util.ArrayList;
-import java.util.Map;
+
+import com.mililu.moneypower.classobject.Diary;
 
 import android.app.ExpandableListActivity;
 import android.content.Context;
@@ -10,11 +11,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class DiaryActivity extends ExpandableListActivity{
 	
@@ -33,9 +33,9 @@ public class DiaryActivity extends ExpandableListActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
-		// this is not really  necessary as ExpandableListActivity contains an ExpandableList
-		//setContentView(R.layout.main);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//setContentView(R.layout.activity_diary);
 		
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);

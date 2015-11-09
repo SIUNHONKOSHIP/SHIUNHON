@@ -3,15 +3,15 @@ package com.mililu.moneypower;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import com.mililu.moneypower.classobject.Diary;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AdapterDiary extends BaseExpandableListAdapter {
 	private Activity activity;

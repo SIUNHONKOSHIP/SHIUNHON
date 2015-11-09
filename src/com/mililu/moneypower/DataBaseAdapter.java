@@ -1,5 +1,7 @@
 package com.mililu.moneypower;
 
+import com.mililu.moneypower.classobject.Diary;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

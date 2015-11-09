@@ -8,14 +8,15 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_margin="5dp"
         android:columnCount="1" >
 
         <Button
             android:id="@+id/btn_wallet_back"
-            android:layout_width="17dp"
+            android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginLeft="10dp"            
+            android:layout_marginLeft="10dp"
             android:background="@drawable/wallet_list_back" />
 
         <TextView

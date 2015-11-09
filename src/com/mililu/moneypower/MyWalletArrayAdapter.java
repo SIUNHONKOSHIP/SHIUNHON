@@ -2,6 +2,8 @@ package com.mililu.moneypower;
 
 import java.util.List;
 
+import com.mililu.moneypower.classobject.Wallet;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
