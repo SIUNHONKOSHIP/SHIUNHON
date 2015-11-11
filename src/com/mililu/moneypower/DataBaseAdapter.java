@@ -318,6 +318,27 @@ public class DataBaseAdapter {
         return db.rawQuery(selectQuery, null);
 	}
 	
+	public Cursor getInforDiary(int id_diary){
+		String selectQuery = "SELECT * from tbl_DIARY WHERE ID_DIARY = " + id_diary + ";";
+		db = dbHelper.getReadableDatabase();
+		return db.rawQuery(selectQuery, null);
+	}
+	
+	public boolean updateDiary (Diary diary){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("AMOUNT", diary.getAmount());
+		newValues.put("NOTICE", diary.getNotice());
+		newValues.put("ID_WALLET", diary.getId_wallet());
+		newValues.put("ID_CATEGORY", diary.getId_category());
+		newValues.put("DAY", diary.getDay());
+		newValues.put("MONTH", diary.getMonth());
+		newValues.put("YEAR", diary.getYear());
+		newValues.put("TIME", diary.getTime());
+		return db.update("tbl_DIARY", newValues, "ID_DIARY = " + diary.getId_diary(), null) > 0;
+		
+	}
+	
 	public boolean deteleDiary(int id_diary){
 			return db.delete("tbl_DIARY", "ID_DIARY = " + id_diary, null) > 0;
 	}

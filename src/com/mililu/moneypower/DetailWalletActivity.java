@@ -27,8 +27,7 @@ public class DetailWalletActivity extends Activity {
 	Button btnBack, btnDelete;
 	static DataBaseAdapter dbAdapter;
 	List<Diary>list_diary = new ArrayList<Diary>();
-	int id_curent_user;
-	static int id_current_wallet;
+	static int id_current_wallet, id_curent_user;
 	TextView tvTittle;
 	static TextView tvAmount;
 	static TextView tvOriginalAmount;

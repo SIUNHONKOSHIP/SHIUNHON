@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -165,7 +166,20 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
                         return true; // end of case delete
                     case R.id.menu_popup_edit:
                     	// Edit the item form the adapter
-                    	Toast.makeText(context, "Sua: " + item.getId_diary(), Toast.LENGTH_SHORT).show();
+                    	if (item.getType() == 1){
+                    		Intent intent = new Intent (context, EditIncomeActivity.class);
+                    		intent.putExtra("id_diary", item.getId_diary());
+                    		intent.putExtra("id_user", DetailWalletActivity.id_curent_user);
+                    		context.startActivity(intent);
+                    	}
+                    	else if(item.getType() == 2){
+                    		//Bundle bundle=new Bundle();
+                			//bundle.putInt("ID_ACCOUNT", item.getId_diary());
+                			//Intent intent = new Intent (context, EditExpenditureActivity.class);
+                			//intent.putExtra("DATA_ACCOUNT", bundle);
+                			//startActivity(intent);
+                    	}
+                    	
                     	return true; // end of case edit
                 }
                 return false;
