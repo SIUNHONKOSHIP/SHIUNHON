@@ -6,7 +6,9 @@ import java.util.List;
 import com.mililu.moneypower.classobject.Diary;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -25,6 +27,8 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 	private List<Diary>list;
 	Typeface tf;
 	
+	DataBaseAdapter dbAdapter;
+	
 	public AdapterDetailWalletArray(Context context, int textViewResourceId, List<Diary> objects) {
 		super(context, textViewResourceId, objects);
 		// TODO Auto-generated constructor stub
@@ -33,6 +37,10 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 		this.list=objects;
 		
 		tf = Typeface.createFromAsset(context.getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+
+		// Create a instance of SQLite Database
+		dbAdapter = new DataBaseAdapter(context);
+		dbAdapter = dbAdapter.open();
 	}	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -97,9 +105,9 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 	    }
 	}
 	private void showPopupMenu(View view) {
-        //final PopupAdapter adapter = (PopupAdapter) getListAdapter();
- 
-        // Retrieve the clicked item from view's tag
+
+        
+		// Retrieve the clicked item from view's tag
         final Diary item = (Diary) view.getTag();
  
         // Create a PopupMenu, giving it the clicked view for an anchor
@@ -114,14 +122,51 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.menu_popup_delete:
-                        // Remove the item from the adapter
-                        //adapter.remove(item);
-                        Toast.makeText(context, "Xoa: " + item.getId_diary(), Toast.LENGTH_SHORT).show();
-                    	return true;
+                    	String transactionName = "";
+                    	if (item.getType() == 1){
+                    		transactionName = item.getName_income();
+                    	}
+                    	else if(item.getType() == 2){
+                    		transactionName = item.getName_expen();
+                    	}
+                    		
+                        // Show messenger to confirm delete
+                    	AlertDialog.Builder adb = new AlertDialog.Builder(getContext()); // khoi tao thong bao
+                        adb.setTitle("Delete !!!"); // title of messenger
+                        adb.setMessage("Are you sure you want to delete " + transactionName + " (" + NumberFormat.getCurrencyInstance().format(item.getAmount()) + ") ?" ); // contain of messenger
+                        adb.setNegativeButton("NO", null);
+                        adb.setPositiveButton("YES", new AlertDialog.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            	
+                            	// Remove the item from the adapter and database
+                            	if(dbAdapter.deteleDiary(item.getId_diary())){
+                            		// calculator new money
+                            		int curentmoney = dbAdapter.getAmountOfWallet(DetailWalletActivity.id_current_wallet); // lay so tien hien tai
+                            		int newmoney = 0;
+                            		if (item.getType() == 1){ // neu thu thi tru ra
+                            			newmoney = curentmoney - item.getAmount();
+                            		}
+                            		else if (item.getType() == 2){ // neu chi thi cong vo
+                            			newmoney = curentmoney + item.getAmount();
+                            		}
+                            		dbAdapter.updateWallet(DetailWalletActivity.id_current_wallet, newmoney);
+                            		
+                            		DetailWalletActivity.ShowInforWallet(); // load lai thong tin cua wallet
+                            		list.remove(getPosition(item)); // xoa trong list
+                            		DetailWalletActivity.adtDeatailWalletArr.notifyDataSetChanged(); // reset lai listview
+                            		Toast.makeText(context, "Transaction has been deleted !!", Toast.LENGTH_SHORT).show(); // thong bao thanh cong
+                            	}
+                            	else{
+                            		Toast.makeText(context, "Can't delete this this transaction !!", Toast.LENGTH_SHORT).show(); // thong bao that bai
+                            	}
+                            } // end of onClick
+                        }); 
+                        adb.show(); // show messenger
+                        return true; // end of case delete
                     case R.id.menu_popup_edit:
                     	// Edit the item form the adapter
                     	Toast.makeText(context, "Sua: " + item.getId_diary(), Toast.LENGTH_SHORT).show();
-                    	return true;
+                    	return true; // end of case edit
                 }
                 return false;
             }

@@ -23,12 +23,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class DetailWalletActivity extends Activity {
-	AdapterDetailWalletArray adtDeatailWalletArr = null;
+	static AdapterDetailWalletArray adtDeatailWalletArr = null;
 	Button btnBack, btnDelete;
-	DataBaseAdapter dbAdapter;
+	static DataBaseAdapter dbAdapter;
 	List<Diary>list_diary = new ArrayList<Diary>();
-	int id_curent_user, id_current_wallet;
-	TextView tvTittle, tvAmount, tvOriginalAmount, tvNotice;
+	int id_curent_user;
+	static int id_current_wallet;
+	TextView tvTittle;
+	static TextView tvAmount;
+	static TextView tvOriginalAmount;
+	static TextView tvNotice;
 	ListView lvDiary;
 	Cursor cursorDiary;
 	
@@ -80,6 +84,14 @@ public class DetailWalletActivity extends Activity {
 		ShowInforWallet();
 	}
 	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		adtDeatailWalletArr.clear();
+	}
+
+
 	private class MyEvent implements OnClickListener{
 		@Override
 		public void onClick(View v) {
@@ -127,6 +139,7 @@ public class DetailWalletActivity extends Activity {
 			cursorDiary.moveToFirst();
 			while(!cursorDiary.isAfterLast()){
 				Diary data=new Diary();
+				data.setId_diary(cursorDiary.getInt(cursorDiary.getColumnIndexOrThrow("ID_DIARY")));
 				data.setAmount(cursorDiary.getInt(cursorDiary.getColumnIndexOrThrow("AMOUNT")));
 				data.setName_income(cursorDiary.getString(cursorDiary.getColumnIndexOrThrow("NAME_INCOME")));
 				data.setName_expen(cursorDiary.getString(cursorDiary.getColumnIndexOrThrow("NAME_EXP_DET")));
@@ -144,7 +157,7 @@ public class DetailWalletActivity extends Activity {
 			lvDiary.setAdapter(adtDeatailWalletArr);
 		}
 	}
-	private void ShowInforWallet(){
+	public static void ShowInforWallet(){
 		String money = NumberFormat.getCurrencyInstance().format(dbAdapter.getAmountOfWallet(id_current_wallet));
 		String originalamount = NumberFormat.getCurrencyInstance().format(dbAdapter.getOriginalAmountOfWallet(id_current_wallet));
 		String notice = dbAdapter.getDecriptionOfWallet(id_current_wallet);
