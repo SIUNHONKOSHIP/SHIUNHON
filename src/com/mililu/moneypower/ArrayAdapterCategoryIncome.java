@@ -35,18 +35,17 @@ public class ArrayAdapterCategoryIncome extends ArrayAdapter<Income>{
 		// TODO Auto-generated method stub
 		if (convertView == null){
 			LayoutInflater flater = context.getLayoutInflater();
-			View row = flater.inflate(layout, parent,false);
+			convertView = flater.inflate(layout, parent,false);
+		}
 			
 			// Set reference
-			TextView incomename =(TextView) row.findViewById(R.id.tv_layoutcategoryitem_name);
+			TextView incomename =(TextView) convertView.findViewById(R.id.tv_layoutcategoryitem_name);
 			
 			// Set font
 			incomename.setTypeface(tf);
 			
 			Income data=list.get(position);
 			incomename.setText(data.getName()==null?"":data.getName().toString());
-			return row;
-			}
-		return convertView;
+			return convertView;
 	}
 }

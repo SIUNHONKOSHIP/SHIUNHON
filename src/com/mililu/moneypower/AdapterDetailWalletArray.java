@@ -10,10 +10,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 	private Activity context;
@@ -35,14 +39,15 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 		// TODO Auto-generated method stub
 		if (convertView == null){
 			LayoutInflater flater = context.getLayoutInflater();
-			View row = flater.inflate(layout, parent,false);
+			convertView = flater.inflate(layout, parent,false);
+		}
 			
-			TextView NameDiary = (TextView) row.findViewById(R.id.tv_layoutdetailwallet_name);
+			TextView NameDiary = (TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_name);
 			//txt1.setTypeface(tf);
-			TextView Date=(TextView) row.findViewById(R.id.tv_layoutdetailwallet_date);	
+			TextView Date=(TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_date);	
 			//txt2.setTypeface(tf);
-			TextView Amount=(TextView) row.findViewById(R.id.tv_layoutdetailwallet_money);
-			TextView Notice=(TextView) row.findViewById(R.id.tv_layoutdetailwallet_notice);
+			TextView Amount=(TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_money);
+			TextView Notice=(TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_notice);
 			Diary data=list.get(position);
 			
 			if (data.getType() == 1) // neu la thu vao
@@ -65,8 +70,64 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 			Amount.setText(NumberFormat.getCurrencyInstance().format(data.getAmount()));
 			Notice.setText(data.getNotice()==null?"":data.getNotice().toString());
 			
-			return row;
-		}
-		return convertView;
+			// Retrieve the popup button from the inflated view
+            View popupButton = convertView.findViewById(R.id.btn_layoutdetailwallet_setting);
+ 
+            // Set the item as the button's tag so it can be retrieved later
+            popupButton.setTag(getItem(position));
+ 
+            // Set the fragment instance as the OnClickListener
+            popupButton.setOnClickListener(new myOnClick());
+			
+			return convertView;
 	}
+	
+	private class myOnClick implements OnClickListener{
+		@Override
+	    public void onClick(final View view) {
+	        // We need to post a Runnable to show the popup to make sure that the PopupMenu is
+	        // correctly positioned. The reason being that the view may change position before the
+	        // PopupMenu is shown.
+	        view.post(new Runnable() {
+	            @Override
+	            public void run() {
+	                showPopupMenu(view);
+	            }
+	        });
+	    }
+	}
+	private void showPopupMenu(View view) {
+        //final PopupAdapter adapter = (PopupAdapter) getListAdapter();
+ 
+        // Retrieve the clicked item from view's tag
+        final Diary item = (Diary) view.getTag();
+ 
+        // Create a PopupMenu, giving it the clicked view for an anchor
+        PopupMenu popup = new PopupMenu(context, view);
+ 
+        // Inflate our menu resource into the PopupMenu's Menu
+        popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+ 
+        // Set a listener so we are notified if a menu item is clicked
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_popup_delete:
+                        // Remove the item from the adapter
+                        //adapter.remove(item);
+                        Toast.makeText(context, "Xoa: " + item.getId_diary(), Toast.LENGTH_SHORT).show();
+                    	return true;
+                    case R.id.menu_popup_edit:
+                    	// Edit the item form the adapter
+                    	Toast.makeText(context, "Sua: " + item.getId_diary(), Toast.LENGTH_SHORT).show();
+                    	return true;
+                }
+                return false;
+            }
+        });
+ 
+        // Finally show the PopupMenu
+        popup.show();
+    }
 }
