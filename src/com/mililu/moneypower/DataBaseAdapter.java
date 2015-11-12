@@ -1,6 +1,7 @@
 package com.mililu.moneypower;
 
 import com.mililu.moneypower.classobject.Diary;
+import com.mililu.moneypower.classobject.Income;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -259,6 +260,24 @@ public class DataBaseAdapter {
 		newValues.put("NAME_INCOME", nameincome);
 		// Insert the row into your table
 		db.insert("tbl_INCOME", null, newValues);
+	}
+	
+	public boolean deteleCategoryIncome(int id_income){
+		return db.delete("tbl_INCOME", "ID_INC = " + id_income, null) > 0;
+	}
+	
+	public boolean updateCategoryIncome(Income income){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("NAME_INCOME", income.getName());
+		// Insert the row into your table
+		return db.update("tbl_INCOME", newValues, "ID_INC = " + income.getId(), null) > 0;
+	}
+	
+	public Cursor getInforCategoryIncome(int id_income){
+		String selectQuery = "SELECT * from tbl_INCOME WHERE ID_INC = " + id_income + ";";
+		db = dbHelper.getReadableDatabase();
+		return db.rawQuery(selectQuery, null);
 	}
 	
     public Cursor getCategoryIncomeCursor() {

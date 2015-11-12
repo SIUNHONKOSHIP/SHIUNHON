@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class CategoryIncomeActivity extends Activity{
 	DataBaseAdapter dbAdapter;
 	List<Income>list_income ;
-	ArrayAdapterCategoryIncome aaCategoryIncome;
+	static ArrayAdapterCategoryIncome aaCategoryIncome;
 	int id_curent_user;
 	ListView lvCategoryIncome;
 	Cursor cursorCategoryIncome;
