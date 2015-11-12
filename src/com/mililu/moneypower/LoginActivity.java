@@ -123,8 +123,11 @@ public class LoginActivity extends Activity {
 					Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
 					//Set bundle into intent
 					intent.putExtra("DATA_ACCOUNT", bundle);
-					// Start Activity
+					// Start Home Activity
 					startActivity(intent);
+					
+					// End LoginActivity
+					finish();
 				}
 				else{
 					Toast.makeText(LoginActivity.this, "Password is not correct", Toast.LENGTH_LONG).show();

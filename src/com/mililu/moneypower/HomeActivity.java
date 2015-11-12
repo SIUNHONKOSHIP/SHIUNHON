@@ -3,6 +3,8 @@ package com.mililu.moneypower;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -231,4 +233,31 @@ public class HomeActivity extends Activity{
 	protected void onDestroy(){
 		super.onDestroy();
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		//super.onBackPressed();
+		backButtonEvent();
+	}
+	private void backButtonEvent(){
+		AlertDialog.Builder adb = new AlertDialog.Builder(HomeActivity.this);
+		adb.setTitle("Exit?");
+		adb.setMessage("Are you sure you want to exit?");
+		adb.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				finish();
+				
+			}
+		});
+		adb.setPositiveButton("NO", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				dialog.cancel();
+			}
+		});
+		adb.show();
+	}
+	
 }
