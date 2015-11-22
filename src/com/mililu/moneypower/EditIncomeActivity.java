@@ -47,10 +47,11 @@ public class EditIncomeActivity extends Activity implements OnItemSelectedListen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_income);
         
+        id_curent_user = HomeActivity.id_user;
+        
         Intent intent = getIntent();
 	    //Bundle bundle = intent.getBundleExtra("DATA_INCOME");
 	    id_diary = intent.getIntExtra("id_diary", 0);
-	    id_curent_user = intent.getIntExtra("id_user", 0);
 	    // Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();

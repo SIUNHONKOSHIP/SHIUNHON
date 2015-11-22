@@ -3,7 +3,6 @@ package com.mililu.moneypower;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -21,9 +20,7 @@ public class CreateWalletActivity extends Activity {
 	DataBaseAdapter dbAdapter;
 	Button btnBack, btnInsertWallet;
 	EditText txtNameWallet, txtMoney, txtDescription;
-	int id_curent_user;
 	TextView tvTittle;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +57,6 @@ public class CreateWalletActivity extends Activity {
 	    // Set OnClick Listener on button 
 	    btnBack.setOnClickListener(new MyEvent());
 	    btnInsertWallet.setOnClickListener(new MyEvent());
-	    
-	    Intent intent = getIntent();
-		Bundle bundle = intent.getBundleExtra("DATA");
-		id_curent_user = bundle.getInt("ID_ACCOUNT");
 	}
 
 	public class MyEvent implements OnClickListener {
@@ -81,7 +74,7 @@ public class CreateWalletActivity extends Activity {
 	}
 	
 	private void InsertWallet(){
-		int id =  id_curent_user;
+		int id =  HomeActivity.id_user;
 		String namewallet = txtNameWallet.getText().toString();
 		String money = txtMoney.getText().toString();
 		String descrip = txtDescription.getText().toString();

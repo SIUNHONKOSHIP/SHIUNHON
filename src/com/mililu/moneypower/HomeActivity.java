@@ -2,10 +2,13 @@ package com.mililu.moneypower;
 
 import java.util.ArrayList;
 
+import com.mililu.moneypower.classobject.NavItem;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -33,9 +36,10 @@ public class HomeActivity extends Activity{
 	Button btnMenu, btnWallet, btnIncome, btnExpenditure, btnStatistic;
 	TextView lableFullname, lableUsername;
 	DataBaseAdapter dbAdapter;
-	int id_curent_user;
+	static int id_user;
 	String username_current_user, fullname_current_user;
-	
+	Cursor accountCursor;
+	Intent intent_income, intent_expend, intent_wallet, intent_stattistic, intent_diary, intent_category;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,38 +52,35 @@ public class HomeActivity extends Activity{
 	    dbAdapter = dbAdapter.open();
 	    
 	    Intent intent = getIntent();
-	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
+	    // Get data from intent
+	    id_user = intent.getIntExtra("ID_ACCOUNT", -1);
 	    
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-	    fullname_current_user = bundle.getString("FULLNAME_ACCOUNT");
-	    username_current_user = bundle.getString("USERNAME_ACCOUNT");
+	    // Khoi tao font
+	    Typeface font_bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
+	    Typeface font_light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    Typeface font_italic = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLDITALIC.TTF");
 	    
-	    // Get The Reference Of Buttons and Edit Text
+	    // Get The Reference 
 	    btnMenu = (Button)findViewById(R.id.btn_home_menu);
-	    
 	    btnWallet=(Button)findViewById(R.id.btn_home_wallet);
-	    Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
-	    btnWallet.setTypeface(font);
-        
 	    btnIncome=(Button)findViewById(R.id.btn_home_income);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-	    btnIncome.setTypeface(font);
-	    
-	    btnExpenditure=(Button)findViewById(R.id.btn_home_expenditure);	 
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-	    btnExpenditure.setTypeface(font);
-	    
+	    btnExpenditure=(Button)findViewById(R.id.btn_home_expenditure);	
 	    btnStatistic=(Button)findViewById(R.id.btn_home_statistic);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLDITALIC.TTF");
-	    btnStatistic.setTypeface(font);
-	    
 	    lableFullname = (TextView)findViewById(R.id.tv_home_fullname) ;
 	    lableUsername = (TextView)findViewById(R.id.tv_home_username);
+	   
+	    // Set font
+	    btnWallet.setTypeface(font_bold);
+	    btnIncome.setTypeface(font_light);
+	    btnExpenditure.setTypeface(font_light);
+	    btnStatistic.setTypeface(font_italic);
+	    
+	    LoadInforUser();
+	    // Set infor of user
 	    lableFullname.setText(fullname_current_user);
 	    lableUsername.setText(username_current_user);
 	    
 	    // Set OnClick Listener
-	    
 	    btnIncome.setOnClickListener(new MyEvent());
 	    btnExpenditure.setOnClickListener(new MyEvent());
 	    btnWallet.setOnClickListener(new MyEvent());
@@ -112,10 +113,34 @@ public class HomeActivity extends Activity{
 	            selectItemFromDrawer(position);
 	        }
 	    });
-	    
-	    
+	}
+		
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		// Khoi tao intent
+		intent_income = new Intent (HomeActivity.this, IncomeActivity.class);
+		intent_expend = new Intent (HomeActivity.this, ExpenditureActivity.class);
+		intent_wallet = new Intent (HomeActivity.this, WalletActivity.class);
+		intent_stattistic = new Intent (HomeActivity.this, StatisticbyMonthActivity.class);
+		intent_category = new Intent (HomeActivity.this, CategoryActivity.class);
+		intent_diary = new Intent (HomeActivity.this, DiaryActivity.class);
 	}
 	
+	private void LoadInforUser(){
+		accountCursor = dbAdapter.getAccountInfor(id_user);
+		if (accountCursor.getCount() <1){
+			Toast.makeText(this, "Error! User not found !!!", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			accountCursor.moveToFirst();
+			// get infor of user
+			fullname_current_user = accountCursor.getString(accountCursor.getColumnIndexOrThrow("FULLNAME"));
+		    username_current_user = accountCursor.getString(accountCursor.getColumnIndexOrThrow("USERNAME"));
+		}
+	}
+
 	private class MyEvent implements OnClickListener{
 		@Override
 		public void onClick(View v) {
@@ -123,32 +148,16 @@ public class HomeActivity extends Activity{
 			
 			if(v.getId()==R.id.btn_home_income)
 			{
-				Bundle bundle=new Bundle();
-				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				Intent intent = new Intent (HomeActivity.this, IncomeActivity.class);
-				intent.putExtra("DATA_ACCOUNT", bundle);
-				startActivity(intent);
+				startActivity(intent_income);
 			}
 			else if(v.getId()==R.id.btn_home_expenditure) {
-				Bundle bundle=new Bundle();
-				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				Intent intent = new Intent (HomeActivity.this, ExpenditureActivity.class);
-				intent.putExtra("DATA_ACCOUNT", bundle);
-				startActivity(intent);
+				startActivity(intent_expend);
 			}
 			else if(v.getId()==R.id.btn_home_wallet) {
-				Bundle bundle=new Bundle();
-				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				Intent intent = new Intent (HomeActivity.this, WalletActivity.class);
-				intent.putExtra("DATA_ACCOUNT", bundle);
-				startActivity(intent);
+				startActivity(intent_wallet);
 			}
 			else if(v.getId()==R.id.btn_home_statistic) {
-				Bundle bundle=new Bundle();
-				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				Intent intent = new Intent (HomeActivity.this, StatisticbyMonthActivity.class);
-				intent.putExtra("DATA_ACCOUNT", bundle);
-				startActivity(intent);
+				startActivity(intent_stattistic);
 			}
 			else if (v.getId()==R.id.btn_home_menu){
 				mDrawerLayout.openDrawer(mDrawerPane);
@@ -163,55 +172,33 @@ public class HomeActivity extends Activity{
 	private void selectItemFromDrawer(int position) {
 	 
 		if (position == 0){ /// selected wallet
-			Bundle bundle=new Bundle();
-			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			Intent intent = new Intent (HomeActivity.this, WalletActivity.class);
-			intent.putExtra("DATA_ACCOUNT", bundle);
-			startActivity(intent);
+			startActivity(intent_wallet);
 		}
 		else if (position == 1){  /// selected income
-			Bundle bundle=new Bundle();
-			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			Intent intent = new Intent (HomeActivity.this, IncomeActivity.class);
-			intent.putExtra("DATA_ACCOUNT", bundle);
-			startActivity(intent);
+			startActivity(intent_income);
 		}
 		else if (position == 2){ ///selected expenditure
-			Bundle bundle=new Bundle();
-			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			Intent intent = new Intent (HomeActivity.this, ExpenditureActivity.class);
-			intent.putExtra("DATA_ACCOUNT", bundle);
-			startActivity(intent);
+			startActivity(intent_expend);
 		}
 		else if (position == 3){ ///selected category
-			Bundle bundle=new Bundle();
-			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			Intent intent = new Intent (HomeActivity.this, CategoryActivity.class);
-			intent.putExtra("DATA", bundle);
-			startActivity(intent);
+			startActivity(intent_category);
 		}
 		else if (position == 4){ ///selected Diary
-			Bundle bundle=new Bundle();
-			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			Intent intent = new Intent (HomeActivity.this, DiaryActivity.class);
-			intent.putExtra("DATA_ACCOUNT", bundle);
-			startActivity(intent);
+			startActivity(intent_diary);
 		}
 		else if (position == 5){ ///selected report
-			Bundle bundle=new Bundle();
-			bundle.putInt("ID_ACCOUNT", id_curent_user);
-			Intent intent = new Intent (HomeActivity.this, StatisticbyMonthActivity.class);
-			intent.putExtra("DATA_ACCOUNT", bundle);
-			startActivity(intent);
+			startActivity(intent_stattistic);
 		}
 		else if (position == 6){ ///selected about us
 			Toast.makeText(HomeActivity.this, "You have just select About us", Toast.LENGTH_LONG).show();
 		}
 		else if (position == 7){ ///selected logout
-			HomeActivity.this.finish();
+			Intent intent_login = new Intent(HomeActivity.this, LoginActivity.class);
+			HomeActivity.this.finish(); // Close Home Activity
+			startActivity(intent_login); // Start login activity
 		}		
-	    mDrawerList.setItemChecked(position, true);
-	    setTitle(mNavItems.get(position).mTitle);
+	    //mDrawerList.setItemChecked(position, true);
+	    //setTitle(mNavItems.get(position).mTitle);
 	 
 	    // Close the drawer
 	    mDrawerLayout.closeDrawer(mDrawerPane);
@@ -248,7 +235,6 @@ public class HomeActivity extends Activity{
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 				finish();
-				
 			}
 		});
 		adb.setPositiveButton("NO", new DialogInterface.OnClickListener() {

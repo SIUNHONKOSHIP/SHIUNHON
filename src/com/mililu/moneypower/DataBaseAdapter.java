@@ -112,12 +112,11 @@ public class DataBaseAdapter {
 	}
 	
     public Cursor getAccountInfor(String username) {
-        // Select All Query
-    	// String selectQuery = "SELECT ID_ACCOUNT AS _id, * FROM tbl_ACCOUNT WHERE USERNAME = " + username;
-    	// db = dbHelper.getReadableDatabase();
-        //return db.rawQuery(selectQuery, null);
-        
         Cursor cursor=db.query("tbl_ACCOUNT", null, " USERNAME=?", new String[]{username}, null, null, null);
+        return cursor;
+    }
+    public Cursor getAccountInfor(Integer id_account) {
+        Cursor cursor=db.query("tbl_ACCOUNT", null, " ID_ACCOUNT=?", new String[]{String.valueOf(id_account)}, null, null, null);
         return cursor;
     }
 	

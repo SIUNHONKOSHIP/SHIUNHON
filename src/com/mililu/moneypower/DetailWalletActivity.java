@@ -27,7 +27,7 @@ public class DetailWalletActivity extends Activity {
 	Button btnBack, btnDelete;
 	static DataBaseAdapter dbAdapter;
 	List<Diary>list_diary = new ArrayList<Diary>();
-	static int id_current_wallet, id_curent_user;
+	static int id_current_wallet;
 	TextView tvTittle;
 	static TextView tvAmount;
 	static TextView tvOriginalAmount;
@@ -70,7 +70,6 @@ public class DetailWalletActivity extends Activity {
 	    // Get data of Bundle
 	    Intent intent = getIntent();
 	    Bundle bundle = intent.getBundleExtra("DATA");
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
 	    id_current_wallet = bundle.getInt("ID_WALLET");
 	    tvTittle.setText(bundle.getString("NAME_WALLET"));
 	    

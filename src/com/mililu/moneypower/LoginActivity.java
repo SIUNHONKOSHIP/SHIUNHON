@@ -36,24 +36,22 @@ public class LoginActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_login);
 		
-	    // Get The Reference Of Buttons and Edit Text
+	    // Get The Reference In View
 	    txtUserName = (EditText)findViewById(R.id.txt_login_username);
-	    //Thiet lap font de su dung tu assets
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-        //Thiet lap font cho Username
-        txtUserName.setTypeface(font);
-        
 	    txtPassword = (EditText)findViewById(R.id.txt_login_password);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-	    txtPassword.setTypeface(font);
-	    
 	    btnLogin=(Button)findViewById(R.id.btn_login_submit);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
-	    btnLogin.setTypeface(font);
-	    
 	    btnRegister=(Button)findViewById(R.id.btn_login_register);
-	    font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHTITALIC.TTF");
-	    btnRegister.setTypeface(font);
+	    
+	    //Thiet lap font de su dung tu assets
+        Typeface font_light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUE.TTF");
+        Typeface font_italic = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHTITALIC.TTF");
+        
+        //Thiet lap font
+        txtUserName.setTypeface(font_light);
+        txtPassword.setTypeface(font_light);
+	    btnLogin.setTypeface(font);
+	    btnRegister.setTypeface(font_italic);
 	    
 	    // Set OnClick Listener on SignUp button 
 	    btnLogin.setOnClickListener(new MyEvent());
@@ -98,7 +96,6 @@ public class LoginActivity extends Activity {
 				return;
 		}
 		else{ 
-			//String passindatabase = dbAdapter.getAccountPassword(username);
 			mAccountCorsor = dbAdapter.getAccountInfor(username);
 			if(mAccountCorsor.getCount()<1) // UserName Not Exist
 	        {
@@ -109,20 +106,13 @@ public class LoginActivity extends Activity {
 				mAccountCorsor.moveToFirst();
 				String passindatabase = mAccountCorsor.getString(mAccountCorsor.getColumnIndex("PASSWORD"));
 				if (password.equals(passindatabase)){
-					// Get information of account
+					// Get id of account
 					int id_account = mAccountCorsor.getInt(mAccountCorsor.getColumnIndex("ID_ACCOUNT")); //dbAdapter.getAccountId(username);
-					String fullname = mAccountCorsor.getString(mAccountCorsor.getColumnIndex("FULLNAME"));
-					String user = mAccountCorsor.getString(mAccountCorsor.getColumnIndex("USERNAME"));
-					//Identify Bundle
-					Bundle bundle=new Bundle();
-					// set data into Bundle
-					bundle.putInt("ID_ACCOUNT", id_account);
-					bundle.putString("USERNAME_ACCOUNT", user);
-					bundle.putString("FULLNAME_ACCOUNT", fullname);
+
 					// create Intend 
 					Intent intent = new Intent (LoginActivity.this, HomeActivity.class);
-					//Set bundle into intent
-					intent.putExtra("DATA_ACCOUNT", bundle);
+					//Set data into intent
+					intent.putExtra("ID_ACCOUNT", id_account);
 					// Start Home Activity
 					startActivity(intent);
 					
@@ -176,10 +166,7 @@ public class LoginActivity extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
- 
 		dbAdapter.close();
-		txtUserName.setText("");
-		txtPassword.setText("");
 	}
 	
 	//// create menu

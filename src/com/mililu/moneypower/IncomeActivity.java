@@ -39,7 +39,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     DataBaseAdapter dbAdapter;
     Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
     EditText txtAmount, txtNotice, txtDate, txtTime;
-    int id_wallet, id_income, id_curent_user;
+    int id_wallet, id_income, id_user;
     String name_wallet, name_income;
     int mYear, mMonth, mDay, mHour, mMinute;
     Dialog mDialog;
@@ -51,66 +51,58 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_income);
-        
-        Intent intent = getIntent();
-	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
 	    
 	    // Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
-	    
+	    // Initializing font
 	    Typeface light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-	    
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-        
-        // Spinner element
+	    // Get id user
+	    id_user = HomeActivity.id_user;
+        // Get The Reference 
         spinnerWallet = (Spinner) findViewById(R.id.spn_income_wallet);
         spinnerCategoryIncome = (Spinner)findViewById(R.id.spn_income_danhmuc);
+        btnSubmit = (Button)findViewById(R.id.btn_income_submit);
+        btnBack = (Button)findViewById(R.id.btn_income_back);
+        btnCreateCategory = (Button)findViewById(R.id.btn_income_createcategory);
+        btnDate = (Button)findViewById(R.id.btn_income_date);
+        btnTime = (Button)findViewById(R.id.btn_income_time);
+        txtAmount = (EditText)findViewById(R.id.txt_income_amount);
+        txtNotice = (EditText)findViewById(R.id.txt_income_notice);
+        txtDate = (EditText)findViewById(R.id.txt_income_date);
+        txtTime = (EditText)findViewById(R.id.txt_income_time);
+        tvTittle = (TextView)findViewById(R.id.tv_income);
+        tvAmount = (TextView)findViewById(R.id.tv_income_amount);
+        tvDes = (TextView)findViewById(R.id.tv_income_notice);      
+        tvWallet = (TextView)findViewById(R.id.tv_income_walletname);
+        tvCate = (TextView)findViewById(R.id.tv_income_category);
+        tvDate = (TextView)findViewById(R.id.tv_income_date);
+        tvTime = (TextView)findViewById(R.id.tv_income_time);
         // Spinner click listener
         spinnerWallet.setOnItemSelectedListener(this);
         spinnerCategoryIncome.setOnItemSelectedListener(this);
-        
-        
-        btnSubmit = (Button)findViewById(R.id.btn_income_submit);
+        // Button click listener
         btnSubmit.setOnClickListener(new MyEvent()); 
-        btnBack = (Button)findViewById(R.id.btn_income_back);
         btnBack.setOnClickListener(new MyEvent());
-        btnCreateCategory = (Button)findViewById(R.id.btn_income_createcategory);
         btnCreateCategory.setOnClickListener(new MyEvent());
-        btnDate = (Button)findViewById(R.id.btn_income_date);
         btnDate.setOnClickListener(new MyEvent());
-        btnTime = (Button)findViewById(R.id.btn_income_time);
         btnTime.setOnClickListener(new MyEvent());
-        
-        txtAmount = (EditText)findViewById(R.id.txt_income_amount);
+        // Set Font
         txtAmount.setTypeface(light);
-        txtNotice = (EditText)findViewById(R.id.txt_income_notice);
         txtNotice.setTypeface(light);
-        txtDate = (EditText)findViewById(R.id.txt_income_date);
         txtDate.setTypeface(light);
-        txtTime = (EditText)findViewById(R.id.txt_income_time);
         txtTime.setTypeface(light);
-        
-        setCurrentDate();
-        setCurrentTime();
-        
-        tvTittle = (TextView)findViewById(R.id.tv_income);
         tvTittle.setTypeface(light);
-        tvAmount = (TextView)findViewById(R.id.tv_income_amount);
         tvAmount.setTypeface(light);
-        tvDes = (TextView)findViewById(R.id.tv_income_notice);      
         tvDes.setTypeface(light);
-        tvWallet = (TextView)findViewById(R.id.tv_income_walletname);
         tvWallet.setTypeface(light);
-        tvCate = (TextView)findViewById(R.id.tv_income_category);
         tvCate.setTypeface(light);
-        tvDate = (TextView)findViewById(R.id.tv_income_date);
         tvDate.setTypeface(light);
-        tvTime = (TextView)findViewById(R.id.tv_income_time);
         tvTime.setTypeface(light);
+        // Get Date and Time
+        getCurrentDate();
+        getCurrentTime();
     }
-    
-    
     
     @Override
 	protected void onStart() {
@@ -120,36 +112,34 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
         loadSpinnerDataCategoryIncome();
 	}
 
-
-
 	/**
      * thiet lap ngay thang nam hien tai
      */
-	public void setCurrentDate(){
+	public void getCurrentDate(){
 		Calendar cal=Calendar.getInstance();
 		mDay=cal.get(Calendar.DAY_OF_MONTH);
 		mMonth=(cal.get(Calendar.MONTH)+1);
 		mYear=cal.get(Calendar.YEAR);
+		// Set date to text box
 		txtDate.setText(mDay+"-"+(mMonth)+"-"+mYear);
 	}
     
 	 /**
 	 * thiet lap gio hien tai
 	 */
-	 public void setCurrentTime(){
+	 public void getCurrentTime(){
 		 Calendar cal=Calendar.getInstance();
-		 mHour=cal.get(Calendar.HOUR);
+		 mHour=cal.get(Calendar.HOUR_OF_DAY);
 		 mMinute=cal.get(Calendar.MINUTE);
+		 // Set time to text box
 		 txtTime.setText(mHour+":"+(mMinute));
 	 }
     /**
      * Function to load the spinner data from SQLite database
      * */    
     private void loadSpinnerDataWallet() {
-    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
-
         // Spinner Drop down cursor
-        walletsCursor = dbAdapter.getListWalletOfUser(id_curent_user);
+        walletsCursor = dbAdapter.getListWalletOfUser(id_user);
         // map the cursor column names to the TextView ids in the layout
         String[] from = { "NAME_WALLET" };
         int[] to = { android.R.id.text1 };
@@ -222,7 +212,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		diary.setId_parent_category(id_income);
     		diary.setId_wallet(id_wallet);
     		diary.setId_category(id_income);
-    		diary.setId_account(id_curent_user);
+    		diary.setId_account(id_user);
     		diary.setDay(mDay);
     		diary.setMonth(mMonth);
     		diary.setYear(mYear);
@@ -232,8 +222,7 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		
     		dbAdapter.insertDiary(diary);
     		dbAdapter.updateWallet(id_wallet, newmoney);
-    		//dbAdapter.close();
-    		Toast.makeText(getApplicationContext(), "thanh cong", Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
     		ClearTextBox();
     	}
     }
@@ -245,6 +234,8 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     private void ClearTextBox(){
     	txtAmount.setText("");
     	txtNotice.setText("");
+    	getCurrentDate();
+    	getCurrentTime();
     }
     
 	@Override
@@ -292,39 +283,39 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 		}
 	};
 	 
-	 @Override
-	 protected Dialog onCreateDialog(int id) {
-		 // TODO Auto-generated method stub
-		 if(id==1){
-			 return new DatePickerDialog(this, dateChange, mYear, mMonth-1, mDay);
-		 }
-		 else if(id==2){
-			 return new TimePickerDialog(this, timeChange, mHour, mMinute, false );
-		 }
-		 return null;
-	 }
-	 
-		@Override
-		public boolean dispatchTouchEvent(MotionEvent ev) {
-		    View v = getCurrentFocus();
-
-		    if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && 
-		            v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
-		        int scrcoords[] = new int[2];
-		        v.getLocationOnScreen(scrcoords);
-		        float x = ev.getRawX() + v.getLeft() - scrcoords[0];
-		        float y = ev.getRawY() + v.getTop() - scrcoords[1];
-
-		        if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
-		            hideKeyboard(this);
-		    }
-		    return super.dispatchTouchEvent(ev);
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		// TODO Auto-generated method stub
+		if(id==1){
+			return new DatePickerDialog(this, dateChange, mYear, mMonth-1, mDay);
 		}
-
-		public static void hideKeyboard(Activity activity) {
-		    if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-		        InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-		        imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-		    }
+		else if(id==2){
+			return new TimePickerDialog(this, timeChange, mHour, mMinute, false );
 		}
+		return null;
+	}
+	
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		View v = getCurrentFocus();
+		
+		if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && 
+				v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
+			int scrcoords[] = new int[2];
+			v.getLocationOnScreen(scrcoords);
+			float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+			float y = ev.getRawY() + v.getTop() - scrcoords[1];
+			 
+			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
+				hideKeyboard(this);
+		}
+		return super.dispatchTouchEvent(ev);
+	}
+	
+	public static void hideKeyboard(Activity activity) {
+		if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+			InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+		}
+	}
 }

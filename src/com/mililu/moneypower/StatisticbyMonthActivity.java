@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -31,7 +30,7 @@ public class StatisticbyMonthActivity extends Activity{
 	SQLiteDatabase db = null;
 	Button btnBack, btnPrevious, btnNext;
 	DataBaseAdapter dbAdapter;
-	int id_curent_user, mMonth, mYear, mIncome, mExpenditure;
+	int id_user, mMonth, mYear, mIncome, mExpenditure;
 	Cursor cursorIncome, cursorExpen;
 	TextView txtTittle, txtDate, txtTotalExpenditure, txtTotalIncome;
 	List <String> list_income, list_expenditure;
@@ -68,19 +67,16 @@ public class StatisticbyMonthActivity extends Activity{
 	    btnNext.setOnClickListener(new MyEvent());
 	    btnPrevious.setOnClickListener(new MyEvent());
 	    
-	    // Get data of Bundle
-	    Intent intent = getIntent();
-	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
+	    id_user = HomeActivity.id_user;
 	    
-	    setCurrentDate();
+	    GetCurrentDate();
 	}
 	@Override
 	protected void onStart(){
 		super.onStart();
 		
-		getTotalIncome(mMonth, mYear, id_curent_user);
-	    getTotalExpenditure(mMonth, mYear, id_curent_user);
+		getTotalIncome(mMonth, mYear, id_user);
+	    getTotalExpenditure(mMonth, mYear, id_user);
 	    CalcultateIncome();
 	    CalcultateExpenditure();
 	    setListViewHeightBasedOnChildren(lvStatisticExpen);
@@ -103,8 +99,8 @@ public class StatisticbyMonthActivity extends Activity{
 					mYear --;
 				}
 				txtDate.setText((mMonth)+"-"+mYear);
-				getTotalIncome(mMonth, mYear, id_curent_user);
-			    getTotalExpenditure(mMonth, mYear, id_curent_user);
+				getTotalIncome(mMonth, mYear, id_user);
+			    getTotalExpenditure(mMonth, mYear, id_user);
 			    CalcultateIncome();
 			    CalcultateExpenditure();
 			    setListViewHeightBasedOnChildren(lvStatisticExpen);
@@ -119,8 +115,8 @@ public class StatisticbyMonthActivity extends Activity{
 					mYear ++;
 				}
 				txtDate.setText((mMonth)+"-"+mYear);
-				getTotalIncome(mMonth, mYear, id_curent_user);
-			    getTotalExpenditure(mMonth, mYear, id_curent_user);
+				getTotalIncome(mMonth, mYear, id_user);
+			    getTotalExpenditure(mMonth, mYear, id_user);
 			    CalcultateIncome();
 			    CalcultateExpenditure();
 			    setListViewHeightBasedOnChildren(lvStatisticExpen);
@@ -141,14 +137,14 @@ public class StatisticbyMonthActivity extends Activity{
 	private void CalcultateIncome(){
 		double balance = 0;
 		list_income.clear();
-		cursorIncome = dbAdapter.getListIncomeOfMonth(mMonth, mYear, id_curent_user);
+		cursorIncome = dbAdapter.getListIncomeOfMonth(mMonth, mYear, id_user);
 		if (cursorIncome.getCount()>0){
 			
 			cursorIncome.moveToFirst();
 			while(!cursorIncome.isAfterLast()){
 				String name = cursorIncome.getString(cursorIncome.getColumnIndexOrThrow("NAME_INCOME"));
 				int id_income = cursorIncome.getInt(cursorIncome.getColumnIndexOrThrow("ID_CATEGORY"));
-				balance = dbAdapter.CalculateIncomeByMonth(id_income, mMonth, mYear, id_curent_user);
+				balance = dbAdapter.CalculateIncomeByMonth(id_income, mMonth, mYear, id_user);
 				String rate = new DecimalFormat("##.##").format(balance*100/mIncome);
 				list_income.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorIncome.moveToNext();
@@ -167,14 +163,14 @@ public class StatisticbyMonthActivity extends Activity{
 	private void CalcultateExpenditure(){
 		double balance = 0;
 		list_expenditure.clear();
-		cursorExpen = dbAdapter.getListExpenditureOfMonth(mMonth, mYear, id_curent_user);
+		cursorExpen = dbAdapter.getListExpenditureOfMonth(mMonth, mYear, id_user);
 		if (cursorExpen.getCount()>0){
 			
 			cursorExpen.moveToFirst();
 			while(!cursorExpen.isAfterLast()){
 				String name = cursorExpen.getString(cursorExpen.getColumnIndexOrThrow("NAME_EXP"));
 				int id_expend = cursorExpen.getInt(cursorExpen.getColumnIndexOrThrow("ID_PARENT_CATEGORY"));
-				balance = dbAdapter.CalculateExpendByMonth(id_expend, mMonth, mYear, id_curent_user);
+				balance = dbAdapter.CalculateExpendByMonth(id_expend, mMonth, mYear, id_user);
 				String rate = new DecimalFormat("##.##").format(balance*100/mExpenditure);
 				list_expenditure.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorExpen.moveToNext();
@@ -190,7 +186,7 @@ public class StatisticbyMonthActivity extends Activity{
 		}
 	}
 	
-	public void setCurrentDate(){
+	public void GetCurrentDate(){
 		Calendar cal=Calendar.getInstance();
 		mMonth=(cal.get(Calendar.MONTH)+1);
 		mYear=cal.get(Calendar.YEAR);

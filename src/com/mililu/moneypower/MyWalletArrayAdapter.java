@@ -33,21 +33,19 @@ public class MyWalletArrayAdapter extends ArrayAdapter<Wallet>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		//if (convertView == null){
+		if (convertView == null){
 			LayoutInflater flater = context.getLayoutInflater();
-			View row = flater.inflate(layout, parent,false);
-			
-			TextView walletname =(TextView) row.findViewById(R.id.tv_layoutlistwallet_name);
-			walletname.setTypeface(tf);
-			TextView amount = (TextView) row.findViewById(R.id.tv_layoutlistwallet_amount);	
-			amount.setTypeface(tf);
-			
-			Wallet data=list.get(position);
-			walletname.setText(data.getName()==null?"":data.getName().toString());
-			amount.setText(data.getMoney()==null?"":data.getMoney().toString());
-			return row;
-		//	}
-		//return convertView;
+			convertView = flater.inflate(layout, parent,false);
+		}
+		TextView walletname =(TextView) convertView.findViewById(R.id.tv_layoutlistwallet_name);
+		walletname.setTypeface(tf);
+		TextView amount = (TextView) convertView.findViewById(R.id.tv_layoutlistwallet_amount);	
+		amount.setTypeface(tf);
+		
+		Wallet data=list.get(position);
+		walletname.setText(data.getName()==null?"":data.getName().toString());
+		amount.setText(data.getMoney()==null?"":data.getMoney().toString());
+		return convertView;
 	}
 
 	

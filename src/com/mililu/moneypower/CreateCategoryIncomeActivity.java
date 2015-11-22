@@ -39,9 +39,6 @@ public class CreateCategoryIncomeActivity extends Activity {
 	    btnBack.setOnClickListener(new MyEvent());
 	    btnInsert.setOnClickListener(new MyEvent());
 	    
-	    //Intent intent = getIntent();
-		//Bundle bundle = intent.getBundleExtra("DATA");
-		//id_curent_user = bundle.getInt("ID_ACCOUNT");
 	}
 
 	public class MyEvent implements OnClickListener {

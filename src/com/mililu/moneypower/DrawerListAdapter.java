@@ -2,6 +2,8 @@ package com.mililu.moneypower;
 
 import java.util.ArrayList;
 
+import com.mililu.moneypower.classobject.NavItem;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

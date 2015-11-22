@@ -169,7 +169,6 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
                     	if (item.getType() == 1){
                     		Intent intent = new Intent (context, EditIncomeActivity.class);
                     		intent.putExtra("id_diary", item.getId_diary());
-                    		intent.putExtra("id_user", DetailWalletActivity.id_curent_user);
                     		context.startActivity(intent);
                     	}
                     	else if(item.getType() == 2){

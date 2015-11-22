@@ -49,9 +49,6 @@ public class EditCategoryIncomeActivity extends Activity {
 	    income = dbAdapter.getInforCategoryIncome(id_income);
 	    income.moveToFirst();
 	    txtNameIncome.setText(income.getString(income.getColumnIndexOrThrow("NAME_INCOME")));
-	    //Intent intent = getIntent();
-		//Bundle bundle = intent.getBundleExtra("DATA");
-		//id_curent_user = bundle.getInt("ID_ACCOUNT");
 	}
 
 	public class MyEvent implements OnClickListener {

@@ -14,7 +14,7 @@ import android.widget.TabHost.TabSpec;
 
 public class CategoryActivity extends TabActivity{
 	TabHost tabHost;
-	int id_curent_user;
+	int id_user;
 	private Button btnBack,btnCreate;
 	private TabSpec incomespec, expendspec;
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,7 @@ public class CategoryActivity extends TabActivity{
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	    setContentView(R.layout.activity_category);
 	    
-	    // Get data of Bundle
-	    Intent intent = getIntent();
-	    Bundle bundle = intent.getBundleExtra("DATA");
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-	    // Set data for Bundle
-	    Bundle setBundle = new Bundle();
-	    setBundle.putInt("ID_ACCOUNT", id_curent_user);
+	    id_user = HomeActivity.id_user;
 	    
 	    tabHost = getTabHost();
 	     
@@ -37,14 +31,12 @@ public class CategoryActivity extends TabActivity{
 	    incomespec = tabHost.newTabSpec("income");
 	    incomespec.setIndicator("Income", getResources().getDrawable(R.drawable.icon_info));
 	    Intent incomesIntent = new Intent(this, CategoryIncomeActivity.class);
-	    incomesIntent.putExtra("DATA", setBundle); // dua du lieu qua activity income
 	    incomespec.setContent(incomesIntent);
 	     
 	    // Tab for Expenditure
 	    expendspec = tabHost.newTabSpec("expend");
 	    expendspec.setIndicator ("Expenditure", getResources().getDrawable(R.drawable.ic_launcher)); // setting Title and Icon for the Tab
 	    Intent expendIntent = new Intent(this, CategoryExpenditureActivity.class);
-	    expendIntent.putExtra("DATA", setBundle); // dua du lieu qua activity expenditure
 	    expendspec.setContent(expendIntent);
 	     
 	    // Adding all TabSpec to TabHost
@@ -77,13 +69,7 @@ public class CategoryActivity extends TabActivity{
 				}
 				else if (tabHost.getCurrentTab() == 1){
 					Toast.makeText(getApplicationContext(), "under developding", Toast.LENGTH_SHORT).show();
-				}
-				/*Bundle bundle=new Bundle();
-				bundle.putInt("ID_ACCOUNT", id_curent_user);
-				Intent intent = new Intent (getApplicationContext(), CreateWalletActivity.class);
-				intent.putExtra("DATA", bundle);
-				startActivity(intent);*/
-					
+				}					
 			}
 		}
 	}

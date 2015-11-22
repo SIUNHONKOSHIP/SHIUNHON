@@ -6,7 +6,6 @@ import java.util.List;
 import com.mililu.moneypower.classobject.Income;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Window;
@@ -18,7 +17,7 @@ public class CategoryIncomeActivity extends Activity{
 	DataBaseAdapter dbAdapter;
 	List<Income>list_income ;
 	static ArrayAdapterCategoryIncome aaCategoryIncome;
-	int id_curent_user;
+	int id_user;
 	ListView lvCategoryIncome;
 	Cursor cursorCategoryIncome;
 	
@@ -47,11 +46,7 @@ public class CategoryIncomeActivity extends Activity{
 	    // Set OnItemClick Listener on listview
 	    //lvDiary.setOnItemClickListener(new MyEventItemOnClick());
 	    
-	    // Get data of Bundle
-	    Intent intent = getIntent();
-	    Bundle bundle = intent.getBundleExtra("DATA");
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
-	    
+	    id_user = HomeActivity.id_user;
 	}
 	
 	@Override

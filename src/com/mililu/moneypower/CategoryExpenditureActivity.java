@@ -2,9 +2,10 @@ package com.mililu.moneypower;
 
 import java.util.ArrayList;
 
+import com.mililu.moneypower.classobject.ExpenditureDetail;
+
 import android.app.ExpandableListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ public class CategoryExpenditureActivity extends ExpandableListActivity{
 	private ArrayList<String> parentItems = new ArrayList<String>();
 	private ArrayList<Object> childItems = new ArrayList<Object>();
 	
-	int id_curent_user;
+	int id_user;
 	ArrayList<ExpenditureDetail> list_child; 
 	
 	ExpandableListView expandableList;
@@ -54,9 +55,7 @@ public class CategoryExpenditureActivity extends ExpandableListActivity{
 		expandableList.setAdapter(aCategoryExpend);
 		expandableList.setOnChildClickListener(this);
 		
-		Intent intent = getIntent();
-	    Bundle bundle = intent.getBundleExtra("DATA");
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
+	    id_user = HomeActivity.id_user;
 		
 		
 		

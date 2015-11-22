@@ -37,7 +37,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     DataBaseAdapter dbAdapter;
     Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
     EditText txtAmount, txtNotice, txtDate, txtTime;
-    int id_wallet, id_expen, id_curent_user, id_expen_detail;
+    int id_wallet, id_expen, id_user, id_expen_detail;
     String name_wallet, name_expen, name_expen_detail;
     int mYear, mMonth, mDay, mHour, mMinute;
     Dialog mDialog;
@@ -47,16 +47,12 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_expenditure);
-		
-        
-        Intent intent = getIntent();
-	    Bundle bundle = intent.getBundleExtra("DATA_ACCOUNT");
-	    
-	 // Create a instance of SQLite Database
+		    
+        // Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
-	    
-	    id_curent_user = bundle.getInt("ID_ACCOUNT");
+	    // Get id user
+	    id_user = HomeActivity.id_user;
         
         // Spinner element
         spnWallet = (Spinner) findViewById(R.id.spn_expen_wallet);
@@ -114,7 +110,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     	//dbAdapter = new DataBaseAdapter(getApplicationContext());
 
         // Spinner Drop down cursor
-        walletsCursor = dbAdapter.getListWalletOfUser(id_curent_user);
+        walletsCursor = dbAdapter.getListWalletOfUser(id_user);
         // map the cursor column names to the TextView ids in the layout
         String[] from = { "NAME_WALLET" };
         int[] to = { android.R.id.text1 };
@@ -199,7 +195,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     		diary.setId_wallet(id_wallet);
     		diary.setId_parent_category(id_expen);
     		diary.setId_category(id_expen_detail);
-    		diary.setId_account(id_curent_user);
+    		diary.setId_account(id_user);
     		diary.setDay(mDay);
     		diary.setMonth(mMonth);
     		diary.setYear(mYear);
@@ -278,7 +274,7 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 			 return new DatePickerDialog(this, dateChange, mYear, mMonth-1, mDay);
 		 }
 		 else if(id==2){
-			 return new TimePickerDialog(this, timeChange, mHour, mMinute, true );
+			 return new TimePickerDialog(this, timeChange, mHour, mMinute, false );
 		 }
 		 return null;
 	 }
