@@ -381,8 +381,48 @@ public class DataBaseAdapter {
 		return amount;
 	}
 	
+	public int getTotalIncome(int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1) AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
+	
 	public int getTotalExpenditure(int month, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2) AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
+	
+	public int getTotalExpenditure(int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2) AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
         int amount = 0;
@@ -406,9 +446,19 @@ public class DataBaseAdapter {
 		db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 	}
+	public Cursor getListIncomeOfYear(int year, int id_account){ // get date from all wallet. result return day, month, year
+		String selectQuery = "SELECT tbl_DIARY.ID_CATEGORY, tbl_INCOME.NAME_INCOME FROM tbl_DIARY, tbl_INCOME WHERE (((tbl_DIARY.TYPE = 1) AND (tbl_DIARY.ID_CATEGORY = tbl_INCOME.ID_INC)) AND (tbl_DIARY.YEAR = "+year+") AND (tbl_DIARY.ID_ACCOUNT = " + id_account + ") ) GROUP BY tbl_DIARY.ID_CATEGORY;";
+		db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+	}
 	
 	public Cursor getListExpenditureOfMonth(int month, int year, int id_account){ // get date from all wallet. result return day, month, year
 		String selectQuery = "SELECT tbl_DIARY.ID_PARENT_CATEGORY, tbl_EXPENDITURE.NAME_EXP FROM tbl_DIARY, tbl_EXPENDITURE WHERE (((tbl_DIARY.TYPE = 2) AND (tbl_DIARY.ID_PARENT_CATEGORY = tbl_EXPENDITURE.ID_EXP)) AND (tbl_DIARY.MONTH = "+month+" AND tbl_DIARY.YEAR = "+year+") AND (tbl_DIARY.ID_ACCOUNT = " + id_account + ") ) GROUP BY tbl_DIARY.ID_PARENT_CATEGORY;";
+		db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+	}
+	public Cursor getListExpenditureOfYear(int year, int id_account){ // get date from all wallet. result return day, month, year
+		String selectQuery = "SELECT tbl_DIARY.ID_PARENT_CATEGORY, tbl_EXPENDITURE.NAME_EXP FROM tbl_DIARY, tbl_EXPENDITURE WHERE (((tbl_DIARY.TYPE = 2) AND (tbl_DIARY.ID_PARENT_CATEGORY = tbl_EXPENDITURE.ID_EXP)) AND (tbl_DIARY.YEAR = "+year+") AND (tbl_DIARY.ID_ACCOUNT = " + id_account + ") ) GROUP BY tbl_DIARY.ID_PARENT_CATEGORY;";
 		db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 	}
@@ -433,8 +483,47 @@ public class DataBaseAdapter {
 		return amount;
 	}
 	
+	public int CalculateIncomeByYear(int id_category, int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1 AND ID_CATEGORY = " + id_category + ") AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
+	
 	public int CalculateExpendByMonth(int id_category, int month, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2 AND ID_PARENT_CATEGORY = " + id_category + ") AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor=db.rawQuery(selectQuery, null);
+        int amount = 0;
+		if(cursor.getCount()<1) // UserName Not Exist
+        {
+        	cursor.close();
+        	return amount;
+        }
+	    cursor.moveToFirst();
+	    while(!cursor.isAfterLast()){
+	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	amount += money;
+			cursor.moveToNext();
+	 	}
+		cursor.close();
+		return amount;
+	}
+	public int CalculateExpendByYear(int id_category, int year, int id_account){
+		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2 AND ID_PARENT_CATEGORY = " + id_category + ") AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
         int amount = 0;

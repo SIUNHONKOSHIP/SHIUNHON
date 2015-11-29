@@ -7,9 +7,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.model.CategorySeries;
+import org.achartengine.renderer.DefaultRenderer;
+import org.achartengine.renderer.SimpleSeriesRenderer;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.view.View;
@@ -20,6 +26,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,15 +35,20 @@ public class StatisticbyMonthActivity extends Activity{
 	
 	// Khai bao bien
 	SQLiteDatabase db = null;
-	Button btnBack, btnPrevious, btnNext;
+	Button btnPrevious, btnNext;
 	DataBaseAdapter dbAdapter;
 	int id_user, mMonth, mYear, mIncome, mExpenditure;
 	Cursor cursorIncome, cursorExpen;
-	TextView txtTittle, txtDate, txtTotalExpenditure, txtTotalIncome;
+	TextView txtDate, txtTotalExpenditure, txtTotalIncome;
 	List <String> list_income, list_expenditure;
 	ListView lvStatisticIncome, lvStatisticExpen;
 	ListAdapter adapterIncome, adapterExpenditure;
+	private View mChartIncome, mChartExpend;
+	LinearLayout chartContainerIncome, chartContainerExpend, yearlayout ;
 	
+	// Color of each Pie Chart Sections
+	int[] colors = { Color.BLUE, Color.MAGENTA, Color.GREEN, Color.CYAN,
+					Color.RED, Color.GRAY, Color.YELLOW, Color.rgb(100, 50, 200) };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,16 +57,16 @@ public class StatisticbyMonthActivity extends Activity{
 		setContentView(R.layout.activity_statisticbymonth);
 		
 		// Get The Reference Of View
-	    txtTittle=(TextView)findViewById(R.id.tv_statisticbymonth_title);
 	    txtDate=(TextView)findViewById(R.id.tv_statisticbymonth_date);
 	    txtTotalIncome=(TextView)findViewById(R.id.tv_statisticbymonth_totalincome);
 	    txtTotalExpenditure=(TextView)findViewById(R.id.tv_statisticbymonth_totalexpenditure);
-	    btnBack=(Button)findViewById(R.id.btn_statisticbymonth_back);
         btnNext=(Button)findViewById(R.id.btn_statisticbymonth_nextmonth);
         btnPrevious=(Button)findViewById(R.id.btn_statisticbymonth_perviousmonth);
         lvStatisticExpen = (ListView)findViewById(R.id.lv_statisticbymonth_expenditure);
         lvStatisticIncome = (ListView)findViewById(R.id.lv_statisticbymonth_income);
-        
+        chartContainerIncome = (LinearLayout) findViewById(R.id.chart_income);
+        chartContainerExpend = (LinearLayout) findViewById(R.id.chart_expend);
+        yearlayout = (LinearLayout)findViewById(R.id.year_layout);
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
@@ -63,13 +75,13 @@ public class StatisticbyMonthActivity extends Activity{
 	    list_expenditure = new ArrayList<String>();
 	    
 	    // Set OnClick Listener on button 
-	    btnBack.setOnClickListener(new MyEvent());
 	    btnNext.setOnClickListener(new MyEvent());
 	    btnPrevious.setOnClickListener(new MyEvent());
 	    
 	    id_user = HomeActivity.id_user;
 	    
 	    GetCurrentDate();
+	    yearlayout.setLayoutParams(new LinearLayout.LayoutParams(0, 0)); // hide year layout 
 	}
 	@Override
 	protected void onStart(){
@@ -87,9 +99,6 @@ public class StatisticbyMonthActivity extends Activity{
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if(v.getId()==R.id.btn_statisticbymonth_back){
-				StatisticbyMonthActivity.this.finish();
-			}
 			if(v.getId()==R.id.btn_statisticbymonth_perviousmonth){
 				if ((mMonth < 13) && (mMonth > 1)){
 					mMonth -= 1;
@@ -139,21 +148,38 @@ public class StatisticbyMonthActivity extends Activity{
 		list_income.clear();
 		cursorIncome = dbAdapter.getListIncomeOfMonth(mMonth, mYear, id_user);
 		if (cursorIncome.getCount()>0){
+			// Pie Chart Section Names
+			String[] NameIncome = new String[cursorIncome.getCount()];
+			// Pie Chart Section Value
+			double[] MoneyIncome = new double[cursorIncome.getCount()];
+			
+			int count = 0;
 			
 			cursorIncome.moveToFirst();
 			while(!cursorIncome.isAfterLast()){
 				String name = cursorIncome.getString(cursorIncome.getColumnIndexOrThrow("NAME_INCOME"));
+				NameIncome[count] = name;
 				int id_income = cursorIncome.getInt(cursorIncome.getColumnIndexOrThrow("ID_CATEGORY"));
 				balance = dbAdapter.CalculateIncomeByMonth(id_income, mMonth, mYear, id_user);
+				MoneyIncome[count] = balance;
 				String rate = new DecimalFormat("##.##").format(balance*100/mIncome);
 				list_income.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorIncome.moveToNext();
+				count++;
 			}
 			cursorIncome.close();
 			adapterIncome = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_income);
 			lvStatisticIncome.setAdapter(adapterIncome);
+			
+			//// SET up CHART
+			DrawChart(NameIncome, MoneyIncome, chartContainerIncome, mChartIncome);
+			
 		}
 		else {
+			// remove any views before u paint the chart
+			chartContainerIncome.removeAllViews();
+			chartContainerIncome.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+			
 			list_income.add("NODATA");
 			adapterIncome = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_income);
 			lvStatisticIncome.setAdapter(adapterIncome);
@@ -166,20 +192,37 @@ public class StatisticbyMonthActivity extends Activity{
 		cursorExpen = dbAdapter.getListExpenditureOfMonth(mMonth, mYear, id_user);
 		if (cursorExpen.getCount()>0){
 			
+			// Pie Chart Section Names
+			String[] NameExpend = new String[cursorExpen.getCount()];
+			// Pie Chart Section Value
+			double[] MoneyExpend = new double[cursorExpen.getCount()];
+			
+			int count = 0;
+			
 			cursorExpen.moveToFirst();
 			while(!cursorExpen.isAfterLast()){
 				String name = cursorExpen.getString(cursorExpen.getColumnIndexOrThrow("NAME_EXP"));
+				NameExpend[count] = name;
 				int id_expend = cursorExpen.getInt(cursorExpen.getColumnIndexOrThrow("ID_PARENT_CATEGORY"));
 				balance = dbAdapter.CalculateExpendByMonth(id_expend, mMonth, mYear, id_user);
+				MoneyExpend[count] = balance;
 				String rate = new DecimalFormat("##.##").format(balance*100/mExpenditure);
 				list_expenditure.add(name + ": " + NumberFormat.getCurrencyInstance().format(balance) + " (" + rate + "%)");
 				cursorExpen.moveToNext();
+				count++;
 			}
 			cursorExpen.close();
 			adapterExpenditure = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_expenditure);
 			lvStatisticExpen.setAdapter(adapterExpenditure);
+			
+			/// set up chart
+			DrawChart(NameExpend, MoneyExpend, chartContainerExpend, mChartExpend);
+			
 		}
 		else {
+			
+			chartContainerExpend.removeAllViews();
+			chartContainerExpend.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
 			list_expenditure.add("NODATA");
 			adapterExpenditure = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_expenditure);
 			lvStatisticExpen.setAdapter(adapterExpenditure);
@@ -215,5 +258,52 @@ public class StatisticbyMonthActivity extends Activity{
 	    ViewGroup.LayoutParams params = listView.getLayoutParams();
 	    params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 	    listView.setLayoutParams(params);
+	}
+	
+	private void DrawChart(String[] name, double[] value, LinearLayout chartContainer, View mChart) {
+		// Instantiating CategorySeries to plot Pie Chart
+		CategorySeries distributionSeries = new CategorySeries(
+				" Android version distribution as on October 1, 2012");
+		for (int i = 0; i < value.length; i++) {
+			// Adding a slice with its values and name to the Pie Chart
+			distributionSeries.add(name[i], value[i]);
+		}
+		
+		// Instantiating a renderer for the Pie Chart
+		DefaultRenderer defaultRenderer = new DefaultRenderer();
+		for (int i = 0; i < value.length; i++) {
+			SimpleSeriesRenderer seriesRenderer = new SimpleSeriesRenderer();
+			seriesRenderer.setColor(colors[i]);
+			//seriesRenderer.setDisplayBoundingPoints(true); //.setDisplayChartValues(true);
+			//Adding colors to the chart
+			defaultRenderer.setBackgroundColor(Color.BLACK);
+			defaultRenderer.setApplyBackgroundColor(true);
+			// Adding a renderer for a slice
+			defaultRenderer.addSeriesRenderer(seriesRenderer);
+		}
+		
+		defaultRenderer.setChartTitle("Statistic in " + mMonth + "/" + mYear);
+		defaultRenderer.setChartTitleTextSize(20);
+		defaultRenderer.setLabelsTextSize(15);
+		defaultRenderer.setZoomButtonsVisible(true);
+		
+		// this part is used to display graph on the xml
+		// Creating an intent to plot bar chart using dataset and
+		// multipleRenderer
+		// Intent intent = ChartFactory.getPieChartIntent(getBaseContext(),
+		// distributionSeries , defaultRenderer, "AChartEnginePieChartDemo");
+		
+		// Start Activity
+		// startActivity(intent);
+		
+		// remove any views before u paint the chart
+		chartContainer.removeAllViews();
+		chartContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 300));
+		// drawing pie chart
+		mChart = ChartFactory.getPieChartView(getBaseContext(),
+				distributionSeries, defaultRenderer);
+		// adding the view to the linearlayout
+		chartContainer.addView(mChart);
+		
 	}
 }

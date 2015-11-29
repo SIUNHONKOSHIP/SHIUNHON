@@ -1,40 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
 
-	<RelativeLayout
+	<LinearLayout
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" >
-
-	    <GridLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="40dp"
-	        android:layout_margin="5dp" >
-	
-	        <Button
-	            android:id="@+id/btn_statisticbymonth_back"
-	            android:layout_width="25dp"
-      		 	android:layout_height="25dp"
-	            android:layout_gravity="left|center_vertical"
-    	        android:layout_marginLeft="10dp"
-        	    android:background="@drawable/wallet_list_back" />
-	
-	        <TextView
-	            android:id="@+id/tv_statisticbymonth_title"
-                android:layout_column="0"
-          		android:layout_gravity="center"
-            	android:layout_row="0"
-            	android:text="Statistic by month"
-            	android:textColor="#33ccff"
-            	android:textSize="18sp" />
-	
-	    </GridLayout>
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
 	
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:layout_marginTop="50dp"
 	        android:orientation="vertical" >
 	
 	        <GridLayout
@@ -95,6 +72,14 @@
 	                android:gravity="center"
 	                android:text="Income"
 	                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	            <LinearLayout
+	                android:id="@+id/chart_income"
+	                android:layout_width="match_parent"
+	                android:layout_height="300dp"
+	                android:orientation="vertical"
+	                tools:ignore="Orientation" >
+	            </LinearLayout>
 	
 	            <ListView
 	                android:id="@+id/lv_statisticbymonth_income"
@@ -117,7 +102,13 @@
 	                android:gravity="center"
 	                android:text="Expenditure"
 	                android:textAppearance="?android:attr/textAppearanceMedium" />
-	
+				<LinearLayout
+	                android:id="@+id/chart_expend"
+	                android:layout_width="match_parent"
+	                android:layout_height="300dp"
+	                android:orientation="vertical"
+	                tools:ignore="Orientation" >
+	            </LinearLayout>
 	            <ListView
 	                android:id="@+id/lv_statisticbymonth_expenditure"
 	                android:layout_width="match_parent"
@@ -125,7 +116,32 @@
 	            </ListView>
 	
 	        </LinearLayout>
-	
+
+	        <LinearLayout
+	            android:id="@+id/year_layout"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="match_parent"
+	                android:layout_height="30dp"
+	                android:background="#b0c4de"
+	                android:gravity="center"
+	                android:text="year summaries"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	            <LinearLayout
+	                android:id="@+id/linechart"
+	                android:layout_width="match_parent"
+	                android:layout_height="400dp"
+	                android:orientation="vertical"
+	                tools:ignore="Orientation" >
+	            </LinearLayout>
+
+	        </LinearLayout>
+
 	    </LinearLayout>
-	</RelativeLayout>
+	</LinearLayout>
 </ScrollView>
