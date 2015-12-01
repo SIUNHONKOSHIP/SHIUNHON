@@ -123,7 +123,7 @@ public class HomeActivity extends Activity{
 		intent_income = new Intent (HomeActivity.this, IncomeActivity.class);
 		intent_expend = new Intent (HomeActivity.this, ExpenditureActivity.class);
 		intent_wallet = new Intent (HomeActivity.this, WalletActivity.class);
-		intent_stattistic = new Intent (HomeActivity.this, StatisticActivity.class);
+		intent_stattistic = new Intent (HomeActivity.this, StatisticActivity2.class);
 		intent_category = new Intent (HomeActivity.this, CategoryActivity.class);
 		intent_diary = new Intent (HomeActivity.this, DiaryActivity.class);
 	}
