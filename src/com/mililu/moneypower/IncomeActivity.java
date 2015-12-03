@@ -204,8 +204,8 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
     		Toast.makeText(getApplicationContext(), "Please insert amount, date and hour", Toast.LENGTH_LONG).show();
     	}
     	else {
-    		int curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
-    		int newmoney = curentmoney + Integer.valueOf(mAmount);
+    		long curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
+    		long newmoney = curentmoney + Long.valueOf(mAmount);
     		
     		Diary diary = new Diary();
     		diary.setAmount(Integer.valueOf(mAmount));

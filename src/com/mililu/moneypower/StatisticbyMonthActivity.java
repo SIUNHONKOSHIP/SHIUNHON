@@ -37,7 +37,8 @@ public class StatisticbyMonthActivity extends Activity{
 	SQLiteDatabase db = null;
 	Button btnPrevious, btnNext;
 	DataBaseAdapter dbAdapter;
-	int id_user, mMonth, mYear, mIncome, mExpenditure;
+	int id_user, mMonth, mYear;
+	long mIncome, mExpenditure;
 	Cursor cursorIncome, cursorExpen;
 	TextView txtDate, txtTotalExpenditure, txtTotalIncome;
 	List <String> list_income, list_expenditure;

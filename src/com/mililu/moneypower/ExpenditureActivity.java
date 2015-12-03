@@ -187,8 +187,8 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
     		Toast.makeText(getApplicationContext(), "Please insert information", Toast.LENGTH_LONG).show();
     	}
     	else {
-    		int curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
-    		int newmoney = curentmoney - Integer.valueOf(mAmount);
+    		long curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
+    		long newmoney = curentmoney - Integer.valueOf(mAmount);
     		
     		Diary diary = new Diary();
     		diary.setAmount(Integer.valueOf(mAmount));

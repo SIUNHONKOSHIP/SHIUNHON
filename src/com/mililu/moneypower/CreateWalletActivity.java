@@ -33,25 +33,22 @@ public class CreateWalletActivity extends Activity {
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
 	    
-	    // Get The Reference Of Views
+	   
 	    Typeface light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    Typeface bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
 	    
+	    // Get The Reference Of Views
 	    tvTittle = (TextView) findViewById(R.id.tv_createwallet_title);
-	    tvTittle.setTypeface(light);
-	    
 	    txtNameWallet = (EditText)findViewById(R.id.txt_createwallet_namewallet);
-	    txtNameWallet.setTypeface(light);
-	    
 	    txtMoney = (EditText)findViewById(R.id.txt_createwallet_money);
-	    txtMoney.setTypeface(light);
-	    
 	    txtDescription = (EditText)findViewById(R.id.txt_createwallet_description);
-	    txtDescription.setTypeface(light);
-	    
 	    btnBack=(Button)findViewById(R.id.btn_createwallet_back);
-	    
 	    btnInsertWallet=(Button)findViewById(R.id.btn_createwallet_submit);
+	    // Set face
+	    tvTittle.setTypeface(light);
+	    txtNameWallet.setTypeface(light);
+	    txtMoney.setTypeface(light);
+	    txtDescription.setTypeface(light);
 	    btnInsertWallet.setTypeface(bold);
 	    
 	    // Set OnClick Listener on button 
@@ -80,14 +77,14 @@ public class CreateWalletActivity extends Activity {
 		String descrip = txtDescription.getText().toString();
 
 		// check if any of the fields are vaccant
-		if(namewallet.equals("")||money.isEmpty()||Integer.valueOf(money)<0)
+		if(namewallet.equals("")||money.isEmpty()||Long.valueOf(money)<0)
 		{
 				Toast.makeText(this, "Please write your wallet's name and money ☝", Toast.LENGTH_LONG).show();
 				return;
 		}
 		else{
 			// Save the Data in Database
-			dbAdapter.insertWallet(namewallet, Integer.valueOf(money),  id, descrip);
+			dbAdapter.insertWallet(namewallet, Long.valueOf(money),  id, descrip);
 			Toast.makeText(getApplicationContext(), "Wallet has been created 😏", Toast.LENGTH_LONG).show();
 			CreateWalletActivity.this.finish();
 		}

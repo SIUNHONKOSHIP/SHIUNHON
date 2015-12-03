@@ -39,7 +39,7 @@ public class HomeActivity extends Activity{
 	static int id_user;
 	String username_current_user, fullname_current_user;
 	Cursor accountCursor;
-	Intent intent_income, intent_expend, intent_wallet, intent_stattistic, intent_diary, intent_category;
+	Intent intent_income, intent_expend, intent_wallet, intent_stattistic, intent_diary, intent_category, intent_debt;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,6 +91,7 @@ public class HomeActivity extends Activity{
 	    mNavItems.add(new NavItem("Wallet", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Income", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Expenture", "", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Debt", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Category", "Category of Income & Expenditure", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Diary", "Everything you have wrote", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Report", "", R.drawable.ic_launcher));
@@ -126,6 +127,7 @@ public class HomeActivity extends Activity{
 		intent_stattistic = new Intent (HomeActivity.this, StatisticActivity2.class);
 		intent_category = new Intent (HomeActivity.this, CategoryActivity.class);
 		intent_diary = new Intent (HomeActivity.this, DiaryActivity.class);
+		intent_debt = new Intent (HomeActivity.this, DebtActivity.class);
 	}
 	
 	private void LoadInforUser(){
@@ -180,19 +182,22 @@ public class HomeActivity extends Activity{
 		else if (position == 2){ ///selected expenditure
 			startActivity(intent_expend);
 		}
-		else if (position == 3){ ///selected category
+		else if (position == 3){ ///selected debt
+			startActivity(intent_debt);
+		}
+		else if (position == 4){ ///selected category
 			startActivity(intent_category);
 		}
-		else if (position == 4){ ///selected Diary
+		else if (position == 5){ ///selected Diary
 			startActivity(intent_diary);
 		}
-		else if (position == 5){ ///selected report
+		else if (position == 6){ ///selected report
 			startActivity(intent_stattistic);
 		}
-		else if (position == 6){ ///selected about us
+		else if (position == 7){ ///selected about us
 			Toast.makeText(HomeActivity.this, "You have just select About us", Toast.LENGTH_LONG).show();
 		}
-		else if (position == 7){ ///selected logout
+		else if (position == 8){ ///selected logout
 			Intent intent_login = new Intent(HomeActivity.this, LoginActivity.class);
 			HomeActivity.this.finish(); // Close Home Activity
 			startActivity(intent_login); // Start login activity

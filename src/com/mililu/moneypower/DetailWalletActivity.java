@@ -86,7 +86,6 @@ public class DetailWalletActivity extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		adtDeatailWalletArr.clear();
 	}
 
 

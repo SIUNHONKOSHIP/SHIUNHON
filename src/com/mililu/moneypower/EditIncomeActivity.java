@@ -205,9 +205,9 @@ public class EditIncomeActivity extends Activity implements OnItemSelectedListen
     		Toast.makeText(getApplicationContext(), "Please insert amount, date and hour", Toast.LENGTH_LONG).show();
     	}
     	else {
-    		int curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
-    		int newmoney = 0;
-    		int balancemoney = Integer.valueOf(newAmount) - oldamount;
+    		long curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
+    		long newmoney = 0;
+    		long balancemoney = Integer.valueOf(newAmount) - oldamount;
     		if (balancemoney == 0){
     			newmoney = curentmoney;
     		}

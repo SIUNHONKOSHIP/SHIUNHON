@@ -95,6 +95,9 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".EditCategoryIncomeActivity"></activity>
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".DebtActivity"></activity>
         
     </application>
 

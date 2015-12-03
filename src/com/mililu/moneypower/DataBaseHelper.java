@@ -22,6 +22,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_EXPENDITURE);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_EXP_DETAIL);
 			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_DIARY);
+			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_DEBT_DIARY);
+			_db.execSQL(DataBaseAdapter.DATABASE_CREATE_DEBTOR);
 			_db.execSQL(DataBaseAdapter.DATABASE_INSERT_INCOME);
 			_db.execSQL(DataBaseAdapter.DATABASE_INSERT_EXPENDITURE);
 			_db.execSQL(DataBaseAdapter.DATABASE_INSERT_EXP_DET);

@@ -100,7 +100,7 @@ public class WalletActivity extends Activity{
 		}
 	}
 	private void getTotalAmount(int id_user){
-		int mBalance = dbAdapter.getTotalAmount(id_user);
+		long mBalance = dbAdapter.getTotalAmount(id_user);
 		txtTotalAmount.setText(NumberFormat.getCurrencyInstance().format(mBalance)); // NumberFormat.getCurrencyInstance().format(mBalance) dinh dang so tien 
 	}
 	
@@ -116,7 +116,7 @@ public class WalletActivity extends Activity{
 				Wallet data=new Wallet();
 				data.setId_wallet(cursorWallet.getInt(cursorWallet.getColumnIndexOrThrow("ID_WALLET")));
 				data.setName(cursorWallet.getString(cursorWallet.getColumnIndexOrThrow("NAME_WALLET")));
-				int money = cursorWallet.getInt(cursorWallet.getColumnIndexOrThrow("MONEY"));
+				long money = cursorWallet.getLong(cursorWallet.getColumnIndexOrThrow("MONEY"));
 				data.setMoney(NumberFormat.getCurrencyInstance().format(money));
 				list_wallet.add(data);
 				cursorWallet.moveToNext();

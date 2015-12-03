@@ -142,8 +142,8 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
                             	// Remove the item from the adapter and database
                             	if(dbAdapter.deteleDiary(item.getId_diary())){
                             		// calculator new money
-                            		int curentmoney = dbAdapter.getAmountOfWallet(DetailWalletActivity.id_current_wallet); // lay so tien hien tai
-                            		int newmoney = 0;
+                            		long curentmoney = dbAdapter.getAmountOfWallet(DetailWalletActivity.id_current_wallet); // lay so tien hien tai
+                            		long newmoney = 0;
                             		if (item.getType() == 1){ // neu thu thi tru ra
                             			newmoney = curentmoney - item.getAmount();
                             		}

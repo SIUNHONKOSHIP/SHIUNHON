@@ -34,9 +34,10 @@ import android.widget.TextView;
 
 public class StatisticActivity2 extends Activity implements OnItemSelectedListener{
 	// Khai bao bien
-	Button btnPrevious, btnNext;
+	Button btnPrevious, btnNext, btnBack;
 	DataBaseAdapter dbAdapter;
-	int id_user, mMonth, mYear, mIncome, mExpenditure;
+	int id_user, mMonth, mYear;
+	long mIncome, mExpenditure;
 	TextView txtDate, txtTotalExpenditure, txtTotalIncome;
 	private View mChart;
 	LinearLayout chartContainer;
@@ -64,6 +65,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 	    txtTotalExpenditure=(TextView)findViewById(R.id.tv_statistic2_totalexpenditure);
         btnNext=(Button)findViewById(R.id.btn_statistic2_next);
         btnPrevious=(Button)findViewById(R.id.btn_statistic2_previous);
+        btnBack = (Button)findViewById(R.id.btn_statistic2_back);
         spnTypeChart = (Spinner)findViewById(R.id.spn_statistic2_typechart);
         spnTypeStatistic = (Spinner)findViewById(R.id.spn_statistic2_typestatistic);
         chartContainer = (LinearLayout) findViewById(R.id.layout_statistic2_chart);
@@ -79,6 +81,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 	    // Set OnClick Listener on button 
 	    btnNext.setOnClickListener(new MyEvent());
 	    btnPrevious.setOnClickListener(new MyEvent());
+	    btnBack.setOnClickListener(new MyEvent());
 	    id_user = HomeActivity.id_user;
 		GetCurrentDate();
 	}

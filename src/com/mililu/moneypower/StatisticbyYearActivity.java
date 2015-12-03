@@ -17,13 +17,11 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.R.color;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.view.View;
@@ -44,7 +42,8 @@ public class StatisticbyYearActivity extends Activity{
 	SQLiteDatabase db = null;
 	Button btnPrevious, btnNext;
 	DataBaseAdapter dbAdapter;
-	int id_user, mYear, mIncome, mExpenditure;
+	int id_user, mYear;
+	long mIncome, mExpenditure;
 	Cursor cursorIncome, cursorExpen;
 	TextView txtDate, txtTotalExpenditure, txtTotalIncome;
 	List <String> list_income, list_expenditure;
@@ -60,8 +59,8 @@ public class StatisticbyYearActivity extends Activity{
 			"Jul", "Aug" , "Sep", "Oct", "Nov", "Dec"
 	};
 	
-	int[] income;
-	int[] expense;
+	long[] income;
+	long[] expense;
 	
 
 	@Override
@@ -97,8 +96,8 @@ public class StatisticbyYearActivity extends Activity{
 		
 		GetCurrentDate();
 		
-		income = new int[12];
-		expense = new int[12];
+		income = new long[12];
+		expense = new long[12];
 	}
 	
 	@Override

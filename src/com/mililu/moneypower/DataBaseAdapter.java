@@ -1,6 +1,7 @@
 package com.mililu.moneypower;
 
 import com.mililu.moneypower.classobject.Diary;
+import com.mililu.moneypower.classobject.DiaryDebt;
 import com.mililu.moneypower.classobject.Income;
 
 import android.content.ContentValues;
@@ -16,11 +17,13 @@ public class DataBaseAdapter {
 	// TODO: Create public field for each column in your table.
 	// SQL Statement to create a new database.
 	static final String DATABASE_CREATE_ACCOUNT = "create table tbl_ACCOUNT (ID_ACCOUNT integer primary key autoincrement, USERNAME  text,PASSWORD text, FULLNAME text); ";
+	static final String DATABASE_CREATE_DEBTOR = "create table tbl_DEBTOR (ID_DEBTOR integer primary key autoincrement, NAME_DEBTOR  text, ID_ACCOUNT integer); ";
 	static final String DATABASE_CREATE_WALLET = "create table tbl_WALLET (ID_WALLET integer primary key autoincrement, NAME_WALLET  text,ID_ACCOUNT integer, MONEY numeric, ORIGINAL_AMOUNT numeric, DESCRIPTION text); ";
 	static final String DATABASE_CREATE_INCOME = "create table tbl_INCOME (ID_INC integer primary key autoincrement, NAME_INCOME  text); ";
 	static final String DATABASE_CREATE_EXPENDITURE = "create table tbl_EXPENDITURE (ID_EXP integer primary key autoincrement, NAME_EXP text); ";
 	static final String DATABASE_CREATE_EXP_DETAIL = "create table tbl_EXP_DETAIL (ID_EXP_DET integer primary key autoincrement, ID_EXP  integer, NAME_EXP_DET text); ";
 	static final String DATABASE_CREATE_DIARY = "CREATE TABLE `tbl_DIARY` (`ID_DIARY` INTEGER PRIMARY KEY AUTOINCREMENT, `ID_PARENT_CATEGORY` INTEGER, `ID_CATEGORY` INTEGER, `ID_WALLET` INTEGER, `AMOUNT` NUMERIC, `ID_ACCOUNT` INTEGER, `DAY` INTEGER, `MONTH` INTEGER, `YEAR` INTEGER, `TIME` TEXT, `TYPE` INTEGER, `NOTICE` TEXT);";
+	static final String DATABASE_CREATE_DEBT_DIARY = "CREATE TABLE `tbl_DEBT_DIARY` (`ID_DIARY_DEBT` INTEGER PRIMARY KEY AUTOINCREMENT, `ID_DEBTOR` INTEGER, `ID_ACCOUNT` INTEGER, `ID_WALLET` INTEGER, `AMOUNT` NUMERIC, `TYPE` INTEGER, `DAY` INTEGER, `MONTH` INTEGER, `YEAR` INTEGER, `NOTICE` TEXT);";
 	static final String DATABASE_INSERT_EXPENDITURE = "insert into tbl_EXPENDITURE (ID_EXP, NAME_EXP) values (1, 'Ăn uống'), (2, 'Đi lại'), (3, 'Dịch vụ sinh hoạt'), (4, 'Hưởng thụ'); ";
 	static final String DATABASE_INSERT_EXP_DET = "insert into tbl_EXP_DETAIL (ID_EXP_DET, ID_EXP, NAME_EXP_DET) values (1, 1, 'Đi chợ/siêu thị'), (2, 1, 'Cafe'), (3, 1, 'Cơm tiệm'), (4, 2, 'Gửi xe'), (5, 2, 'Xăng xe'), (6, 2, 'Rửa xe'), (7, 3, 'Điện thoại'), (8, 3, 'Điện'), (9, 3, 'Nước'), (10, 4, 'Du lịch'), (11, 4, 'Xem phim'); ";
 	static final String DATABASE_INSERT_INCOME = "insert into tbl_INCOME (ID_INC, NAME_INCOME) values (1, 'Lương'), (2, 'Thưởng'), (3, 'Lãi'), (4, 'Lãi tiết kiệm'), (5, 'Được cho/tặng'), (6, 'Khác'); ";
@@ -151,7 +154,7 @@ public class DataBaseAdapter {
 	 * @param money
 	 * @param id_user
 	 */
-	public void insertWallet(String namewallet, int money, int id_user, String description){
+	public void insertWallet(String namewallet, long money, int id_user, String description){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
 		newValues.put("NAME_WALLET", namewallet);
@@ -163,17 +166,7 @@ public class DataBaseAdapter {
 		db.insert("tbl_WALLET", null, newValues);
 	}
 
-	public void updateWallet(int id_wallet, String namewallet, int money, int original_amount, String description){
-		ContentValues newValues = new ContentValues();
-		// Assign values for each row.
-		newValues.put("NAME_WALLET", namewallet);
-		newValues.put("MONEY", money);
-		newValues.put("ORIGINAL_AMOUNT", original_amount);
-		newValues.put("DESCRIPTION", description);
-		// Insert the row into your table
-		db.update("tbl_WALLET", newValues, "ID_WALLET =? ", new String[] {String.valueOf(id_wallet)});
-	}
-	public void updateWallet(int id_wallet, int money){
+	public void updateWallet(int id_wallet, long money){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
 		newValues.put("MONEY", money);
@@ -189,7 +182,7 @@ public class DataBaseAdapter {
 		db.delete("tbl_WALLET", "ID_WALLET =?", new String[] {String.valueOf(id_wallet)});
 	}
 	
-	public int getAmountOfWallet(int id_wallet){
+	public long getAmountOfWallet(int id_wallet){
 		Cursor cursor=db.query("tbl_WALLET", null, " ID_WALLET=?", new String[]{String.valueOf(id_wallet)}, null, null, null);
         if(cursor.getCount()<1) // UserName Not Exist
         {
@@ -197,12 +190,12 @@ public class DataBaseAdapter {
         	return 0;
         }
 	    cursor.moveToFirst();
-		int amount = cursor.getInt(cursor.getColumnIndex("MONEY"));
+		long amount = cursor.getLong(cursor.getColumnIndex("MONEY"));
 		cursor.close();
 		return amount;
 	}
 	
-	public int getOriginalAmountOfWallet(int id_wallet){
+	public long getOriginalAmountOfWallet(int id_wallet){
 		Cursor cursor=db.query("tbl_WALLET", null, " ID_WALLET=?", new String[]{String.valueOf(id_wallet)}, null, null, null);
         if(cursor.getCount()<1) // UserName Not Exist
         {
@@ -210,7 +203,7 @@ public class DataBaseAdapter {
         	return 0;
         }
 	    cursor.moveToFirst();
-		int amount = cursor.getInt(cursor.getColumnIndex("ORIGINAL_AMOUNT"));
+		long amount = cursor.getLong(cursor.getColumnIndex("ORIGINAL_AMOUNT"));
 		cursor.close();
 		return amount;
 	}
@@ -228,9 +221,9 @@ public class DataBaseAdapter {
 		return noti;
 	}
 	
-	public int getTotalAmount(int id_user){
+	public long getTotalAmount(int id_user){
 		Cursor cursor=db.query("tbl_WALLET", null, " ID_ACCOUNT=?", new String[]{String.valueOf(id_user)}, null, null, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -238,7 +231,7 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("MONEY"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("MONEY"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
@@ -361,11 +354,11 @@ public class DataBaseAdapter {
 			return db.delete("tbl_DIARY", "ID_DIARY = " + id_diary, null) > 0;
 	}
 	
-	public int getTotalIncome(int month, int year, int id_account){
+	public long getTotalIncome(int month, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1) AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -373,7 +366,7 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
@@ -381,11 +374,11 @@ public class DataBaseAdapter {
 		return amount;
 	}
 	
-	public int getTotalIncome(int year, int id_account){
+	public long getTotalIncome(int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1) AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -393,7 +386,7 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
@@ -401,11 +394,11 @@ public class DataBaseAdapter {
 		return amount;
 	}
 	
-	public int getTotalExpenditure(int month, int year, int id_account){
+	public long getTotalExpenditure(int month, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2) AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -413,7 +406,7 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
@@ -421,11 +414,11 @@ public class DataBaseAdapter {
 		return amount;
 	}
 	
-	public int getTotalExpenditure(int year, int id_account){
+	public long getTotalExpenditure(int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2) AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -433,7 +426,7 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
@@ -463,11 +456,11 @@ public class DataBaseAdapter {
         return db.rawQuery(selectQuery, null);
 	}
 	
-	public int CalculateIncomeByMonth(int id_category, int month, int year, int id_account){
+	public long CalculateIncomeByMonth(int id_category, int month, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1 AND ID_CATEGORY = " + id_category + ") AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -475,7 +468,7 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
@@ -483,11 +476,11 @@ public class DataBaseAdapter {
 		return amount;
 	}
 	
-	public int CalculateIncomeByYear(int id_category, int year, int id_account){
+	public long CalculateIncomeByYear(int id_category, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 1 AND ID_CATEGORY = " + id_category + ") AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -495,7 +488,7 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
@@ -503,11 +496,11 @@ public class DataBaseAdapter {
 		return amount;
 	}
 	
-	public int CalculateExpendByMonth(int id_category, int month, int year, int id_account){
+	public long CalculateExpendByMonth(int id_category, int month, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2 AND ID_PARENT_CATEGORY = " + id_category + ") AND (MONTH = "+month+" AND YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -515,18 +508,18 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
 		cursor.close();
 		return amount;
 	}
-	public int CalculateExpendByYear(int id_category, int year, int id_account){
+	public long CalculateExpendByYear(int id_category, int year, int id_account){
 		String selectQuery = "SELECT AMOUNT FROM tbl_DIARY WHERE ((TYPE = 2 AND ID_PARENT_CATEGORY = " + id_category + ") AND (YEAR = "+year+") AND (ID_ACCOUNT = " + id_account + "))";
 		db = dbHelper.getReadableDatabase();
 		Cursor cursor=db.rawQuery(selectQuery, null);
-        int amount = 0;
+        long amount = 0;
 		if(cursor.getCount()<1) // UserName Not Exist
         {
         	cursor.close();
@@ -534,12 +527,44 @@ public class DataBaseAdapter {
         }
 	    cursor.moveToFirst();
 	    while(!cursor.isAfterLast()){
-	    	int money = cursor.getInt(cursor.getColumnIndex("AMOUNT"));
+	    	long money = cursor.getLong(cursor.getColumnIndex("AMOUNT"));
 	    	amount += money;
 			cursor.moveToNext();
 	 	}
 		cursor.close();
 		return amount;
+	}
+	
+	public boolean insertDebtDiary(DiaryDebt diary){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("ID_DEBTOR", diary.getId_debtor());
+		newValues.put("ID_ACCOUNT", diary.getId_account());
+		newValues.put("ID_WALLET",diary.getId_wallet());
+		newValues.put("TYPE",diary.getId_account());
+		newValues.put("AMOUNT", diary.getAmount());
+		newValues.put("DAY", diary.getDay());
+		newValues.put("MONTH", diary.getMonth());
+		newValues.put("YEAR", diary.getYear());
+		newValues.put("NOTICE", diary.getNotice());
+		// Insert the row into your table
+		return db.insert("tbl_DEBT_DIARY", null, newValues) > 0;
+	}
+	
+    public Cursor getDebtorCursor(int id_user) {
+        // Select All Query
+        String selectQuery = "SELECT ID_DEBTOR as _id, * FROM tbl_DEBTOR WHERE ID_ACCOUNT =" + id_user;
+        db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+    
+	public boolean insertDebtor(String namedebtor, int id_user){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("NAME_DEBTOR", namedebtor);
+		newValues.put("ID_ACCOUNT", id_user);
+		// Insert the row into your table
+		return db.insert("tbl_DEBTOR", null, newValues) > 0;
 	}
 }
 

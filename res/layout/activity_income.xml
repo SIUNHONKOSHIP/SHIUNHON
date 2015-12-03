@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
-        android:background="@drawable/income_bg_light"
+        android:background="#dcdcdc"
         android:gravity="center_vertical" >
 
         <LinearLayout
@@ -81,12 +81,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/txt_full_black"
                         android:ems="10"
                         android:inputType="number"
                         android:paddingLeft="10dp"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp" />
+                        android:textSize="16sp" >
+                        <requestFocus />
+
+                    </EditText>
                 </LinearLayout>
 
                 <LinearLayout
@@ -110,10 +111,8 @@
                         android:layout_height="30dp"
                         android:layout_below="@+id/tv_income_notice"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/txt_full_black"
                         android:ems="10"
                         android:paddingLeft="10dp"
-                        android:textColor="#ffffff"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -208,8 +207,6 @@
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="date" >
-
-                            <requestFocus />
                         </EditText>
 
                         <Button

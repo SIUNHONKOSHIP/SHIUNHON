@@ -14,7 +14,7 @@ public class Diary {
 	private int month;
 	private int year;
 	private String time;
-	private int amount;
+	private long amount;
 	private int type;
 	private String notice;
 	
@@ -84,10 +84,10 @@ public class Diary {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public int getAmount() {
+	public long getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
 	public int getType() {
