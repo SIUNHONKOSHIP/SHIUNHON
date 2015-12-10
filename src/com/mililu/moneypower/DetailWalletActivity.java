@@ -12,6 +12,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -28,12 +29,13 @@ public class DetailWalletActivity extends Activity {
 	static DataBaseAdapter dbAdapter;
 	List<Diary>list_diary = new ArrayList<Diary>();
 	static int id_current_wallet;
-	TextView tvTittle;
+	TextView tvTittle, tvTittle1 ;
 	static TextView tvAmount;
 	static TextView tvOriginalAmount;
 	static TextView tvNotice;
 	ListView lvDiary;
 	Cursor cursorDiary;
+	Typeface tf, tf1 ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +44,26 @@ public class DetailWalletActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_detail_wallet);
 		
+		// Set font
+		tf = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+		tf1 = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
+//        txtTittle.setTypeface(font_light);
+		
 		// Get The Reference Of View
 	    tvTittle=(TextView)findViewById(R.id.tv_detailwallet_title);
+	    tvTittle.setTypeface(tf);
+	    tvTittle1 =(TextView)findViewById(R.id.tv_detailwallet_titlebalance);
+	    tvTittle1.setTypeface(tf);
 	    tvAmount=(TextView)findViewById(R.id.tv_detailwallet_amount);
+	    tvAmount.setTypeface(tf1);
 	    tvOriginalAmount=(TextView)findViewById(R.id.tv_detailwallet_originalamount);
+	    tvOriginalAmount.setTypeface(tf);
 	    tvNotice=(TextView)findViewById(R.id.tv_detailwallet_notice);
+	    tvNotice.setTypeface(tf);
 	    btnBack=(Button)findViewById(R.id.btn_detailwallet_back);
 	    btnDelete=(Button)findViewById(R.id.btn_detailwallet_delete);
 	    lvDiary = (ListView)findViewById(R.id.lv_detailwallet_listhistory);
-		
-	    // Set font
-        //Typeface font_light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
-        //Typeface font_bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
-        //txtTittle.setTypeface(font_light);
+	
         
 		// Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);

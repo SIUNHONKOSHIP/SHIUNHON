@@ -2,11 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff" >
+    android:background="#FFFFFF" >
 
     <GridLayout
-        android:layout_width="fill_parent"
+        android:id="@+id/lay_tittle"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_margin="5dp"
         android:useDefaultMargins="true" >
 
         <Button
@@ -24,30 +26,32 @@
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="0"
+            android:text="wallet name"
             android:textColor="#33ccff"
-            android:textSize="18sp"
-            android:text="wallet name" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_detailwallet_delete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_column="0"
             android:layout_gravity="center_vertical|end"
             android:layout_row="0"
-            android:text="delete" />
+            android:background="@drawable/btn_delete" />
 
     </GridLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/wallet_list_bg" >
 
         <GridLayout
             android:id="@+id/detailwallet"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:columnCount="1" >
 
             <TextView
@@ -56,21 +60,24 @@
                 android:layout_gravity="fill_horizontal"
                 android:layout_row="0"
                 android:gravity="center"
-                android:text="BALANCE"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="B A L A N C E"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_detailwallet_amount"
                 android:layout_gravity="fill_horizontal"
                 android:gravity="center"
                 android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_detailwallet_originalamount"
                 android:layout_gravity="fill_horizontal"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_detailwallet_notice"
@@ -79,15 +86,24 @@
                 android:layout_row="3"
                 android:gravity="center"
                 android:text="Small Text"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="14sp" />
+
         </GridLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp" >
 
         <ListView
             android:id="@+id/lv_detailwallet_listhistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/detailwallet"
-            android:layout_marginTop="20dp" >
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp" >
 
         </ListView>
     </RelativeLayout>

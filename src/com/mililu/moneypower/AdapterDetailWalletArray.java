@@ -26,7 +26,7 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 	private Activity context;
 	private int layout;
 	private List<Diary>list;
-	Typeface tf;
+	Typeface tf, tf1 ;
 	
 	DataBaseAdapter dbAdapter;
 	
@@ -38,6 +38,7 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 		this.list=objects;
 		
 		tf = Typeface.createFromAsset(context.getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+		tf1 = Typeface.createFromAsset(context.getAssets(),"fonts/HELVETICANEUELIGHTITALIC.TTF");
 
 		// Create a instance of SQLite Database
 		dbAdapter = new DataBaseAdapter(context);
@@ -52,11 +53,13 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 		}
 			
 			TextView NameDiary = (TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_name);
-			//txt1.setTypeface(tf);
+			NameDiary.setTypeface(tf);
 			TextView Date=(TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_date);	
-			//txt2.setTypeface(tf);
+			Date.setTypeface(tf1);
 			TextView Amount=(TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_money);
+			Amount.setTypeface(tf);
 			TextView Notice=(TextView) convertView.findViewById(R.id.tv_layoutdetailwallet_notice);
+			Notice.setTypeface(tf1);
 			Diary data=list.get(position);
 			
 			if (data.getType() == 1) // neu la thu vao
@@ -80,8 +83,7 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 			Notice.setText(data.getNotice()==null?"":data.getNotice().toString());
 			
 			// Retrieve the popup button from the inflated view
-            View popupButton = convertView.findViewById(R.id.btn_layoutdetailwallet_setting);
- 
+            View popupButton = convertView.findViewById(R.id.lv_detail);
             // Set the item as the button's tag so it can be retrieved later
             popupButton.setTag(getItem(position));
  
@@ -91,6 +93,11 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 			return convertView;
 	}
 	
+	private void setTag(Diary item) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private class myOnClick implements OnClickListener{
 		@Override
 	    public void onClick(final View view) {

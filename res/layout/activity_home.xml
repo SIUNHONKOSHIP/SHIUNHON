@@ -25,14 +25,14 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/home_icon_menu" />
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/tv_home_title"
                 android:layout_column="0"
                 android:layout_gravity="center"
                 android:layout_row="0"
                 android:text="M O N E Y  P O W E R"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp" /> -->
             
         </GridLayout>
 
@@ -44,6 +44,7 @@
 	        android:orientation="vertical" >
 	
 	        <LinearLayout
+	            android:id="@+id/layout_btn_wallet"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
@@ -53,15 +54,12 @@
 
 	            <Button
 	                android:id="@+id/btn_home_wallet"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:background="#171717"
-	                android:paddingBottom="1dp"
-	                android:paddingLeft="7dp"
-	                android:paddingRight="7dp"
-	                android:paddingTop="1dp"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:background="@drawable/btn_trans"
+	                android:gravity="center_vertical|center_horizontal"
 	                android:text="WALLET"
-	                android:textColor="#FFFFFF"
+	                android:textColor="#252525"
 	                android:textSize="30sp" />
 	        </LinearLayout>
 	
