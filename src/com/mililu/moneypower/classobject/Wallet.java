@@ -3,7 +3,9 @@ package com.mililu.moneypower.classobject;
 public class Wallet {
 	private int id_wallet;
 	private String name;
-	private String money;
+	private long money;
+	private long org_money;
+	private String descrip;
 	
 	public int getId_wallet() {
 		return id_wallet;
@@ -17,15 +19,22 @@ public class Wallet {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getMoney() {
+	public long getMoney() {
 		return money;
 	}
-	public void setMoney(String money) {
+	public void setMoney(long money) {
 		this.money = money;
 	}
-	@Override
-	 public String toString() {
-	 // TODO Auto-generated method stub
-	 return this.name +" - "+this.money;
-	 }
+	public long getOrg_money() {
+		return org_money;
+	}
+	public void setOrg_money(long org_money) {
+		this.org_money = org_money;
+	}
+	public String getDescrip() {
+		return descrip;
+	}
+	public void setDescrip(String descrip) {
+		this.descrip = descrip;
+	}
 }

@@ -3,6 +3,7 @@ package com.mililu.moneypower;
 import com.mililu.moneypower.classobject.Diary;
 import com.mililu.moneypower.classobject.DiaryDebt;
 import com.mililu.moneypower.classobject.Income;
+import com.mililu.moneypower.classobject.Wallet;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -166,20 +167,29 @@ public class DataBaseAdapter {
 		db.insert("tbl_WALLET", null, newValues);
 	}
 
-	public void updateWallet(int id_wallet, long money){
+	public boolean updateWallet(int id_wallet, long money){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
 		newValues.put("MONEY", money);
 		// Insert the row into your table
-		db.update("tbl_WALLET", newValues, "ID_WALLET =? ", new String[] {String.valueOf(id_wallet)});
+		return db.update("tbl_WALLET", newValues, "ID_WALLET =? ", new String[] {String.valueOf(id_wallet)}) > 0;
+	}
+	public boolean updateWallet(Wallet wallet){
+		ContentValues newValues = new ContentValues();
+		// Assign values for each row.
+		newValues.put("NAME_WALLET", wallet.getName());
+		newValues.put("ORIGINAL_AMOUNT", wallet.getOrg_money());
+		newValues.put("DESCRIPTION", wallet.getDescrip());
+		// Insert the row into your table
+		return db.update("tbl_WALLET", newValues, "ID_WALLET =?", new String[] {String.valueOf(wallet.getId_wallet())}) > 0;
 	}
 	
 	/**
 	 * Delete wallet from table WALLET
 	 * @param id_wallet
 	 */
-	public void deleteWallet(int id_wallet){
-		db.delete("tbl_WALLET", "ID_WALLET =?", new String[] {String.valueOf(id_wallet)});
+	public boolean deleteWallet(int id_wallet){
+		return db.delete("tbl_WALLET", "ID_WALLET =?", new String[] {String.valueOf(id_wallet)}) > 0;
 	}
 	
 	public long getAmountOfWallet(int id_wallet){
@@ -219,6 +229,12 @@ public class DataBaseAdapter {
 		String noti = cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
 		cursor.close();
 		return noti;
+	}
+	
+	public Cursor getInforWallet(int id_wallet){
+		String selectQuery = "SELECT * from tbl_WALLET WHERE ID_WALLET = " + id_wallet + ";";
+		db = dbHelper.getReadableDatabase();
+		return db.rawQuery(selectQuery, null);
 	}
 	
 	public long getTotalAmount(int id_user){
@@ -292,8 +308,14 @@ public class DataBaseAdapter {
         db = dbHelper.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
+    public Cursor getAllCategoryExpenDetail() {
+        // Select All Query
+        String selectQuery = "SELECT ID_EXP_DET AS _id, * FROM tbl_EXP_DETAIL ";
+        db = dbHelper.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
 	
-    public void insertDiary(Diary diary){
+    public boolean insertDiary(Diary diary){
 		ContentValues newValues = new ContentValues();
 		// Assign values for each row.
 		newValues.put("ID_PARENT_CATEGORY", diary.getId_parent_category());
@@ -308,7 +330,7 @@ public class DataBaseAdapter {
 		newValues.put("TYPE", diary.getType());
 		newValues.put("NOTICE", diary.getNotice().toString());
 		// Insert the row into your table
-		db.insert("tbl_DIARY", null, newValues);
+		return db.insert("tbl_DIARY", null, newValues) > 0;
 	}
     
 	public Cursor getDiaryOfWallet(int id_wallet){
@@ -342,6 +364,7 @@ public class DataBaseAdapter {
 		newValues.put("NOTICE", diary.getNotice());
 		newValues.put("ID_WALLET", diary.getId_wallet());
 		newValues.put("ID_CATEGORY", diary.getId_category());
+		newValues.put("ID_PARENT_CATEGORY", diary.getId_parent_category());
 		newValues.put("DAY", diary.getDay());
 		newValues.put("MONTH", diary.getMonth());
 		newValues.put("YEAR", diary.getYear());

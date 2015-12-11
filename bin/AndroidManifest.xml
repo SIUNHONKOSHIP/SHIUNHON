@@ -98,6 +98,12 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".DebtActivity"></activity>
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".EditWalletActivity"></activity>
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".EditExpenseActivity"></activity>
         
     </application>
 
