@@ -11,7 +11,6 @@ import android.app.TimePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -32,15 +31,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ExpenditureActivity extends Activity implements OnItemSelectedListener {
 	// Spinner element
-	Spinner spnWallet, spnCategoryExpen, spnCategoryExpenDetail;
-    Cursor walletsCursor, categoryExpenCursor, categoryExpenDetailCursor;
-    DataBaseAdapter dbAdapter;
-    Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
-    EditText txtAmount, txtNotice, txtDate, txtTime;
-    int id_wallet, id_expen, id_user, id_expen_detail;
-    String name_wallet, name_expen, name_expen_detail;
-    int mYear, mMonth, mDay, mHour, mMinute;
-    Dialog mDialog;
+	private Spinner spnWallet, spnCategoryExpenDetail;
+	private Cursor walletsCursor, categoryExpenDetailCursor;
+	private DataBaseAdapter dbAdapter;
+	private Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
+	private EditText txtAmount, txtNotice, txtDate, txtTime;
+	private int id_wallet, id_expen, id_user, id_expen_detail;
+	private int mYear, mMonth, mDay, mHour, mMinute;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +53,10 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
         
         // Spinner element
         spnWallet = (Spinner) findViewById(R.id.spn_expen_wallet);
-        spnCategoryExpen = (Spinner)findViewById(R.id.spn_expen_danhmuc);
         spnCategoryExpenDetail = (Spinner)findViewById(R.id.spn_expen_danhmuccon);
         // Spinner click listener
         spnWallet.setOnItemSelectedListener(this);
-        spnCategoryExpen.setOnItemSelectedListener(this);
         spnCategoryExpenDetail.setOnItemSelectedListener(this);
-        loadSpinnerDataWallet();
-        loadSpinnerDataCategoryExpen();
         
         btnSubmit = (Button)findViewById(R.id.btn_expen_submit);
         btnSubmit.setOnClickListener(new MyEvent()); 
@@ -83,32 +76,29 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
         setCurrentDate();
         setCurrentTime();
     }
-    /**
-	 * thiet lap ngay thang nam hien tai
-	 */
-	 public void setCurrentDate(){
+    
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		loadSpinnerDataCategoryExpenDetail();
+		loadSpinnerDataWallet();
+	}
+	public void setCurrentDate(){
 		 Calendar cal=Calendar.getInstance();
 		 mDay=cal.get(Calendar.DAY_OF_MONTH);
 		 mMonth=(cal.get(Calendar.MONTH)+1);
 		 mYear=cal.get(Calendar.YEAR);
 		 txtDate.setText(mDay+"-"+(mMonth)+"-"+mYear);
 	 }
-    /**
-	 * thiet lap gio hien tai
-	 */
 	 public void setCurrentTime(){
 		 Calendar cal=Calendar.getInstance();
-		 mHour=cal.get(Calendar.HOUR);
+		 mHour=cal.get(Calendar.HOUR_OF_DAY);
 		 mMinute=cal.get(Calendar.MINUTE);
 		 txtTime.setText(mHour+":"+(mMinute));
 	 }
-    /**
-     * Function to load the spinner data from SQLite database
-     * */    
     private void loadSpinnerDataWallet() {
-    	//Toast.makeText(getApplicationContext(), "ID: " + id_curent_user, Toast.LENGTH_LONG).show();
-    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
-
         // Spinner Drop down cursor
         walletsCursor = dbAdapter.getListWalletOfUser(id_user);
         // map the cursor column names to the TextView ids in the layout
@@ -120,52 +110,53 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 
         // attaching data adapter to spinner
         spnWallet.setAdapter(dataAdapter);
-        
-    }
-    /**
-     * Load category income into spinner
-     */
-    private void loadSpinnerDataCategoryExpen() {
-    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
-        // Spinner Drop down cursor
-        categoryExpenCursor = dbAdapter.getCategoryExpenCursor();
-        // map the cursor column names to the TextView ids in the layout
-        String[] from = { "NAME_EXP" };
-        int[] to = { android.R.id.text1 };
-
-        // Creating adapter for spinner
-        SimpleCursorAdapter dataAdapter = new SimpleCursorAdapter(this, 
-              android.R.layout.simple_spinner_dropdown_item,
-              categoryExpenCursor, from, to, 0);
-
-        // attaching data adapter to spinner
-        spnCategoryExpen.setAdapter(dataAdapter);
     }
     
-    private void loadSpinnerDataCategoryExpenDetail(int id) {
-    	//dbAdapter = new DataBaseAdapter(getApplicationContext());
+    private void loadSpinnerDataCategoryExpenDetail() {
         // Spinner Drop down cursor
-        categoryExpenDetailCursor = dbAdapter.getCategoryExpenDetail(id);
+        categoryExpenDetailCursor = dbAdapter.getAllCategoryExpenDetail();
         // map the cursor column names to the TextView ids in the layout
         String[] from = { "NAME_EXP_DET" };
         int[] to = { android.R.id.text1 };
-
         // Creating adapter for spinner
         SimpleCursorAdapter dataAdapter = new SimpleCursorAdapter(this, 
               android.R.layout.simple_spinner_dropdown_item,
               categoryExpenDetailCursor, from, to, 0);
-
         // attaching data adapter to spinner
         spnCategoryExpenDetail.setAdapter(dataAdapter);
     }
-    
+      
     private class MyEvent implements OnClickListener{
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if(v.getId()==R.id.btn_expen_submit)
 			{
-				DoInsertExpen();
+				String mAmount = txtAmount.getText().toString();
+		    	String mNotice = txtNotice.getText().toString();
+		    	String mTime = txtTime.getText().toString();
+		    	if(mAmount.equals("")){
+		    		Notify("Please fill in amount");
+		    	}
+		    	else if (Long.valueOf(mAmount)<=0){
+		    		Notify("Invalid amount");
+		    	}
+		    	else {
+		    		Diary diary = new Diary();
+		    		diary.setAmount(Long.valueOf(mAmount));
+		    		diary.setId_wallet(id_wallet);
+		    		diary.setId_parent_category(id_expen);
+		    		diary.setId_category(id_expen_detail);
+		    		diary.setId_account(id_user);
+		    		diary.setDay(mDay);
+		    		diary.setMonth(mMonth);
+		    		diary.setYear(mYear);
+		    		diary.setTime(mTime);
+		    		diary.setType(2); // 2 = chi
+		    		diary.setNotice(mNotice);
+		    		
+		    		DoInsertExpen(diary);
+		    	}
 			}
 			else if(v.getId() == R.id.btn_expen_back){
 				ExpenditureActivity.this.finish();
@@ -179,42 +170,35 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 		}
 	}
     
-    private void DoInsertExpen(){
-    	String mAmount = txtAmount.getText().toString();
-    	String mNotice = txtNotice.getText().toString();
-    	String mTime = txtTime.getText().toString();
-    	if(mAmount.equals("")){
-    		Toast.makeText(getApplicationContext(), "Please insert information", Toast.LENGTH_LONG).show();
-    	}
-    	else {
-    		long curentmoney = dbAdapter.getAmountOfWallet(id_wallet);
-    		long newmoney = curentmoney - Integer.valueOf(mAmount);
-    		
-    		Diary diary = new Diary();
-    		diary.setAmount(Integer.valueOf(mAmount));
-    		diary.setId_wallet(id_wallet);
-    		diary.setId_parent_category(id_expen);
-    		diary.setId_category(id_expen_detail);
-    		diary.setId_account(id_user);
-    		diary.setDay(mDay);
-    		diary.setMonth(mMonth);
-    		diary.setYear(mYear);
-    		diary.setTime(mTime);
-    		diary.setType(2); // 2 = chi
-    		diary.setNotice(mNotice);
-    		
-    		dbAdapter.insertDiary(diary);
-    		dbAdapter.updateWallet(id_wallet, newmoney);
-    		Toast.makeText(getApplicationContext(), "Thanh Cong", Toast.LENGTH_SHORT).show();
-    		ClearTextBox();
-    	}
+    private void DoInsertExpen(Diary diary){
+    		long curentmoney_wallet = dbAdapter.getAmountOfWallet(diary.getId_wallet());
+    		if (diary.getAmount() > curentmoney_wallet){
+    			Notify("You don't have enough money");
+    		}
+    		else {
+    			if(dbAdapter.insertDiary(diary)){
+    				long newmoney = curentmoney_wallet - diary.getAmount();
+    				if(dbAdapter.updateWallet(id_wallet, newmoney)){
+    					Notify("Success");
+    					ClearTextBox();
+    				}
+    				else {
+    					Notify("Can't update Wallet");
+    				}
+    			}
+    			else {
+    				Notify("Can't insert diary");
+    			}
+    		}    	
     }
     
     private void ClearTextBox(){
     	txtAmount.setText("");
     	txtNotice.setText("");
     }
-    
+    private void Notify(String mess){
+    	Toast.makeText(getApplicationContext(), mess, Toast.LENGTH_SHORT).show();
+    }
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		Spinner spinner = (Spinner) parent;
@@ -222,20 +206,12 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 		{
 			walletsCursor.moveToPosition(position);
 			id_wallet = walletsCursor.getInt(walletsCursor.getColumnIndexOrThrow("_id"));
-			name_wallet = walletsCursor.getString(walletsCursor.getColumnIndexOrThrow("NAME_WALLET"));
-		}
-		else if(spinner.getId() == R.id.spn_expen_danhmuc)
-		{
-			categoryExpenCursor.moveToPosition(position);
-			id_expen = categoryExpenCursor.getInt(categoryExpenCursor.getColumnIndexOrThrow("_id"));
-			name_expen = categoryExpenCursor.getString(categoryExpenCursor.getColumnIndexOrThrow("NAME_EXP"));
-			loadSpinnerDataCategoryExpenDetail(id_expen);
 		}
 		else if(spinner.getId() == R.id.spn_expen_danhmuccon)
 		{
 			categoryExpenDetailCursor.moveToPosition(position);
+			id_expen = categoryExpenDetailCursor.getInt(categoryExpenDetailCursor.getColumnIndexOrThrow("ID_EXP"));
 			id_expen_detail = categoryExpenDetailCursor.getInt(categoryExpenDetailCursor.getColumnIndexOrThrow("_id"));
-			name_expen_detail = categoryExpenDetailCursor.getString(categoryExpenDetailCursor.getColumnIndexOrThrow("NAME_EXP_DET"));
 		}
 	}
 	

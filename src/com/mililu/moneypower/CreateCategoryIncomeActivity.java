@@ -14,10 +14,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class CreateCategoryIncomeActivity extends Activity {
-	DataBaseAdapter dbAdapter;
-	Button btnBack, btnInsert;
-	EditText txtNameIncome;
-	int id_curent_user;
+	private DataBaseAdapter dbAdapter;
+	private Button btnBack, btnInsert;
+	private EditText txtNameIncome;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -26,9 +26,8 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 	private Activity context;
 	private int layout;
 	private List<Diary>list;
-	Typeface tf, tf1 ;
-	
-	DataBaseAdapter dbAdapter;
+	private Typeface tf, tf1 ;
+	private DataBaseAdapter dbAdapter;
 	
 	public AdapterDetailWalletArray(Context context, int textViewResourceId, List<Diary> objects) {
 		super(context, textViewResourceId, objects);
@@ -93,11 +92,6 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 			return convertView;
 	}
 	
-	private void setTag(Diary item) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private class myOnClick implements OnClickListener{
 		@Override
 	    public void onClick(final View view) {
@@ -179,11 +173,9 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
                     		context.startActivity(intent);
                     	}
                     	else if(item.getType() == 2){
-                    		//Bundle bundle=new Bundle();
-                			//bundle.putInt("ID_ACCOUNT", item.getId_diary());
-                			//Intent intent = new Intent (context, EditExpenditureActivity.class);
-                			//intent.putExtra("DATA_ACCOUNT", bundle);
-                			//startActivity(intent);
+                    		Intent intent = new Intent (context, EditExpenseActivity.class);
+                    		intent.putExtra("id_diary", item.getId_diary());
+                    		context.startActivity(intent);
                     	}
                     	
                     	return true; // end of case edit

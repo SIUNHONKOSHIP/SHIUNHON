@@ -13,8 +13,7 @@ import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 
 public class CategoryActivity extends TabActivity{
-	TabHost tabHost;
-	int id_user;
+	private TabHost tabHost;
 	private Button btnBack,btnCreate;
 	private TabSpec incomespec, expendspec;
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +21,6 @@ public class CategoryActivity extends TabActivity{
 	    requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	    setContentView(R.layout.activity_category);
-	    
-	    id_user = HomeActivity.id_user;
 	    
 	    tabHost = getTabHost();
 	     

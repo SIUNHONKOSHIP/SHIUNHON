@@ -33,16 +33,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class StatisticActivity2 extends Activity implements OnItemSelectedListener{
-	// Khai bao bien
-	Button btnPrevious, btnNext, btnBack;
-	DataBaseAdapter dbAdapter;
-	int id_user, mMonth, mYear;
-	long mIncome, mExpenditure;
-	TextView txtDate, txtTotalExpenditure, txtTotalIncome;
+	private 	Button btnPrevious, btnNext, btnBack;
+	private DataBaseAdapter dbAdapter;
+	private int id_user, mMonth, mYear;
+	private long mIncome, mExpenditure;
+	private TextView txtDate, txtTotalExpenditure, txtTotalIncome;
 	private View mChart;
-	LinearLayout chartContainer;
-	ListAdapter adapterIncome, adapterExpenditure;
-	String typeStatistic[]={"Statistic By Month", "Statistic by Year"};
+	private LinearLayout chartContainer;
+	private String typeStatistic[]={"Statistic By Month", "Statistic by Year"};
 	
 	private String[] ListMonth = new String[] {"Jan", "Feb" , "Mar", "Apr", "May", "Jun",
 			"Jul", "Aug" , "Sep", "Oct", "Nov", "Dec"};

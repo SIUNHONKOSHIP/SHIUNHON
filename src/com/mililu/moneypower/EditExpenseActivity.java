@@ -1,7 +1,5 @@
 package com.mililu.moneypower;
 
-import java.util.Calendar;
-
 import com.mililu.moneypower.classobject.Diary;
 
 import android.app.Activity;

@@ -17,10 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateWalletActivity extends Activity {
-	DataBaseAdapter dbAdapter;
-	Button btnBack, btnInsertWallet;
-	EditText txtNameWallet, txtMoney, txtDescription;
-	TextView tvTittle;
+	private DataBaseAdapter dbAdapter;
+	private Button btnBack, btnInsertWallet;
+	private EditText txtNameWallet, txtMoney, txtDescription;
+	private TextView tvTittle;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

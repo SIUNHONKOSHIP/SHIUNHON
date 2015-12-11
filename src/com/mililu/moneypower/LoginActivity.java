@@ -22,12 +22,10 @@ import android.widget.Toast;
 import android.graphics.Typeface;
 
 public class LoginActivity extends Activity {
-	// khai bao bien
-	
-	Button btnLogin, btnRegister;
-	EditText txtUserName, txtPassword;
-	DataBaseAdapter dbAdapter;
-	Cursor mAccountCorsor;
+	private Button btnLogin, btnRegister;
+	private EditText txtUserName, txtPassword;
+	private DataBaseAdapter dbAdapter;
+	private Cursor mAccountCorsor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

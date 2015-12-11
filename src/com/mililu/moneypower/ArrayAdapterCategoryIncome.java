@@ -25,7 +25,7 @@ public class ArrayAdapterCategoryIncome extends ArrayAdapter<Income>{
 	private int layout;
 	private List<Income>list;
 	private Typeface tf;
-	DataBaseAdapter dbAdapter;
+	private DataBaseAdapter dbAdapter;
 	
 	public ArrayAdapterCategoryIncome(Context context, int textViewResourceId, List<Income> objects) {
 		super(context, textViewResourceId, objects);

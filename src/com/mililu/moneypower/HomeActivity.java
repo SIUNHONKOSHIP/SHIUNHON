@@ -26,20 +26,19 @@ import android.widget.RelativeLayout;
 
 public class HomeActivity extends Activity{
 
-	ListView mDrawerList;
-	RelativeLayout mDrawerPane;
-	//private ActionBarDrawerToggle mDrawerToggle;
+	private ListView mDrawerList;
+	private RelativeLayout mDrawerPane;
 	private DrawerLayout mDrawerLayout;
 	 
-	ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+	private ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 	
-	Button btnMenu, btnWallet, btnIncome, btnExpenditure, btnStatistic;
-	TextView lableFullname, lableUsername;
-	DataBaseAdapter dbAdapter;
-	static int id_user;
-	String username_current_user, fullname_current_user;
-	Cursor accountCursor;
-	Intent intent_income, intent_expend, intent_wallet, intent_stattistic, intent_diary, intent_category, intent_debt;
+	private Button btnMenu, btnWallet, btnIncome, btnExpenditure, btnStatistic;
+	private TextView lableFullname, lableUsername;
+	private DataBaseAdapter dbAdapter;
+	public static int id_user;
+	private String username_current_user, fullname_current_user;
+	private Cursor accountCursor;
+	private Intent intent_income, intent_expend, intent_wallet, intent_stattistic, intent_diary, intent_category, intent_debt;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

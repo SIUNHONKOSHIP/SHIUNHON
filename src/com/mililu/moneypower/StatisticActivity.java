@@ -13,7 +13,7 @@ import android.widget.TabHost.TabSpec;
 
 public class StatisticActivity extends TabActivity {
 	private TabHost mTabHost;
-	Button btnBack;
+	private Button btnBack;
 	private TabSpec monthspec, yearspec;
 	
    @Override

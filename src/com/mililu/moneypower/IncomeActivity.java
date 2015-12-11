@@ -33,17 +33,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class IncomeActivity extends Activity implements OnItemSelectedListener{
-	// Spinner element
-	Spinner spinnerWallet, spinnerCategoryIncome;
-    Cursor walletsCursor, categoryIncomeCursor;
-    DataBaseAdapter dbAdapter;
-    Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
-    EditText txtAmount, txtNotice, txtDate, txtTime;
-    int id_wallet, id_income, id_user;
-    String name_wallet, name_income;
-    int mYear, mMonth, mDay, mHour, mMinute;
-    Dialog mDialog;
-    TextView tvTittle, tvAmount, tvDes, tvWallet, tvCate, tvDate, tvTime;
+	private Spinner spinnerWallet, spinnerCategoryIncome;
+	private Cursor walletsCursor, categoryIncomeCursor;
+	private DataBaseAdapter dbAdapter;
+	private Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
+	private EditText txtAmount, txtNotice, txtDate, txtTime;
+	private int id_wallet, id_income, id_user;
+	private int mYear, mMonth, mDay, mHour, mMinute;
+	private TextView tvTittle, tvAmount, tvDes, tvWallet, tvCate, tvDate, tvTime;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -245,13 +242,11 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 		{
 			walletsCursor.moveToPosition(position);
 			id_wallet = walletsCursor.getInt(walletsCursor.getColumnIndexOrThrow("_id"));
-			name_wallet = walletsCursor.getString(walletsCursor.getColumnIndexOrThrow("NAME_WALLET"));
 		}
 		else if(spinner.getId() == R.id.spn_income_danhmuc)
 		{
 			categoryIncomeCursor.moveToPosition(position);
 			id_income = categoryIncomeCursor.getInt(categoryIncomeCursor.getColumnIndexOrThrow("_id"));
-			name_income = categoryIncomeCursor.getString(categoryIncomeCursor.getColumnIndexOrThrow("NAME_INCOME"));
 		}
 	}
 	

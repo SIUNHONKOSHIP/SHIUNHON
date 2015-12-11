@@ -19,7 +19,7 @@ public class MyWalletArrayAdapter extends ArrayAdapter<Wallet>{
 	private Activity context;
 	private int layout;
 	private List<Wallet>list;
-	Typeface tf;
+	private Typeface tf;
 	
 	public MyWalletArrayAdapter(Context context, int textViewResourceId, List<Wallet> objects) {
 		super(context, textViewResourceId, objects);
