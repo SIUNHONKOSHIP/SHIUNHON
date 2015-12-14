@@ -65,12 +65,14 @@ public class AdapterDetailWalletArray extends ArrayAdapter<Diary>{
 			if (data.getType() == 1) // neu la thu vao
 			{
 				NameDiary.setText(data.getName_income()==null?"":data.getName_income().toString());
-				Amount.setTextColor(Color.BLUE);
+//				Amount.setTextColor(Color.BLUE);
+				Amount.setTextColor(Color.parseColor("#b92902"));
 			}
 			else if (data.getType() == 2) // neu la chi 
 			{
 				NameDiary.setText(data.getName_expen()==null?"":data.getName_expen().toString());
-				Amount.setTextColor(Color.RED); // chinh mau chu (#FF0000 = 16711680 = RED)
+//				Amount.setTextColor(Color.RED); // chinh mau chu (#FF0000 = 16711680 = RED)
+				Amount.setTextColor(Color.parseColor("#33ccff"));
 			}
 			if ((String.valueOf(data.getDay())=="")|| (String.valueOf(data.getDay())=="") || (String.valueOf(data.getDay())=="")) {
 				Date.setText("");
