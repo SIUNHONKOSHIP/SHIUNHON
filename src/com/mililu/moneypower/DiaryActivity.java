@@ -6,7 +6,6 @@ import com.mililu.moneypower.classobject.Diary;
 
 import android.app.ExpandableListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,14 +19,14 @@ public class DiaryActivity extends ExpandableListActivity{
 	
 	private ArrayList<String> parentItems = new ArrayList<String>();
 	private ArrayList<Object> childItems = new ArrayList<Object>();
-	int id_user;
-	ArrayList<Diary> child; 
+	private int id_user;
+	private ArrayList<Diary> child; 
 	
-	ExpandableListView expandableList;
+	private ExpandableListView expandableList;
 	
-	DataBaseAdapter dbAdapter;
-	AdapterDiary adapter;
-	Cursor cursorDiaryDate, cursorDiaryData;
+	private DataBaseAdapter dbAdapter;
+	private AdapterDiary adapter;
+	private Cursor cursorDiaryDate, cursorDiaryData;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

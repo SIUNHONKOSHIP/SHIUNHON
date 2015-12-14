@@ -28,17 +28,15 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class EditIncomeActivity extends Activity implements OnItemSelectedListener{
-	Spinner spinnerWallet, spinnerCategoryIncome;
-    Cursor walletsCursor, categoryIncomeCursor, diaryCursor;
-    DataBaseAdapter dbAdapter;
-    Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
-    EditText txtAmount, txtNotice, txtDate, txtTime;
-    int oldamount;
-    int  id_diary, id_wallet, id_income, id_curent_user;
-    String name_wallet, name_income;
-    int mYear, mMonth, mDay, mHour, mMinute;
-    Dialog mDialog;
-    TextView tvTittle, tvAmount, tvDes, tvWallet, tvCate, tvDate, tvTime;
+	private Spinner spinnerWallet, spinnerCategoryIncome;
+	private Cursor walletsCursor, categoryIncomeCursor, diaryCursor;
+	private DataBaseAdapter dbAdapter;
+	private Button btnSubmit, btnCreateCategory, btnBack, btnDate, btnTime;
+	private EditText txtAmount, txtNotice, txtDate, txtTime;
+	private int oldamount;
+	private int  id_diary, id_wallet, id_income, id_curent_user;
+	private int mYear, mMonth, mDay, mHour, mMinute;
+	private TextView tvTittle, tvAmount, tvDes, tvWallet, tvCate, tvDate, tvTime;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,8 +103,6 @@ public class EditIncomeActivity extends Activity implements OnItemSelectedListen
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		
-		
 		loadSpinnerDataWallet();
         loadSpinnerDataCategoryIncome();
         getInforDiary();
@@ -115,25 +111,18 @@ public class EditIncomeActivity extends Activity implements OnItemSelectedListen
     private void getInforDiary(){
     	diaryCursor = dbAdapter.getInforDiary(id_diary);
     	diaryCursor.moveToFirst();
-    	//String Name = diaryCursor.getString(diaryCursor.getColumnIndexOrThrow("N"));
     	oldamount = diaryCursor.getInt(diaryCursor.getColumnIndexOrThrow("AMOUNT"));
     	String notice = diaryCursor.getString(diaryCursor.getColumnIndexOrThrow("NOTICE"));
     	mDay = diaryCursor.getInt(diaryCursor.getColumnIndexOrThrow("DAY"));
     	mMonth = diaryCursor.getInt(diaryCursor.getColumnIndexOrThrow("MONTH"));
     	mYear = diaryCursor.getInt(diaryCursor.getColumnIndexOrThrow("YEAR"));
     	String time = diaryCursor.getString(diaryCursor.getColumnIndexOrThrow("TIME"));
-    	//int id_wallet = diaryCursor.getInt(diaryCursor.getColumnIndexOrThrow("ID_WALLET"));
-    	//int id_category = diaryCursor.getInt(diaryCursor.getColumnIndexOrThrow("ID_CATEGORY"));
     	
     	txtAmount.setText(String.valueOf(oldamount));
     	txtDate.setText(mDay+"/"+mMonth+"/"+mYear);
     	txtTime.setText(time);
     	txtNotice.setText(notice);
     }
-    
-    /**
-     * Function to load the spinner data from SQLite database
-     * */    
     private void loadSpinnerDataWallet() {
     	//dbAdapter = new DataBaseAdapter(getApplicationContext());
 
@@ -150,10 +139,6 @@ public class EditIncomeActivity extends Activity implements OnItemSelectedListen
         spinnerWallet.setAdapter(dataAdapter);
         
     }
-    
-    /**
-     * Load category income into spinner
-     */
     private void loadSpinnerDataCategoryIncome() {
     	//dbAdapter = new DataBaseAdapter(getApplicationContext());
         // Spinner Drop down cursor
@@ -193,7 +178,6 @@ public class EditIncomeActivity extends Activity implements OnItemSelectedListen
 			}
 		}
 	}
-    
     
     private void DoUpdateIncome(){
     	String newAmount = txtAmount.getText().toString();
@@ -253,22 +237,17 @@ public class EditIncomeActivity extends Activity implements OnItemSelectedListen
 		{
 			walletsCursor.moveToPosition(position);
 			id_wallet = walletsCursor.getInt(walletsCursor.getColumnIndexOrThrow("_id"));
-			name_wallet = walletsCursor.getString(walletsCursor.getColumnIndexOrThrow("NAME_WALLET"));
 		}
 		else if(spinner.getId() == R.id.spn_income_danhmuc)
 		{
 			categoryIncomeCursor.moveToPosition(position);
 			id_income = categoryIncomeCursor.getInt(categoryIncomeCursor.getColumnIndexOrThrow("_id"));
-			name_income = categoryIncomeCursor.getString(categoryIncomeCursor.getColumnIndexOrThrow("NAME_INCOME"));
 		}
 	}
 	@Override
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
-	/**
-	 * xu ly DatePickerDialog
-	 */
 	 private DatePickerDialog.OnDateSetListener dateChange = new OnDateSetListener() {
 		 @Override
 		 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

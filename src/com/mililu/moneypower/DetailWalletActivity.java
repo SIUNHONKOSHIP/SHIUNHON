@@ -25,17 +25,17 @@ import android.widget.Toast;
 
 public class DetailWalletActivity extends Activity {
 	static AdapterDetailWalletArray adtDeatailWalletArr = null;
-	Button btnBack, btnDelete;
-	static DataBaseAdapter dbAdapter;
-	List<Diary>list_diary = new ArrayList<Diary>();
-	static int id_current_wallet;
-	TextView tvTittle, tvTittle1 ;
-	static TextView tvAmount;
-	static TextView tvOriginalAmount;
-	static TextView tvNotice;
-	ListView lvDiary;
-	Cursor cursorDiary;
-	Typeface tf, tf1 ;
+	private Button btnBack, btnDelete;
+	private static DataBaseAdapter dbAdapter;
+	private List<Diary>list_diary = new ArrayList<Diary>();
+	public static int id_current_wallet;
+	private TextView tvTittle, tvTittle1 ;
+	private static TextView tvAmount;
+	private static TextView tvOriginalAmount;
+	private static TextView tvNotice;
+	private ListView lvDiary;
+	private Cursor cursorDiary;
+	private Typeface tf, tf1 ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

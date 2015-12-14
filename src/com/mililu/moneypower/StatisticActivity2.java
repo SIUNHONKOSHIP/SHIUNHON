@@ -5,10 +5,12 @@ import java.util.Calendar;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
-import org.achartengine.chart.BarChart.Type;
+import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.BasicStroke;
+import org.achartengine.renderer.DefaultRenderer;
+import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -27,30 +29,32 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ListAdapter;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class StatisticActivity2 extends Activity implements OnItemSelectedListener{
-	// Khai bao bien
-	Button btnPrevious, btnNext, btnBack;
-	DataBaseAdapter dbAdapter;
-	int id_user, mMonth, mYear;
-	long mIncome, mExpenditure;
-	TextView txtDate, txtTotalExpenditure, txtTotalIncome;
+	private 	Button btnPrevious, btnNext, btnBack;
+	private DataBaseAdapter dbAdapter;
+	private int id_user, mMonth, mYear;
+	private long mIncome, mExpenditure;
+	private TextView txtDate, txtTotalExpenditure, txtTotalIncome;
 	private View mChart;
-	LinearLayout chartContainer;
-	ListAdapter adapterIncome, adapterExpenditure;
-	String typeStatistic[]={"Statistic By Month", "Statistic by Year"};
+	private LinearLayout chartContainer;
+	private String typeStatistic[]={"Statistic By Month", "Statistic by Year"};
 	
 	private String[] ListMonth = new String[] {"Jan", "Feb" , "Mar", "Apr", "May", "Jun",
 			"Jul", "Aug" , "Sep", "Oct", "Nov", "Dec"};
-	Spinner spnTypeStatistic, spnTypeChart;
-	String[] NameIncome, NameExpense;
-	double[] MoneyIncome, MoneyExpense;
-	double[] income;
-	double[] expense;
+	
+	// Color of each Pie Chart Sections
+	private int[] colors = { Color.rgb(37, 126, 255), Color.rgb(255, 37, 126), Color.rgb(126, 255, 37), Color.rgb(255, 185, 15), Color.rgb(191, 62, 255),
+			Color.rgb(141, 238, 238), Color.rgb(255, 69, 0), Color.rgb(154, 255, 154), Color.rgb(255, 246, 143), Color.rgb(70, 132, 153), Color.rgb(0, 255, 127),
+			Color.rgb(100, 50, 200), Color.rgb(255, 247, 40), Color.rgb(255, 40, 40), };
+	private Spinner spnTypeStatistic, spnTypeChart;
+	private String[] NameIncome, NameExpense;
+	private double[] MoneyIncome, MoneyExpense;
+	private double[] income;
+	private double[] expense;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -165,7 +169,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 				}
 				cursorIncome.close();
 				// Draw chart
-				DrawBarChart(NameIncome, MoneyIncome, chartContainer, mChart);
+				DrawPieChart(NameIncome, MoneyIncome, chartContainer, mChart);
 			}
 			else {
 				// remove any views before u paint the chart
@@ -210,7 +214,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 				}
 				cursorExpen.close();
 				// Draw chart
-				DrawBarChart(NameExpense, MoneyExpense, chartContainer, mChart);
+				DrawPieChart(NameExpense, MoneyExpense, chartContainer, mChart);
 			}
 			else {
 				// remove any views before u paint the chart
@@ -266,13 +270,11 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 	
 	@Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
     }
 	
 	private class MyEvent implements OnClickListener{
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			if(v.getId()==R.id.btn_statistic2_back){
 				StatisticActivity2.this.finish();
 			}
@@ -339,118 +341,70 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 			txtDate.setText(String.valueOf(mYear));
 		}
 	}
-	
-	private void DrawBarChart(String[] name, double[] value, LinearLayout chartContainer, View mChart){
-		double YaxixMax = 0;
-		for (int i = 0; i < value.length; i++){
-			if ( YaxixMax < value[i]){
-				YaxixMax = value[i];
+	private void DrawPieChart(String[] name, double[] value, LinearLayout chartContainer, View mChart) {
+		// Instantiating CategorySeries to plot Pie Chart
+		CategorySeries distributionSeries = new CategorySeries(
+				" Android version distribution as on October 1, 2012");
+		for (int i = 0; i < value.length; i++) {
+			// Adding a slice with its values and name to the Pie Chart
+			distributionSeries.add(name[i], value[i]);
+		}
+		
+		// Instantiating a renderer for the Pie Chart
+		DefaultRenderer defaultRenderer = new DefaultRenderer();
+		for (int i = 0; i < value.length; i++) {
+			SimpleSeriesRenderer seriesRenderer = new SimpleSeriesRenderer();
+			seriesRenderer.setColor(colors[i]);
+			//seriesRenderer.setDisplayBoundingPoints(true); //.setDisplayChartValues(true);
+			//Adding colors to the chart
+			defaultRenderer.setBackgroundColor(Color.TRANSPARENT);
+			defaultRenderer.setApplyBackgroundColor(true);
+			// Adding a renderer for a slice
+			defaultRenderer.addSeriesRenderer(seriesRenderer);
+		}
+		if (spnTypeChart.getSelectedItemPosition() == 0){
+			if (spnTypeStatistic.getSelectedItemPosition() == 0){
+				defaultRenderer.setChartTitle("Income (" + mMonth + "/" + mYear + ")");
 			}
+			else if (spnTypeStatistic.getSelectedItemPosition() == 1){
+				defaultRenderer.setChartTitle("Income (" + mYear + ")");
+			} 
 		}
-		// Creating an XYSeries for Income
-		XYSeries valueSeries = null;
-		if (spnTypeChart.getSelectedItemPosition() == 0){
-			valueSeries = new XYSeries("Income");
+		else if	(spnTypeChart.getSelectedItemPosition() == 1){
+			if (spnTypeStatistic.getSelectedItemPosition() == 0){
+				defaultRenderer.setChartTitle("Expenditure (" + mMonth + "/" + mYear + ")");
+			}
+			else if (spnTypeStatistic.getSelectedItemPosition() == 1){
+				defaultRenderer.setChartTitle("Expenditure (" + mYear + ")");
+			} 
 		}
-		else if (spnTypeChart.getSelectedItemPosition() == 1){
-			valueSeries = new XYSeries("Expense");
-		}
-		// Adding data to Series
-		for(int i=0;i<name.length;i++){
-			valueSeries.add(i,value[i]);
-		}
+		defaultRenderer.setChartTitleTextSize(23);
+		defaultRenderer.setLabelsTextSize(18);
+		defaultRenderer.setZoomButtonsVisible(false);
+		defaultRenderer.setDisplayValues(true);
+		defaultRenderer.setLegendTextSize(18);
+		defaultRenderer.setPanEnabled(false);
+		defaultRenderer.setLabelsColor(Color.BLACK);
 		
-		// Creating a dataset to hold each series
-		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		// Adding Income Series to the dataset
-		dataset.addSeries(valueSeries);
-		// Creating XYSeriesRenderer to customize incomeSeries
-		XYSeriesRenderer valueRenderer = new XYSeriesRenderer();
-		if (spnTypeChart.getSelectedItemPosition() == 0){
-			valueRenderer.setColor(Color.GREEN); //color of the graph set to cyan
-		}
-		else if (spnTypeChart.getSelectedItemPosition() == 1){
-			valueRenderer.setColor(Color.RED); //color of the graph set to cyan
-		}
-		valueRenderer.setFillPoints(true);
-		valueRenderer.setLineWidth(10f);
-		valueRenderer.setDisplayChartValues(true);
-		valueRenderer.setDisplayChartValuesDistance(5); //setting chart value distance
-		valueRenderer.setChartValuesTextSize(20f);
-		// Creating a XYMultipleSeriesRenderer to customize the whole chart
-		XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-		multiRenderer.setOrientation(XYMultipleSeriesRenderer.Orientation.HORIZONTAL);
-		multiRenderer.setXLabels(0);
 		
-		/***
-		 * Customizing graphs
-		 */
-		//setting text size of the title
-		multiRenderer.setChartTitleTextSize(28);
-		//setting text size of the axis title
-		multiRenderer.setAxisTitleTextSize(24);
-		//setting text size of the graph lable
-		multiRenderer.setLabelsTextSize(20);
-		//setting zoom buttons visiblity
-		multiRenderer.setZoomButtonsVisible(false);
-		//setting pan enablity which uses graph to move on both axis
-		multiRenderer.setPanEnabled(true, true);
-		//setting click false on graph
-		multiRenderer.setClickEnabled(false);
-		//setting zoom to false on both axis
-		multiRenderer.setZoomEnabled(true, true);
-		//setting lines to display on y axis
-		multiRenderer.setShowGridY(false);
-		//setting lines to display on x axis
-		multiRenderer.setShowGridX(false);
-		//setting legend to fit the screen size
-		multiRenderer.setFitLegend(true);
-		//setting displaying line on grid
-		multiRenderer.setShowGrid(false);
-		//setting external zoom functions to false
-		multiRenderer.setExternalZoomEnabled(true);
-		//setting displaying lines on graph to be formatted(like using graphics)
-		multiRenderer.setAntialiasing(true);
-		//setting to in scroll to false
-		multiRenderer.setInScroll(true);
-		//setting to set legend height of the graph
-		multiRenderer.setLegendHeight(30);
-		multiRenderer.setLegendTextSize(20f);
-		//setting x axis label align
-		multiRenderer.setXLabelsAlign(Align.CENTER);
-		//setting y axis label to align
-		multiRenderer.setYLabelsAlign(Align.LEFT);
-		//setting text style
-		multiRenderer.setTextTypeface("sans_serif", Typeface.NORMAL);
-		multiRenderer.setYAxisMin(0);
-		multiRenderer.setYAxisMax(YaxixMax*1.2);
-		//setting used to move the graph on xaxiz to .5 to the right
-		multiRenderer.setXAxisMin(-1);
-		//setting max values to be display in x axis
-		multiRenderer.setXAxisMax(name.length);
-		multiRenderer.setBarSpacing(1f);
-		multiRenderer.setBarWidth(50f);
-		multiRenderer.setMarginsColor(Color.WHITE);
-		multiRenderer.setXLabelsColor(Color.BLACK);
-		multiRenderer.setMargins(new int[]{20, 20, 20, 20});
+		// this part is used to display graph on the xml
+		// Creating an intent to plot bar chart using dataset and
+		// multipleRenderer
+		// Intent intent = ChartFactory.getPieChartIntent(getBaseContext(),
+		// distributionSeries , defaultRenderer, "AChartEnginePieChartDemo");
 		
-		for(int i=0; i< name.length;i++){
-			multiRenderer.addXTextLabel(i, name[i]);
-		}
+		// Start Activity
+		// startActivity(intent);
 		
-		// Adding valuesRenderer to multipleRenderer
-		// Note: The order of adding dataseries to dataset and renderers to multipleRenderer
-		// should be same
-		multiRenderer.addSeriesRenderer(valueRenderer);
-		
-		//remove any views before u paint the chart
+		// remove any views before u paint the chart
 		chartContainer.removeAllViews();
 		chartContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		//drawing bar chart
-		mChart = ChartFactory.getBarChartView(StatisticActivity2.this, dataset, multiRenderer,Type.STACKED);
-		
-		//adding the view to the linearlayout
+		// drawing pie chart
+		mChart = ChartFactory.getPieChartView(getBaseContext(),
+				distributionSeries, defaultRenderer);
+		// adding the view to the linearlayout
 		chartContainer.addView(mChart);
+		
 	}
 	
 	private void DrawLineChart() {
@@ -490,7 +444,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 		
 		// Creating XYSeriesRenderer to customize incomeSeries
 		XYSeriesRenderer incomeRenderer = new XYSeriesRenderer();
-		incomeRenderer.setColor(Color.GREEN); //color of the graph set to cyan
+		incomeRenderer.setColor(Color.BLUE); //color of the graph set to cyan
 		incomeRenderer.setFillPoints(true);
 		incomeRenderer.setLineWidth(2f);
 		incomeRenderer.setDisplayChartValues(true);
@@ -518,7 +472,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 		// Creating a XYMultipleSeriesRenderer to customize the whole chart
 		XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
 		multiRenderer.setXLabels(0);
-		multiRenderer.setChartTitle("Income vs Expense Chart " + "(" + mYear + ")");
+		multiRenderer.setChartTitle("Income vs Expense " + "(" + mYear + ")");
 		multiRenderer.setYTitle("Amount");
 		/***
 		 * Customizing graphs
@@ -532,7 +486,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 		//setting zoom buttons visiblity
 		multiRenderer.setZoomButtonsVisible(false);
 		//setting pan enablity which uses graph to move on both axis
-		//multiRenderer.setPanEnabled(false, false);
+		multiRenderer.setPanEnabled(false, false);
 		//setting click false on graph
 		multiRenderer.setClickEnabled(false);
 		//setting zoom to false on both axis
@@ -598,6 +552,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 		
 		//remove any views before u paint the chart
 		chartContainer.removeAllViews();
+		chartContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		//drawing bar chart
 		mChart = ChartFactory.getLineChartView(StatisticActivity2.this, dataset, multiRenderer);
 		//adding the view to the linearlayout

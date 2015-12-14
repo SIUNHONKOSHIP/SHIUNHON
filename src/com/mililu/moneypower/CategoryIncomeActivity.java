@@ -14,12 +14,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class CategoryIncomeActivity extends Activity{
-	DataBaseAdapter dbAdapter;
-	List<Income>list_income ;
+	private DataBaseAdapter dbAdapter;
+	private List<Income>list_income ;
 	static ArrayAdapterCategoryIncome aaCategoryIncome;
-	int id_user;
-	ListView lvCategoryIncome;
-	Cursor cursorCategoryIncome;
+	private ListView lvCategoryIncome;
+	private Cursor cursorCategoryIncome;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,6 @@ public class CategoryIncomeActivity extends Activity{
 	    // Set OnItemClick Listener on listview
 	    //lvDiary.setOnItemClickListener(new MyEventItemOnClick());
 	    
-	    id_user = HomeActivity.id_user;
 	}
 	
 	@Override

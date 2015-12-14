@@ -26,20 +26,19 @@ import android.widget.RelativeLayout;
 
 public class HomeActivity extends Activity{
 
-	ListView mDrawerList;
-	RelativeLayout mDrawerPane;
-	//private ActionBarDrawerToggle mDrawerToggle;
+	private ListView mDrawerList;
+	private RelativeLayout mDrawerPane;
 	private DrawerLayout mDrawerLayout;
 	 
-	ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+	private ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 	
-	Button btnMenu, btnWallet, btnIncome, btnExpenditure, btnStatistic;
-	TextView lableFullname, lableUsername;
-	DataBaseAdapter dbAdapter;
-	static int id_user;
-	String username_current_user, fullname_current_user;
-	Cursor accountCursor;
-	Intent intent_income, intent_expend, intent_wallet, intent_stattistic, intent_diary, intent_category, intent_debt;
+	private Button btnMenu, btnWallet, btnIncome, btnExpenditure, btnStatistic;
+	private TextView lableFullname, lableUsername;
+	private DataBaseAdapter dbAdapter;
+	public static int id_user;
+	private String username_current_user, fullname_current_user;
+	private Cursor accountCursor;
+	private Intent intent_income, intent_expend, intent_wallet, intent_stattistic, intent_diary, intent_category, intent_transfer;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,7 +90,7 @@ public class HomeActivity extends Activity{
 	    mNavItems.add(new NavItem("Wallet", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Income", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Expenture", "", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Debt", "", R.drawable.ic_launcher));
+		mNavItems.add(new NavItem("Transfer", "", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Category", "Category of Income & Expenditure", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Diary", "Everything you have wrote", R.drawable.ic_launcher));
 		mNavItems.add(new NavItem("Report", "", R.drawable.ic_launcher));
@@ -127,7 +126,7 @@ public class HomeActivity extends Activity{
 		intent_stattistic = new Intent (HomeActivity.this, StatisticActivity2.class);
 		intent_category = new Intent (HomeActivity.this, CategoryActivity.class);
 		intent_diary = new Intent (HomeActivity.this, DiaryActivity.class);
-		intent_debt = new Intent (HomeActivity.this, DebtActivity.class);
+		intent_transfer = new Intent (HomeActivity.this, TransferActivity.class);
 	}
 	
 	private void LoadInforUser(){
@@ -182,8 +181,8 @@ public class HomeActivity extends Activity{
 		else if (position == 2){ ///selected expenditure
 			startActivity(intent_expend);
 		}
-		else if (position == 3){ ///selected debt
-			startActivity(intent_debt);
+		else if (position == 3){ ///selected transfer
+			startActivity(intent_transfer);
 		}
 		else if (position == 4){ ///selected category
 			startActivity(intent_category);

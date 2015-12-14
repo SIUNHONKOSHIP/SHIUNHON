@@ -8,13 +8,12 @@ import com.mililu.moneypower.classobject.Wallet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,24 +21,21 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 public class WalletActivity extends Activity{
-	
-	// Khai bao bien
-	SQLiteDatabase db = null;
-	MyWalletArrayAdapter arrayadapter = null;
-	Button btnBack, btnCreateWallet;
-	DataBaseAdapter dbAdapter;
-	Wallet wl=null;
-	List<Wallet>list_wallet=new ArrayList<Wallet>();
-	TextView txtTittle, txtBalance, txtTotalAmount;
-	Cursor cursorWallet;
-	ListView lvWallet;
-	int id_user;
+	private MyWalletArrayAdapter Walletaa = null;
+	private Button btnBack, btnCreateWallet;
+	private DataBaseAdapter dbAdapter;
+	private List<Wallet>list_wallet=new ArrayList<Wallet>();
+	private TextView txtTittle, txtBalance, txtTotalAmount;
+	private Cursor cursorWallet;
+	private ListView lvWallet;
+	private int id_user;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +71,7 @@ public class WalletActivity extends Activity{
 	    id_user = HomeActivity.id_user;
 	    // Set OnItemClick Listener on listview
 	    lvWallet.setOnItemClickListener(new MyEventItemOnClick());
+	    lvWallet.setOnItemLongClickListener(new MyEventItemOnLongClick());
 	}
 	
 	@Override
@@ -117,53 +114,15 @@ public class WalletActivity extends Activity{
 				data.setId_wallet(cursorWallet.getInt(cursorWallet.getColumnIndexOrThrow("ID_WALLET")));
 				data.setName(cursorWallet.getString(cursorWallet.getColumnIndexOrThrow("NAME_WALLET")));
 				long money = cursorWallet.getLong(cursorWallet.getColumnIndexOrThrow("MONEY"));
-				data.setMoney(NumberFormat.getCurrencyInstance().format(money));
+				data.setMoney(money);
 				list_wallet.add(data);
 				cursorWallet.moveToNext();
 		 	}
 			cursorWallet.close();
-			arrayadapter = new MyWalletArrayAdapter(WalletActivity.this, R.layout.layout_for_list_wallet, list_wallet);
-			arrayadapter.notifyDataSetChanged();
-			lvWallet.setAdapter(arrayadapter);
-				lvWallet.setOnItemLongClickListener(new OnItemLongClickListener() {
-					@Override
-					public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-						// TODO Auto-generated method stub
-						final Wallet data=list_wallet.get(arg2);
-						final int pos=arg2;
-						Toast.makeText(WalletActivity.this, data.toString(), Toast.LENGTH_LONG).show();
-						AlertDialog.Builder b = new Builder(WalletActivity.this);
-						b.setTitle("Remove Wallet");
-						b.setMessage("Do you wanna delete ["+data.getName() +"]?");
-						b.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-							
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
-								int n=db.delete("tbl_WALLET", "ID_WALLET=?", new String[]{String.valueOf(data.getId_wallet())});
-								if(n>0){
-									Toast.makeText(WalletActivity.this, "Delete Success", Toast.LENGTH_LONG).show();
-									list_wallet.remove(pos);
-									arrayadapter.notifyDataSetChanged();
-								}
-								else{
-									Toast.makeText(WalletActivity.this, "Delete not success", Toast.LENGTH_LONG).show();
-								}
-							}
-						});
-						b.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-							
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
-								dialog.cancel();
-							}
-						});
-						b.show();
-						return false;
-					}
-				});
-			}
+			Walletaa = new MyWalletArrayAdapter(WalletActivity.this, R.layout.layout_for_list_wallet, list_wallet);
+			Walletaa.notifyDataSetChanged();
+			lvWallet.setAdapter(Walletaa);
+		}
 	}
 	
 	private class MyEventItemOnClick implements OnItemClickListener{
@@ -177,5 +136,61 @@ public class WalletActivity extends Activity{
 			intent.putExtra("DATA", bundle);
 			startActivity(intent);
 		}
+	}
+	
+	private class MyEventItemOnLongClick implements OnItemLongClickListener{
+
+		@Override
+		public boolean onItemLongClick(AdapterView<?> arg0,final View view,final int position, long id) {
+			showPopupMenu(view, position);
+			return true;
+		}
+	}
+	private void showPopupMenu(View view,final int position) {
+		// Retrieve the clicked item from view's tag
+        final Wallet item = list_wallet.get(position);
+        // Create a PopupMenu, giving it the clicked view for an anchor
+        PopupMenu popup = new PopupMenu(WalletActivity.this, view);
+        // Inflate our menu resource into the PopupMenu's Menu
+        popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+        // Set a listener so we are notified if a menu item is clicked
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_popup_delete:
+                        // Show messenger to confirm delete
+                    	AlertDialog.Builder adb = new AlertDialog.Builder(WalletActivity.this); // khoi tao thong bao
+                        adb.setTitle("Delete !!!"); // title of messenger
+                        adb.setMessage("Are you sure you want to delete " + item.getName() + " ?" ); // contain of messenger
+                        adb.setNegativeButton("NO", null);
+                        adb.setPositiveButton("YES", new AlertDialog.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            	// Remove the item from the adapter and database
+                            	if(dbAdapter.deleteWallet(item.getId_wallet())){
+                            		list_wallet.remove(position); // xoa trong list
+                            		Walletaa.notifyDataSetChanged(); // reset lai listview
+                            		getTotalAmount(id_user); // load lai du lieu
+                            		Toast.makeText(WalletActivity.this, "Wallet has been deleted !!", Toast.LENGTH_SHORT).show(); // thong bao thanh cong
+                            	}
+                            	else{
+                            		Toast.makeText(WalletActivity.this, item.getId_wallet() + " - " + item.getName(), Toast.LENGTH_SHORT).show(); // thong bao that bai
+                            	}
+                            } // end of onClick
+                        }); 
+                        adb.show(); // show messenger
+                        return true; // end of case delete
+                    case R.id.menu_popup_edit:
+                    	// Edit the item form the adapter
+                    		Intent intent = new Intent (WalletActivity.this, EditWalletActivity.class);
+                    		intent.putExtra("id_wallet", item.getId_wallet());
+                    		startActivity(intent);
+                    	return true; // end of case edit
+                }
+                return false;
+            }
+        });
+        // Finally show the PopupMenu
+        popup.show();
 	}
 }

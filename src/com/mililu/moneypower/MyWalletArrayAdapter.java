@@ -1,5 +1,6 @@
 package com.mililu.moneypower;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import com.mililu.moneypower.classobject.Wallet;
@@ -18,7 +19,7 @@ public class MyWalletArrayAdapter extends ArrayAdapter<Wallet>{
 	private Activity context;
 	private int layout;
 	private List<Wallet>list;
-	Typeface tf;
+	private Typeface tf;
 	
 	public MyWalletArrayAdapter(Context context, int textViewResourceId, List<Wallet> objects) {
 		super(context, textViewResourceId, objects);
@@ -44,7 +45,7 @@ public class MyWalletArrayAdapter extends ArrayAdapter<Wallet>{
 		
 		Wallet data=list.get(position);
 		walletname.setText(data.getName()==null?"":data.getName().toString());
-		amount.setText(data.getMoney()==null?"":data.getMoney().toString());
+		amount.setText(NumberFormat.getInstance().format(data.getMoney()));
 		return convertView;
 	}
 

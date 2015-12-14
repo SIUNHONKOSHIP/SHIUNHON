@@ -1,8 +1,11 @@
 package com.mililu.moneypower;
 
+import com.mililu.moneypower.classobject.Wallet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -16,11 +19,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CreateWalletActivity extends Activity {
+public class EditWalletActivity extends Activity {
+	private Cursor walletCursor;
 	private DataBaseAdapter dbAdapter;
-	private Button btnBack, btnInsertWallet;
+	private Button btnBack, btnUpdateWallet;
 	private EditText txtNameWallet, txtMoney, txtDescription;
 	private TextView tvTittle;
+	private int id_wallet;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,8 @@ public class CreateWalletActivity extends Activity {
 	    dbAdapter =new DataBaseAdapter(this);
 	    dbAdapter = dbAdapter.open();
 	    
+	    Intent intent = getIntent();
+	    id_wallet = intent.getIntExtra("id_wallet", 0);
 	   
 	    Typeface light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
 	    Typeface bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
@@ -43,18 +50,26 @@ public class CreateWalletActivity extends Activity {
 	    txtMoney = (EditText)findViewById(R.id.txt_createwallet_money);
 	    txtDescription = (EditText)findViewById(R.id.txt_createwallet_description);
 	    btnBack=(Button)findViewById(R.id.btn_createwallet_back);
-	    btnInsertWallet=(Button)findViewById(R.id.btn_createwallet_submit);
+	    btnUpdateWallet=(Button)findViewById(R.id.btn_createwallet_submit);
 	    // Set face
 	    tvTittle.setTypeface(light);
 	    txtNameWallet.setTypeface(light);
 	    txtMoney.setTypeface(light);
 	    txtDescription.setTypeface(light);
-	    btnInsertWallet.setTypeface(bold);
+	    btnUpdateWallet.setTypeface(bold);
 	    
 	    // Set OnClick Listener on button 
 	    btnBack.setOnClickListener(new MyEvent());
-	    btnInsertWallet.setOnClickListener(new MyEvent());
+	    btnUpdateWallet.setOnClickListener(new MyEvent());
 	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		getWalletInfo(id_wallet);
+	}
+
 
 	public class MyEvent implements OnClickListener {
 		@Override
@@ -62,32 +77,47 @@ public class CreateWalletActivity extends Activity {
 			// TODO Auto-generated method stub
 			if(v.getId()==R.id.btn_createwallet_back)
 			{
-				CreateWalletActivity.this.finish();
+				EditWalletActivity.this.finish();
 			}
 			else if(v.getId()==R.id.btn_createwallet_submit) {
-					InsertWallet();
+					String namewallet = txtNameWallet.getText().toString();
+					String money = txtMoney.getText().toString();
+					String descrip = txtDescription.getText().toString();
+					// check if any of the fields are vaccant
+					if(namewallet.equals("")||money.isEmpty()||Long.valueOf(money)<0)
+					{
+							Toast.makeText(getApplicationContext(), "Please write your wallet's name and money ", Toast.LENGTH_LONG).show();
+							return;
+					}
+					else {
+						Wallet wallet = new Wallet();
+						wallet.setId_wallet(id_wallet);
+						wallet.setName(namewallet);
+						wallet.setOrg_money(Long.valueOf(money));
+						wallet.setDescrip(descrip);
+						UpdateWallet(wallet);
+					}
 			}
 		}
 	}
 	
-	private void InsertWallet(){
-		int id =  HomeActivity.id_user;
-		String namewallet = txtNameWallet.getText().toString();
-		String money = txtMoney.getText().toString();
-		String descrip = txtDescription.getText().toString();
-
-		// check if any of the fields are vaccant
-		if(namewallet.equals("")||money.isEmpty()||Long.valueOf(money)<0)
-		{
-				Toast.makeText(this, "Please write your wallet's name and money ☝", Toast.LENGTH_LONG).show();
-				return;
-		}
-		else{
-			// Save the Data in Database
-			dbAdapter.insertWallet(namewallet, Long.valueOf(money),  id, descrip);
-			Toast.makeText(getApplicationContext(), "Wallet has been created 😏", Toast.LENGTH_LONG).show();
-			CreateWalletActivity.this.finish();
-		}
+	private void getWalletInfo(int id_wallet){
+		walletCursor = dbAdapter.getInforWallet(id_wallet);
+		walletCursor.moveToFirst();
+    	String name = walletCursor.getString(walletCursor.getColumnIndexOrThrow("NAME_WALLET"));
+		long oldamount = walletCursor.getLong(walletCursor.getColumnIndexOrThrow("ORIGINAL_AMOUNT"));
+    	String notice = walletCursor.getString(walletCursor.getColumnIndexOrThrow("DESCRIPTION"));
+    	
+    	txtNameWallet.setText(name);
+    	txtMoney.setText(String.valueOf(oldamount));
+    	txtDescription.setText(notice);
+	}
+	
+	private void UpdateWallet(Wallet wallet){
+		// Save the Data in Database
+		dbAdapter.updateWallet(wallet);
+		Toast.makeText(getApplicationContext(), "Wallet has been updated", Toast.LENGTH_LONG).show();
+		EditWalletActivity.this.finish();
 	}
 	
 	@Override

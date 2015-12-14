@@ -15,9 +15,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
-	Button btnBack, btnRegister;
-	EditText txtUserName, txtPassword, txtConfirmPass, txtFullname;
-	DataBaseAdapter dbAdapter;
+	private Button btnBack, btnRegister;
+	private EditText txtUserName, txtPassword, txtConfirmPass, txtFullname;
+	private DataBaseAdapter dbAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -20,17 +20,14 @@ public class AdapterDiary extends BaseExpandableListAdapter {
 	private ArrayList<String> parentItems;
 	private ArrayList<Diary> child;
 	
-
 	public AdapterDiary(ArrayList<String> parents, ArrayList<Object> childern) {
 		this.parentItems = parents;
 		this.childtems = childern;
 	}
-
 	public void setInflater(LayoutInflater inflater, Activity activity) {
 		this.inflater = inflater;
 		this.activity = activity;
 	}
-
 	
 	@Override
 	public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
@@ -57,7 +54,6 @@ public class AdapterDiary extends BaseExpandableListAdapter {
 		TextView tvAmount = null;
 		TextView tvNotice = null;
 		
-		
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.layout_for_diary_item, null);
 		}
@@ -67,21 +63,10 @@ public class AdapterDiary extends BaseExpandableListAdapter {
 		tvAmount = (TextView)convertView.findViewById(R.id.tv_layoutdiary_amount);
 		tvNotice = (TextView)convertView.findViewById(R.id.tv_layoutdiary_notice);
 		
-		
-		
 		tvName.setText(mName);
 		tvWallet.setText(mWallet);
 		tvAmount.setText(mAmount);
 		tvNotice.setText(mNotice);
-		
-		/*convertView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View view) {
-				Toast.makeText(activity, String.valueOf(child.get(childPosition).getId_diary()),
-						Toast.LENGTH_SHORT).show();
-			}
-		});*/
 		
 		return convertView;
 	}
@@ -138,8 +123,6 @@ public class AdapterDiary extends BaseExpandableListAdapter {
 	public long getGroupId(int groupPosition) {
 		return 0;
 	}
-
-	
 
 	@Override
 	public boolean hasStableIds() {

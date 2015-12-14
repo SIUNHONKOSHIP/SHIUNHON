@@ -18,11 +18,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class EditCategoryIncomeActivity extends Activity {
-	DataBaseAdapter dbAdapter;
-	Button btnBack, btnInsert;
-	EditText txtNameIncome;
-	int id_income;
-	Cursor income;
+	private DataBaseAdapter dbAdapter;
+	private Button btnBack, btnInsert;
+	private EditText txtNameIncome;
+	private int id_income;
+	private Cursor income;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
