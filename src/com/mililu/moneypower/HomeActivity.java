@@ -78,6 +78,8 @@ public class HomeActivity extends Activity{
 	    // Set infor of user
 	    lableFullname.setText(fullname_current_user);
 	    lableUsername.setText(username_current_user);
+	    lableFullname.setTypeface(font_bold);
+	    lableUsername.setTypeface(font_light);
 	    
 	    // Set OnClick Listener
 	    btnIncome.setOnClickListener(new MyEvent());
@@ -87,15 +89,15 @@ public class HomeActivity extends Activity{
 	    btnMenu.setOnClickListener(new MyEvent());
 	    
 	    // Add list menu
-	    mNavItems.add(new NavItem("Wallet", "", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Income", "", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Expenture", "", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Transfer", "", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Category", "Category of Income & Expenditure", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Diary", "Everything you have wrote", R.drawable.ic_launcher));
-		mNavItems.add(new NavItem("Report", "", R.drawable.ic_launcher));
-	    mNavItems.add(new NavItem("About us", "Information about this app", R.drawable.icon_info));
-	    mNavItems.add(new NavItem("Logout", "", R.drawable.icon_info));
+	    mNavItems.add(new NavItem("Wallet", "", R.drawable.btn_wall));
+		mNavItems.add(new NavItem("Income", "", R.drawable.btn_income));
+		mNavItems.add(new NavItem("Expenture", "", R.drawable.btn_expen));
+		mNavItems.add(new NavItem("Transfer", "", R.drawable.btn_transfer));
+		mNavItems.add(new NavItem("Category", "Category of Income & Expenditure", R.drawable.btn_cate));
+		mNavItems.add(new NavItem("Diary", "Everything you have wrote", R.drawable.btn_diary));
+		mNavItems.add(new NavItem("Report", "", R.drawable.btn_report));
+	    mNavItems.add(new NavItem("About us", "Information about this app", R.drawable.btn_help));
+	    mNavItems.add(new NavItem("Logout", "", R.drawable.btn_logout));
 	 
 	    // DrawerLayout
 	    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);

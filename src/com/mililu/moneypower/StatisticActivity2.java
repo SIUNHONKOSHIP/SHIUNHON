@@ -38,7 +38,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 	private DataBaseAdapter dbAdapter;
 	private int id_user, mMonth, mYear;
 	private long mIncome, mExpenditure;
-	private TextView txtDate, txtTotalExpenditure, txtTotalIncome;
+	private TextView txtDate, txtTotalExpenditure, txtTotalIncome, txtTime, txtType, txtTittle;
 	private View mChart;
 	private LinearLayout chartContainer;
 	private String typeStatistic[]={"Statistic By Month", "Statistic by Year"};
@@ -73,6 +73,9 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
         spnTypeChart = (Spinner)findViewById(R.id.spn_statistic2_typechart);
         spnTypeStatistic = (Spinner)findViewById(R.id.spn_statistic2_typestatistic);
         chartContainer = (LinearLayout) findViewById(R.id.layout_statistic2_chart);
+        txtTime=(TextView)findViewById(R.id.tv_time_rp);
+        txtType=(TextView)findViewById(R.id.tv_type_rp);
+        txtTittle=(TextView)findViewById(R.id.tv_statistic_title);
 		
         // Create a instance of SQLite Database
 	    dbAdapter =new DataBaseAdapter(this);
@@ -88,6 +91,19 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 	    btnBack.setOnClickListener(new MyEvent());
 	    id_user = HomeActivity.id_user;
 		GetCurrentDate();
+		
+		// Khoi tao font
+	    Typeface font_bold = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLD.TTF");
+	    Typeface font_light = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUELIGHT.TTF");
+	    Typeface font_italic = Typeface.createFromAsset(getAssets(),"fonts/HELVETICANEUEBOLDITALIC.TTF");
+	    
+	    // Set fonts
+	    txtDate.setTypeface(font_light);
+	    txtTotalIncome.setTypeface(font_light);
+	    txtTotalExpenditure.setTypeface(font_light);
+	    txtTime.setTypeface(font_light);
+	    txtType.setTypeface(font_light);
+	    txtTittle.setTypeface(font_light);
 	}
 	
     private void loadSpnTypeStatistic() {
@@ -121,7 +137,7 @@ public class StatisticActivity2 extends Activity implements OnItemSelectedListen
 		else if (spnTypeStatistic.getSelectedItemPosition() == 1){
 			mIncome = dbAdapter.getTotalIncome(mYear, id_user);
 		}
-		txtTotalIncome.setText("Toatal Income: " + NumberFormat.getCurrencyInstance().format(mIncome));
+		txtTotalIncome.setText("Total Income: " + NumberFormat.getCurrencyInstance().format(mIncome));
 		
 	}
 	private void getTotalExpenditure(){
