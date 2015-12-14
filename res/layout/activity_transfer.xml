@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@drawable/wallet_list_bg"
+        android:background="@drawable/bg_income_night"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -46,28 +46,29 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="68dp"
+                android:background="@drawable/bg_trans_white1"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tv_transfer_amount"
-                    android:layout_width="60dp"
+                    android:layout_width="68dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical|start"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="Amount" />
+                    android:text="Amount"
+                    android:textColor="#fff" />
 
                 <EditText
                     android:id="@+id/txt_transfer_amount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/txt_white"
+                    android:background="@drawable/bg_trans"
                     android:ems="10"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:hint="Amount"
+                    android:gravity="center_vertical"
                     android:inputType="number"
-                    android:textColor="#171717"
+                    android:textColor="#fff"
                     android:textColorHint="#989898"
                     android:textSize="15sp" />
 
@@ -76,43 +77,49 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="68dp"
+                android:background="@drawable/bg_trans_white2"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tv_transfer_from"
-                    android:layout_width="60dp"
+                    android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical|start"
+                    android:layout_gravity="start|center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="From" />
+                    android:text="From"
+                    android:textColor="#fff" />
 
                 <Spinner
                     android:id="@+id/spn_transfer_from"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_trans_choose" />
 
             </LinearLayout>
             
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="68dp"
+                android:background="@drawable/bg_trans_white2"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tv_transfer_to"
-                    android:layout_width="60dp"
+                    android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical|start"
+                    android:layout_gravity="start|center_vertical|"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="To" />
+                    android:text="To"
+                    android:textColor="#fff" />
 
                 <Spinner
                     android:id="@+id/spn_transfer_to"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_trans_choose" />
 
             </LinearLayout>
             
@@ -123,9 +130,9 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
-                android:background="#372f2d"
+                android:background="#e4e0c5"
                 android:text="SUBMIT"
-                android:textColor="#FFFFFF" />
+                android:textColor="#462e17" />
 
         </LinearLayout>
 

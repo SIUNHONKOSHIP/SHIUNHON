@@ -21,8 +21,9 @@
                 android:id="@+id/btn_home_menu"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_gravity="left|center_vertical"
+                android:layout_gravity="start|center_vertical"
                 android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/home_icon_menu" />
 
             <!-- <TextView
@@ -140,6 +141,7 @@
                 android:id="@+id/imgv_home_avatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="account"
                 android:src="@drawable/icon_info"
                 android:layout_marginTop="15dp" />
  
@@ -148,7 +150,9 @@
                 android:layout_height="42dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/avatar"
+                android:layout_marginStart="15dp"
+                android:layout_toRightOf="@+id/imgv_home_avatar"
+                android:layout_toEndOf="@+id/imgv_home_avatar"
                 android:orientation="vertical" >
  
                 <TextView
