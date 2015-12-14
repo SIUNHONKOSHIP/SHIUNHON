@@ -104,6 +104,9 @@
         <activity            
             android:screenOrientation="portrait"
             android:name=".EditExpenseActivity"></activity>
+        <activity            
+            android:screenOrientation="portrait"
+            android:name=".TransferActivity"></activity>
         
     </application>
 

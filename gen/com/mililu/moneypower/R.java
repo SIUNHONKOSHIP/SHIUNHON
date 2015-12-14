@@ -87,9 +87,9 @@ public final class R {
         public static final int wl_submit=0x7f02003e;
     }
     public static final class id {
-        public static final int GridLayout1=0x7f080099;
-        public static final int LinearLayout1=0x7f0800a5;
-        public static final int action_settings=0x7f0800ab;
+        public static final int GridLayout1=0x7f0800a2;
+        public static final int LinearLayout1=0x7f0800ae;
+        public static final int action_settings=0x7f0800b4;
         public static final int avatar=0x7f080052;
         public static final int btn_category_back=0x7f080000;
         public static final int btn_category_create=0x7f080002;
@@ -117,7 +117,7 @@ public final class R {
         public static final int btn_income_date=0x7f080064;
         public static final int btn_income_submit=0x7f080068;
         public static final int btn_income_time=0x7f080067;
-        public static final int btn_layoutcategoryitem_seting=0x7f08009b;
+        public static final int btn_layoutcategoryitem_seting=0x7f0800a4;
         public static final int btn_login_register=0x7f08006e;
         public static final int btn_login_submit=0x7f08006d;
         public static final int btn_register_back=0x7f080073;
@@ -128,8 +128,10 @@ public final class R {
         public static final int btn_statistic_back=0x7f080075;
         public static final int btn_statisticbymonth_nextmonth=0x7f080084;
         public static final int btn_statisticbymonth_perviousmonth=0x7f080082;
-        public static final int btn_wallet_back=0x7f08008f;
-        public static final int btn_wallet_createwallet=0x7f080091;
+        public static final int btn_transfer_back=0x7f08008f;
+        public static final int btn_transfer_submit=0x7f080097;
+        public static final int btn_wallet_back=0x7f080098;
+        public static final int btn_wallet_createwallet=0x7f08009a;
         public static final int chart_expend=0x7f08008b;
         public static final int chart_income=0x7f080088;
         public static final int detailwallet=0x7f080023;
@@ -140,8 +142,8 @@ public final class R {
         public static final int imgv_home_avatar=0x7f080051;
         public static final int imgv_intro_logo=0x7f080069;
         public static final int imgv_login_logo=0x7f08006a;
-        public static final int imgv_menu_icon=0x7f080096;
-        public static final int imgv_wallet_line=0x7f080094;
+        public static final int imgv_menu_icon=0x7f08009f;
+        public static final int imgv_wallet_line=0x7f08009d;
         public static final int lay_amount=0x7f080030;
         public static final int lay_body=0x7f08002f;
         public static final int lay_bodyexpen=0x7f08002e;
@@ -156,19 +158,19 @@ public final class R {
         public static final int layout_statistic2_chart=0x7f080080;
         public static final int linechart=0x7f08008e;
         public static final int lv_categoryincome_listincome=0x7f080003;
-        public static final int lv_detail=0x7f08009c;
+        public static final int lv_detail=0x7f0800a5;
         public static final int lv_detailwallet_listhistory=0x7f080028;
         public static final int lv_home_navList=0x7f080055;
         public static final int lv_statisticbymonth_expenditure=0x7f08008c;
         public static final int lv_statisticbymonth_income=0x7f080089;
-        public static final int lv_wallet_listwallet=0x7f080095;
+        public static final int lv_wallet_listwallet=0x7f08009e;
         public static final int mainContent=0x7f080047;
-        public static final int menu_popup_delete=0x7f0800aa;
-        public static final int menu_popup_edit=0x7f0800a9;
+        public static final int menu_popup_delete=0x7f0800b3;
+        public static final int menu_popup_edit=0x7f0800b2;
         public static final int profileBox=0x7f080050;
         public static final int rdbt_debt_borrow=0x7f080013;
         public static final int rdbt_debt_lend=0x7f080014;
-        public static final int reset_database=0x7f0800a8;
+        public static final int reset_database=0x7f0800b1;
         public static final int rg_debt_type=0x7f080012;
         public static final int spn_debt_debtor=0x7f080016;
         public static final int spn_debt_wallet=0x7f080019;
@@ -178,6 +180,8 @@ public final class R {
         public static final int spn_income_wallet=0x7f08005e;
         public static final int spn_statistic2_typechart=0x7f08007f;
         public static final int spn_statistic2_typestatistic=0x7f080079;
+        public static final int spn_transfer_from=0x7f080094;
+        public static final int spn_transfer_to=0x7f080096;
         public static final int textView1=0x7f080081;
         public static final int tv_category_tittle=0x7f080001;
         public static final int tv_createcategoryincome_nameincome=0x7f080007;
@@ -211,19 +215,19 @@ public final class R {
         public static final int tv_income_notice=0x7f08005b;
         public static final int tv_income_time=0x7f080065;
         public static final int tv_income_walletname=0x7f08005d;
-        public static final int tv_layoutcategoryitem_name=0x7f08009a;
-        public static final int tv_layoutdetailwallet_date=0x7f08009f;
-        public static final int tv_layoutdetailwallet_money=0x7f08009e;
-        public static final int tv_layoutdetailwallet_name=0x7f08009d;
-        public static final int tv_layoutdetailwallet_notice=0x7f0800a0;
-        public static final int tv_layoutdiary_amount=0x7f0800a3;
-        public static final int tv_layoutdiary_namecategory=0x7f0800a1;
-        public static final int tv_layoutdiary_namewallet=0x7f0800a2;
-        public static final int tv_layoutdiary_notice=0x7f0800a4;
-        public static final int tv_layoutlistwallet_amount=0x7f0800a7;
-        public static final int tv_layoutlistwallet_name=0x7f0800a6;
-        public static final int tv_menu_subtitle=0x7f080098;
-        public static final int tv_menu_title=0x7f080097;
+        public static final int tv_layoutcategoryitem_name=0x7f0800a3;
+        public static final int tv_layoutdetailwallet_date=0x7f0800a8;
+        public static final int tv_layoutdetailwallet_money=0x7f0800a7;
+        public static final int tv_layoutdetailwallet_name=0x7f0800a6;
+        public static final int tv_layoutdetailwallet_notice=0x7f0800a9;
+        public static final int tv_layoutdiary_amount=0x7f0800ac;
+        public static final int tv_layoutdiary_namecategory=0x7f0800aa;
+        public static final int tv_layoutdiary_namewallet=0x7f0800ab;
+        public static final int tv_layoutdiary_notice=0x7f0800ad;
+        public static final int tv_layoutlistwallet_amount=0x7f0800b0;
+        public static final int tv_layoutlistwallet_name=0x7f0800af;
+        public static final int tv_menu_subtitle=0x7f0800a1;
+        public static final int tv_menu_title=0x7f0800a0;
         public static final int tv_statistic2_date=0x7f08007b;
         public static final int tv_statistic2_totalexpenditure=0x7f08007e;
         public static final int tv_statistic2_totalincome=0x7f08007d;
@@ -234,9 +238,13 @@ public final class R {
         public static final int tv_statisticbymonth_titleincome=0x7f080087;
         public static final int tv_statisticbymonth_totalexpenditure=0x7f080086;
         public static final int tv_statisticbymonth_totalincome=0x7f080085;
-        public static final int tv_wallet_amount=0x7f080093;
-        public static final int tv_wallet_title=0x7f080090;
-        public static final int tv_wallet_totalbalance=0x7f080092;
+        public static final int tv_transfer_amount=0x7f080091;
+        public static final int tv_transfer_from=0x7f080093;
+        public static final int tv_transfer_title=0x7f080090;
+        public static final int tv_transfer_to=0x7f080095;
+        public static final int tv_wallet_amount=0x7f08009c;
+        public static final int tv_wallet_title=0x7f080099;
+        public static final int tv_wallet_totalbalance=0x7f08009b;
         public static final int txt_createcategoryincome_nameincome=0x7f080008;
         public static final int txt_createwallet_description=0x7f08000d;
         public static final int txt_createwallet_money=0x7f08000c;
@@ -258,6 +266,7 @@ public final class R {
         public static final int txt_register_fullname=0x7f08006f;
         public static final int txt_register_password=0x7f080071;
         public static final int txt_register_username=0x7f080070;
+        public static final int txt_transfer_amount=0x7f080092;
         public static final int year_layout=0x7f08008d;
     }
     public static final class layout {
@@ -277,14 +286,15 @@ public final class R {
         public static final int activity_statistic=0x7f03000d;
         public static final int activity_statistic2=0x7f03000e;
         public static final int activity_statisticbymonth=0x7f03000f;
-        public static final int activity_wallet=0x7f030010;
-        public static final int drawer_item=0x7f030011;
-        public static final int layout_for_category_group=0x7f030012;
-        public static final int layout_for_category_item=0x7f030013;
-        public static final int layout_for_detail_wallet=0x7f030014;
-        public static final int layout_for_diary_group=0x7f030015;
-        public static final int layout_for_diary_item=0x7f030016;
-        public static final int layout_for_list_wallet=0x7f030017;
+        public static final int activity_transfer=0x7f030010;
+        public static final int activity_wallet=0x7f030011;
+        public static final int drawer_item=0x7f030012;
+        public static final int layout_for_category_group=0x7f030013;
+        public static final int layout_for_category_item=0x7f030014;
+        public static final int layout_for_detail_wallet=0x7f030015;
+        public static final int layout_for_diary_group=0x7f030016;
+        public static final int layout_for_diary_item=0x7f030017;
+        public static final int layout_for_list_wallet=0x7f030018;
     }
     public static final class menu {
         public static final int home_menu=0x7f070000;
