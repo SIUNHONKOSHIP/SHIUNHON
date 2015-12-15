@@ -60,13 +60,13 @@ public class ArrayAdapterCategoryIncome extends ArrayAdapter<Income>{
 			incomename.setText(data.getName()==null?"":data.getName().toString());
 			
 			// Retrieve the popup button from the inflated view
-            View popupButton = convertView.findViewById(R.id.btn_layoutcategoryitem_seting);
+            //View popupButton = convertView.findViewById(convertView);
  
             // Set the item as the button's tag so it can be retrieved later
-            popupButton.setTag(getItem(position));
+            //popupButton.setTag(getItem(position));
  
             // Set the fragment instance as the OnClickListener
-            popupButton.setOnClickListener(new myOnClick());
+            //popupButton.setOnClickListener(new myOnClick());
             
 			return convertView;
 	}

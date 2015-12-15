@@ -231,7 +231,12 @@ public class HomeActivity extends Activity{
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		//super.onBackPressed();
-		backButtonEvent();
+		if (mDrawerLayout.isDrawerOpen(mDrawerPane)){
+			mDrawerLayout.closeDrawer(mDrawerPane);
+		}
+		else {
+			backButtonEvent();
+		}
 	}
 	private void backButtonEvent(){
 		AlertDialog.Builder adb = new AlertDialog.Builder(HomeActivity.this);

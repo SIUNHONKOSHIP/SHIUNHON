@@ -47,7 +47,7 @@
             android:id="@+id/tv_createcategoryincome_nameincome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ten thu nhap" />
+            android:text="Name" />
 
         <EditText
             android:id="@+id/txt_createcategoryincome_nameincome"

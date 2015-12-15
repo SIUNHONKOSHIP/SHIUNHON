@@ -174,7 +174,15 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 			// TODO Auto-generated method stub
 			if(v.getId()==R.id.btn_income_submit)
 			{
-				DoInsertIncome();
+				if (id_wallet == -1){
+					Toast.makeText(getApplicationContext(), "There are no wallet", Toast.LENGTH_LONG).show();
+				}
+				else if (id_income == -1){
+					Toast.makeText(getApplicationContext(), "There are no income", Toast.LENGTH_LONG).show();
+				}
+				else {
+					DoInsertIncome();
+				}
 			}
 			else if(v.getId() == R.id.btn_income_back){
 				IncomeActivity.this.finish();
@@ -251,8 +259,16 @@ public class IncomeActivity extends Activity implements OnItemSelectedListener{
 	}
 	
 	@Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
+    public void onNothingSelected(AdapterView<?> parent) {
+		Spinner spinner = (Spinner) parent;
+		if(spinner.getId() == R.id.spn_income_wallet)
+		{
+			id_wallet = -1;
+		}
+		else if(spinner.getId() == R.id.spn_income_danhmuc)
+		{
+			id_income = -1;
+		}
     }
     
 	/**

@@ -141,21 +141,31 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 		    	else if (Long.valueOf(mAmount)<=0){
 		    		Notify("Invalid amount");
 		    	}
+		    	
 		    	else {
-		    		Diary diary = new Diary();
-		    		diary.setAmount(Long.valueOf(mAmount));
-		    		diary.setId_wallet(id_wallet);
-		    		diary.setId_parent_category(id_expen);
-		    		diary.setId_category(id_expen_detail);
-		    		diary.setId_account(id_user);
-		    		diary.setDay(mDay);
-		    		diary.setMonth(mMonth);
-		    		diary.setYear(mYear);
-		    		diary.setTime(mTime);
-		    		diary.setType(2); // 2 = chi
-		    		diary.setNotice(mNotice);
-		    		
-		    		DoInsertExpen(diary);
+		    		if (id_wallet == -1){
+						Toast.makeText(getApplicationContext(), "There are no wallet", Toast.LENGTH_LONG).show();
+					}
+					else if (id_expen_detail == -1){
+						Toast.makeText(getApplicationContext(), "There are no income", Toast.LENGTH_LONG).show();
+					}
+					else {
+					
+			    		Diary diary = new Diary();
+			    		diary.setAmount(Long.valueOf(mAmount));
+			    		diary.setId_wallet(id_wallet);
+			    		diary.setId_parent_category(id_expen);
+			    		diary.setId_category(id_expen_detail);
+			    		diary.setId_account(id_user);
+			    		diary.setDay(mDay);
+			    		diary.setMonth(mMonth);
+			    		diary.setYear(mYear);
+			    		diary.setTime(mTime);
+			    		diary.setType(2); // 2 = chi
+			    		diary.setNotice(mNotice);
+			    		
+			    		DoInsertExpen(diary);
+					}
 		    	}
 			}
 			else if(v.getId() == R.id.btn_expen_back){
@@ -216,8 +226,18 @@ public class ExpenditureActivity extends Activity implements OnItemSelectedListe
 	}
 	
 	@Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
+    public void onNothingSelected(AdapterView<?> parent) {
+		Spinner spinner = (Spinner) parent;
+		if(spinner.getId() == R.id.spn_expen_wallet)
+		{
+			id_wallet = -1;
+		}
+		else if(spinner.getId() == R.id.spn_expen_danhmuccon)
+		{
+			id_expen = -1;
+			id_expen_detail = -1;
+		}
+		
     }
 	
 	/**
